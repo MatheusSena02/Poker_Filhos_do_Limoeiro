@@ -24,7 +24,7 @@ int main()
     
 	//Variáveis das configurações -> opcoes.txt
     opc opcoes;
-    //Verifica se o opcoes.txt já foi criado
+    //Verifica se o opcoes.txt já foi criadof
     if (!arq_verificarOpcoes()) return 10;
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     inicializacao(&opcoes);
@@ -35,12 +35,7 @@ int main()
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     
-    printf("Aperta qlquer bomba q fecha\n");
-    
-    	input=-1;
-		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    
-    return 0;
+    programa_finalizar();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

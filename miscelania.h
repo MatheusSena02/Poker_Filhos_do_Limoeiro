@@ -59,4 +59,17 @@ int getch() {
 #endif
 }
     
+void programa_finalizar () {
+    
+    int input;
+    printf("Aperte F para encerrar o programa\n");
+    
+    do {
+        input=-1;
+		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102);
+    
+}
+
+
 #endif
