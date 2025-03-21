@@ -74,7 +74,7 @@ void pilha_imprimir(tp_pilha p) {
     }
 }
 
-int pilhaCmp(tp_pilha pilha1,tp_pilha pilha2) {
+int pilha_cmp(tp_pilha pilha1,tp_pilha pilha2) {
 //Compara pilha1 e pilha2, retorna 1 se forem iguais e 0 se forem diferentes
     tp_item a,b;
     if (pilha_altura(&pilha1) == pilha_altura(&pilha2)) {
@@ -91,7 +91,7 @@ int pilhaCmp(tp_pilha pilha1,tp_pilha pilha2) {
     
 }
 
-int pilha_PilhaPush(tp_pilha *pilha1,tp_pilha *pilha2) {
+int pilha_pilhaPush(tp_pilha *pilha1,tp_pilha *pilha2) {
 // se couber na pilha1, empilha a pilha 2 em pilha 1
 // retorna 0 para erro -> se nao couber em pilha1, a pilha 2
     tp_item e;
