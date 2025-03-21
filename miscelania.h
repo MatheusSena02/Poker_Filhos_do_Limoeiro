@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <time.h>
 
-
 //pro getch
 #include <unistd.h>
 #ifdef _WIN32
@@ -62,12 +61,27 @@ int getch() {
 void programa_finalizar () {
     
     int input;
+    printf("\e[65;0H");
     printf("Aperte F para encerrar o programa\n");
     
     do {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 102);
+    } while (input != 102 && input != 70);
+
+
+}
+
+void programa_iniciar () {
+    
+    int input;
+    printf("Por favor coloque o programa em tela cheia\n");
+    printf("Aperte F para continuar\n");
+    
+    do {
+        input=-1;
+		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102 && input != 70);
 
 }
 

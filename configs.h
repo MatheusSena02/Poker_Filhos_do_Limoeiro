@@ -2,7 +2,7 @@
 #define CONFIGS_H
 
 typedef struct {
-	int debug, debugLimpaTela, modoDeSalvamento;
+	int debug, modoDeSalvamento, estiloCarta;
 }opc;
 
 void inicializacao(opc *opcoes) {
@@ -10,7 +10,7 @@ void inicializacao(opc *opcoes) {
     srand(time(0));
     //Obter variáveis guardadas em opcoes.txt
     arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d");
-    arq_lerOpcoes(&opcoes->debugLimpaTela,"LimparTela = ","LimparTela = %d");
+    arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d");
     arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d");
 }
 
