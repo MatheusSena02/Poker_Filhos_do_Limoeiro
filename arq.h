@@ -17,7 +17,6 @@ int arq_gerar(char principal[], char arqmontado[],int modo) {
 // Modos de operação:
 // 1 -> gera o nome do arquivo sem nenhuma mudança
 // 2 -> gera o nome do arquivo considerando se o arquivo já existe. Se já existir o arquivo "exemplo.txt" será criado "exemplo1.txt"
-// Debug: caso debug seja 1, printfs de aviso e visualização dos resultados serão mostrados
     
     // Modo 1
     if (modo==1) {
@@ -50,7 +49,6 @@ int arq_gerar(char principal[], char arqmontado[],int modo) {
 int arq_ler(int limite, char arq_nome[]) {
 // Função que lê todo um arquivo txt linha por linha
 // Recebe uma string que armazenará o conteúdo até o caractere [limite] da linha atual, do arquivo arq_nome.
-// Debug: caso debug seja 1, printfs de aviso e visualização dos resultados serão mostrados
     
     char linha[limite+1];
     FILE *arquivo;
@@ -141,11 +139,11 @@ void arq_criarOpcoes () {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
-        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Automatizado )\n");
-        fprintf(arq,"// Simples -> prinfs de avisos e monitoramento / Automatizado -> Jogadas são feitas aleatoriamente\n");
+        fprintf(arq,"// Estilo de Carta ( 1 = Carta Branca [Padrão] / 0 = Carta Preta )\n");
+        fprintf(arq,"EstiloCarta = 1\n\n");
+        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )\n");
+        fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"debug = 0\n\n");
-        fprintf(arq,"// Ativa ou desativa função de limpeza de tela ( 1 = Ativado [Padrão] / 0 = Desativado )\n");
-        fprintf(arq,"LimparTela = 1\n\n");
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
         fprintf(arq,"// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\n");
         fprintf(arq,"ModoDeSalvamento = 1\n\n");
