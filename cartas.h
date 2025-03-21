@@ -12,7 +12,7 @@ typedef struct {
 
 int carta_setarvalor(tp_carta *carta, int valor) {
     // Seta o valor da carta atual do baralho para "valor".
-    // valor serve para a função de printar, na parte dos números e letras
+    // ele guarda o valor de 2 formas diferentes, uma em caractere (A,1 a 10, J, Q e K) e outra em int (1 a 13)
     carta->valor_i = valor;
     switch (valor) {
         case 1:
@@ -74,6 +74,8 @@ int carta_setarvalor(tp_carta *carta, int valor) {
 }
 
 void baralho_inicializar(tp_carta *baralho) {
+    // Monta o baralho de forma organizada
+    // Baralho precisa ser um vetor de struct tp_carta de tamanho 52
     for(int i=0;i<52;i++){
         baralho[i].naipe = (i/13);
         carta_setarvalor(&baralho[i], ((i%13)+1));
@@ -81,6 +83,7 @@ void baralho_inicializar(tp_carta *baralho) {
 }
 
 void carta_printar(tp_carta *carta, int estiloCarta) {
+    // Printa a carta dada, de acordo com o estilo selecionado 
     char  simbolo_naipe[4][8] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
     if (estiloCarta == 1) {
  
@@ -112,6 +115,17 @@ void carta_printar(tp_carta *carta, int estiloCarta) {
     }
 
     printf("\e[3A\e[2C");
+}
+
+void baralho_printar (tp_carta *carta, int estiloCarta) {
+    //Provavelmente inútil para o funcionamente do jogo
+    //Printa todo o baralho
+    //Precisa receber um vetor do struct tp_carta, de tamanho 52
+    for (int i=0;i<52;i++){
+        carta_printar(&carta[i],estiloCarta);
+        fflush(stdout);
+        if (i==12||i==25||i==38) printf("\e[5E");
+    }
 }
 
 #endif

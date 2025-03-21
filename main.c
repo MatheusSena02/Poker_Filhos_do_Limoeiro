@@ -41,11 +41,7 @@ int main()
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     
     
-    for (int i=0;i<52;i++){
-        carta_printar(&baralho[i],opcoes.estiloCarta);
-        fflush(stdout);
-        if (i==12||i==25||i==38) printf("\e[5E");
-    }
+    baralho_printar(baralho,opcoes.estiloCarta);
     
     
 
