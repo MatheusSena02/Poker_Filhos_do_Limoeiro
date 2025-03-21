@@ -78,13 +78,13 @@ void carta_printar(tp_carta *carta, int estiloCarta) {
  
         if(carta->naipe == 0 || carta->naipe == 1) {
 
-            if(carta->valor_i != 10) printf("     \e[1B\e[5D\e[107;30m\e[31m%s\e[39m    \e[1B\e[5D  \e[31m%s\e[39m  \e[1B\e[5D    \e[31m%s\e[39m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
-            else printf("     \e[1B\e[5D\e[107;30m\e[31m%s\e[39m   \e[1B\e[5D  \e[31m%s\e[39m  \e[1B\e[5D   \e[31m%s\e[39m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            if(carta->valor_i != 10) printf("     \e[1B\e[5D\e[107;30m\e[31m\e[1m%s\e[22m\e[39m    \e[1B\e[5D  \e[31m\e[1m%s\e[22m\e[39m  \e[1B\e[5D    \e[31m\e[1m%s\e[22m\e[39m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf("     \e[1B\e[5D\e[107;30m\e[31m\e[1m%s\e[22m\e[39m   \e[1B\e[5D  \e[31m\e[1m%s\e[22m\e[39m  \e[1B\e[5D   \e[31m\e[1m%s\e[22m\e[39m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
     
         } else {
     
-            if(carta->valor_i != 10) printf("     \e[1B\e[5D\e[107;30m%s    \e[1B\e[5D  %s  \e[1B\e[5D    %s\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
-            else printf("     \e[1B\e[5D\e[107;30m%s   \e[1B\e[5D  %s  \e[1B\e[5D   %s\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            if(carta->valor_i != 10) printf("     \e[1B\e[5D\e[107;30m\e[1m%s\e[22m    \e[1B\e[5D  \e[1m%s\e[22m  \e[1B\e[5D    \e[1m%s\e[22m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf("     \e[1B\e[5D\e[107;30m\e[1m%s\e[22m   \e[1B\e[5D  \e[1m%s\e[22m  \e[1B\e[5D   \e[1m%s\e[22m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
     
         }
 
@@ -92,13 +92,13 @@ void carta_printar(tp_carta *carta, int estiloCarta) {
 
         if(carta->naipe == 0 || carta->naipe == 1) {
 
-            if(carta->valor_i != 10) printf(" ___ \e[1B\e[5D|\e[91m%s\e[39m  |\e[1B\e[5D| \e[91m%s\e[39m |\e[1B\e[5D|__\e[91m%s\e[39m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
-            else printf(" ___ \e[1B\e[5D|\e[91m%s\e[39m |\e[1B\e[5D| \e[91m%s\e[39m |\e[1B\e[5D|_\e[91m%s\e[39m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            if(carta->valor_i != 10) printf(" ___ \e[1B\e[5D|\e[91m\e[1m%s\e[22m\e[39m  |\e[1B\e[5D| \e[91m\e[1m%s\e[22m\e[39m |\e[1B\e[5D|__\e[91m\e[1m%s\e[22m\e[39m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf(" ___ \e[1B\e[5D|\e[91m\e[1m%s\e[22m\e[39m |\e[1B\e[5D| \e[91m\e[1m%s\e[22m\e[39m |\e[1B\e[5D|_\e[91m\e[1m%s\e[22m\e[39m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
 
         } else {
 
-            if(carta->valor_i != 10) printf(" ___ \e[1B\e[5D|%s  |\e[1B\e[5D| %s |\e[1B\e[5D|__%s|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
-            else printf(" ___ \e[1B\e[5D|%s |\e[1B\e[5D| %s |\e[1B\e[5D|_%s|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            if(carta->valor_i != 10) printf(" ___ \e[1B\e[5D|\e[1m%s\e[22m  |\e[1B\e[5D| \e[1m%s\e[22m |\e[1B\e[5D|__\e[1m%s\e[22m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf(" ___ \e[1B\e[5D|\e[1m%s\e[22m |\e[1B\e[5D| \e[1m%s\e[22m |\e[1B\e[5D|_\e[1m%s\e[22m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
         
         }
     }
