@@ -31,6 +31,14 @@ void inicializacao(opc *opcoes) {
 	        SetConsoleOutputCP(65001);
 	
 	}
+//Só pra linux --------------------------------------------------------------------------------------------------------
+#else
+#include <locale.h>
+
+    void linuxconfig() {
+        setlocale(LC_ALL, "pt_BR.UTF-8");
+    }
+
 #endif
 
 #endif

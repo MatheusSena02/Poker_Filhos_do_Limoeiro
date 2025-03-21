@@ -4,6 +4,7 @@
 #include <string.h>
 
 typedef struct {
+    int ID;
     int naipe; // ♥(0)[espadas], ♦(1)[ouros], ♠(2)[espadas], ♣(3)[paus]
     int valor_i; //1,2,3,4,5,6,7,8,9,10,11,12,13
     char valor_c[4]; //A,2,3,4,5,6,7,8,9,J,Q,K
@@ -72,8 +73,15 @@ int carta_setarvalor(tp_carta *carta, int valor) {
     return 1;
 }
 
+void baralho_inicializar(tp_carta *baralho) {
+    for(int i=0;i<52;i++){
+        baralho[i].naipe = (i/13);
+        carta_setarvalor(&baralho[i], ((i%13)+1));
+    }
+}
+
 void carta_printar(tp_carta *carta, int estiloCarta) {
-    char  simbolo_naipe[4][7] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
+    char  simbolo_naipe[4][8] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
     if (estiloCarta == 1) {
  
         if(carta->naipe == 0 || carta->naipe == 1) {

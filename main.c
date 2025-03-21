@@ -20,6 +20,8 @@ int main()
 	//Configura o console para windows (liga cores e outros caracteres)
     #ifdef _WIN32
 	windowsconfig();
+	#else
+	linuxconfig();
     #endif
 
     //////////////////////////// INICIALIZAÇÃO - ARQUIVOS - CONFIGURAÇÕES ////////////////////////////////
@@ -33,25 +35,19 @@ int main()
     programa_iniciar();
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
     
-	tp_carta baralho[53];
+	tp_carta baralho[52];
+	baralho_inicializar(baralho);
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     
-
-    baralho[0].naipe=0;
-    carta_setarvalor(&baralho[0],1);
-    baralho[1].naipe=1;
-    carta_setarvalor(&baralho[1],2);
-    baralho[2].naipe=2;
-    carta_setarvalor(&baralho[2],3);
-    baralho[3].naipe=3;
-    carta_setarvalor(&baralho[3],10);
     
-    carta_printar(&baralho[0],opcoes.estiloCarta);
-    carta_printar(&baralho[1],opcoes.estiloCarta);
-    carta_printar(&baralho[2],opcoes.estiloCarta);
-    carta_printar(&baralho[3],opcoes.estiloCarta);
-
+    for (int i=0;i<52;i++){
+        carta_printar(&baralho[i],opcoes.estiloCarta);
+        fflush(stdout);
+        if (i==12||i==25||i==38) printf("\e[5E");
+    }
+    
+    
 
 
 
