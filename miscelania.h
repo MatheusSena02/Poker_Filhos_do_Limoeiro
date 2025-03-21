@@ -62,7 +62,7 @@ int getch() {
 void programa_finalizar () {
     
     int input;
-    printf("Aperte F para encerrar o programaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAa\n");
+    printf("Aperte F para encerrar o programa\n");
     
     do {
         input=-1;
