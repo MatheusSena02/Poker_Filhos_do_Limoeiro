@@ -8,7 +8,7 @@
 #define PILHA_H
 //aq pra baixo é a biblioteca
 #include <stdio.h>
-#define MAX 100
+#define MAX 52
 //toca vez que encontrar o termo "MAX", troca pra 100;
 
 //seta o tipo de "tp_item", se vc mudar aq, toda a pilha muda o tipo

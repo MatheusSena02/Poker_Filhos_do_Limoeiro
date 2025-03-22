@@ -2,17 +2,18 @@
 #define CARTAS_H
 #include <stdio.h>
 #include <string.h>
+#include "pilha.h"
 
 typedef struct {
     int ID;
-    int naipe; // ♥(0)[espadas], ♦(1)[ouros], ♠(2)[espadas], ♣(3)[paus]
+    int naipe; // ♥(0)[copas], ♦(1)[ouros], ♠(2)[espadas], ♣(3)[paus]
     int valor_i; //1,2,3,4,5,6,7,8,9,10,11,12,13
     char valor_c[4]; //A,2,3,4,5,6,7,8,9,J,Q,K
 } tp_carta;
 
 int carta_setarvalor(tp_carta *carta, int valor) {
     // Seta o valor da carta atual do baralho para "valor".
-    // ele guarda o valor de 2 formas diferentes, uma em caractere (A,1 a 10, J, Q e K) e outra em int (1 a 13)
+    // ele guarda o valor de 2 formas diferentes, uma em caractere (A,2 a 10, J, Q e K) e outra em int (1 a 13)
     carta->valor_i = valor;
     switch (valor) {
         case 1:
@@ -77,6 +78,7 @@ void baralho_inicializar(tp_carta *baralho) {
     // Monta o baralho de forma organizada
     // Baralho precisa ser um vetor de struct tp_carta de tamanho 52
     for(int i=0;i<52;i++){
+        baralho[i].ID = (i+1);
         baralho[i].naipe = (i/13);
         carta_setarvalor(&baralho[i], ((i%13)+1));
     }
@@ -127,5 +129,59 @@ void baralho_printar (tp_carta *carta, int estiloCarta) {
         if (i==12||i==25||i==38) printf("\e[5E");
     }
 }
+
+
+int embaralhar_cartas(tp_pilha *baralhoJogo){
+    int cpf_carta, veri, gaveta[52], tam_gaveta=0;
+    pilha_inicializar(baralhoJogo);
+    for(int i=0;(!pilha_cheia(baralhoJogo));i++){
+        veri=0;
+        cpf_carta=aleatorio(0, 51);
+        if(i==0){
+            gaveta[0]=cpf_carta;
+            pilha_push(baralhoJogo,cpf_carta);
+            tam_gaveta++;
+        }
+        else{
+            for(int j=0;j<tam_gaveta;j++){
+                if(gaveta[j] == cpf_carta){
+                    veri = 1;
+                
+                }
+            }
+                
+            if(veri==0){
+                gaveta[i]=cpf_carta;
+                pilha_push(baralhoJogo,cpf_carta);
+                tam_gaveta++;
+            }
+            else{
+                if(veri==1){
+                    i-=1;    
+                }
+            }
+            
+        }
+    
+    
+    
+    
+    }    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif

@@ -6,10 +6,12 @@
 #include <unistd.h>
 
 //Bibliotecas próprias
-#include "arq.h"
+#include "arquivo.h"
 #include  "configs.h"
-#include "miscelania.h"
+#include "miscelanea.h"
 #include "cartas.h"
+#include "pilha.h"
+#include "jogador.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
@@ -35,14 +37,19 @@ int main()
     programa_iniciar();
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
     
+    int quant=jogador_escolherQuantidade();
+    tp_jogador jogador[quant];
+    
+    tp_pilha baralhoJogo;
 	tp_carta baralho[52];
 	baralho_inicializar(baralho);
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     
-    
-    baralho_printar(baralho,opcoes.estiloCarta);
-    
+    jogador_escolherNomes(jogador, quant);
+    //baralho_printar(baralho,opcoes.estiloCarta);
+    //embaralhar_cartas(&baralhoJogo);
+    //pilha_imprimir(baralhoJogo);
     
 
 

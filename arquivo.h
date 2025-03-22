@@ -1,5 +1,5 @@
-#ifndef ARQ_H
-#define ARQ_H
+#ifndef ARQUIVO_H
+#define ARQUIVO_H
 #include <stdio.h>
 #include <time.h>
 
