@@ -1,5 +1,5 @@
-#ifndef ARQ_H
-#define ARQ_H
+#ifndef ARQUIVO_H
+#define ARQUIVO_H
 #include <stdio.h>
 #include <time.h>
 
@@ -152,6 +152,7 @@ void arq_criarOpcoes () {
         fclose(arq);
     }
 }
+
 
 int arq_lerOpcoes (int *variavel, char scan[], char formato[]){
 // Função para obter valores para uma variável cujos valores estão dentro deu um opcoes.txt
