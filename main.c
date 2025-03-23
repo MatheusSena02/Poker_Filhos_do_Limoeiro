@@ -10,7 +10,7 @@
 #include "elementosvisuais.h"
 #include "arquivo.h"
 #include "cartas.h"
-#include  "configs.h"
+#include "configs.h"
 #include "pilha.h"
 #include "jogador.h"
 

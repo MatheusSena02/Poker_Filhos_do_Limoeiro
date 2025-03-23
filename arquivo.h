@@ -8,7 +8,7 @@ int str_iniciaCom(char stringA[],char stringB[]) {
 // EXEMPLO: str_iniciaCom("TesteEscrito","Teste")
     if(strncmp(stringA, stringB, strlen(stringB)) == 0 ) return 1; 
     else return 0;
-    
+
 }
 
 int arq_gerar(char principal[], char arqmontado[],int modo) {
@@ -17,53 +17,54 @@ int arq_gerar(char principal[], char arqmontado[],int modo) {
 // Modos de operação:
 // 1 -> gera o nome do arquivo sem nenhuma mudança
 // 2 -> gera o nome do arquivo considerando se o arquivo já existe. Se já existir o arquivo "exemplo.txt" será criado "exemplo1.txt"
-    
+
     // Modo 1
     if (modo==1) {
         sprintf(arqmontado,"%s.txt",principal);
         return 1;
     }
-    
+
     // Modo 2
     else if (modo==2) {
         int cont=0; char scont[20];
-        
+
         do {
             strcpy(arqmontado,principal);
-            
+
             if (cont>0) strcat(arqmontado,scont);
-            
+
             strcat(arqmontado,".txt");
-            
+
             cont++;
             sprintf(scont,"%d",cont);
-            
+
         } while ((fopen(arqmontado,"r") != NULL));
-		return 1;
+        return 1;
     }
-    
+
     else return 0;
-    
+
 }
 
 int arq_ler(int limite, char arq_nome[]) {
 // Função que lê todo um arquivo txt linha por linha
 // Recebe uma string que armazenará o conteúdo até o caractere [limite] da linha atual, do arquivo arq_nome.
-    
+
     char linha[limite+1];
     FILE *arquivo;
     arquivo=fopen(arq_nome,"r");
-    
+
     if (arquivo) {
         while  (fgets(linha, limite, arquivo) ) printf("%s",linha); 
         fclose(arquivo); 
         return 1;
-        
+
     } else return 0;
-    
+
 }
 
 void arq_obterData(char arq_nome[]) {
+    // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
     time_t agora = time(NULL);
     struct tm infoTempo;
     char buffer[20];  // Espaço para "DD-MM-YYYY-HH-MM-SS" + '\0'
@@ -88,10 +89,10 @@ void arq_obterData(char arq_nome[]) {
 
 int arq_gerarcData(char arq_nome[]) {
 //Função que coloca na string "arq_nome" uma string no formato DD-MM-YYYY-HH-MM-SS.txt e gera esse arquivo
-    
+
     arq_obterData(arq_nome);
     arq_gerar(arq_nome,arq_nome,1);
-    
+
     FILE *arquivo;
     arquivo=fopen(arq_nome,"a");
     if (arquivo) fclose(arquivo);
@@ -110,26 +111,26 @@ int arq_gerarcData(char arq_nome[]) {
 int arq_gerarCopia(char arq_nome[], char arq_nomeCopia[]) {
 // Função que copia arq_nome para o arq_nomeCopia, que é criado no modo write
 // Debug: caso debug seja 1, printfs de aviso e visualização dos resultados serão mostrados
-    
+
     int limite=300;
     char linha[limite+1];
-    
+
     FILE *arquivo;
     FILE *arquivo2;
     arquivo=fopen(arq_nome,"r");
     arquivo2=fopen(arq_nomeCopia,"w");
-    
+
     if (arquivo) {
         if (arquivo2) {
-            
+
             while  (fgets(linha, limite, arquivo) ) fprintf(arquivo2,"%s",linha); 
             fclose(arquivo); 
             fclose(arquivo2); 
-            
+
         } else return 0;
-        
+
     } else return 0;
-    
+
     return 1;
 }
 
@@ -145,10 +146,16 @@ void arq_criarOpcoes () {
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"debug = 0\n\n");
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
-        fprintf(arq,"// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\n");
+        fprintf(arq,"// Recomendação:  Windows ou OnlineGDB = 1 / Replit = 0\n");
+
+        #ifdef _WIN32
         fprintf(arq,"ModoDeSalvamento = 1\n\n");
-        fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows e é onde funciona normalmente\n");
-        fprintf(arq,"//-->Em sites que rodam Linux, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora\n");
+        #else
+        fprintf(arq,"ModoDeSalvamento = 0\n\n");
+        #endif
+
+        fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows, mas tem compatibilidade quase completa para LINUX\n");
+        fprintf(arq,"//-->Em sites que rodam LINUX, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora\n");
         fclose(arq);
     }
 }
@@ -183,7 +190,13 @@ int arq_verificarOpcoes () {
     else {
         printf(" - Gerando arquivos necessários - \n");
         arq_criarOpcoes();
-        printf(" Geração concluida, rode o programa novamente");
+        #ifdef _WIN32
+        printf("Ambiente Windows detectado, configurações padrão foram aplicadas\n");
+        #else
+        printf("\n=> Ambiente LINUX detectado, configurações recomendadas foram aplicadas\n");
+        printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
+        #endif
+        printf("\n Geração concluida, rode o programa novamente");
         return 0;
     }
     return 1;

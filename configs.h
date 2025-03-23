@@ -116,11 +116,13 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 }
 
 
+
 // Só pra windows -----------------------------------------------------------------------------------------------------
 #ifdef _WIN32
 #include <windows.h>
 
 	void windowsconfig() {
+		// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
 		//Configuração de Console pro Windows (Cores e ANSII Escape Code) ---------------------
 	        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	        DWORD dwMode = 0;
@@ -136,6 +138,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 #include <locale.h>
 
     void linuxconfig() {
+			// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
         setlocale(LC_ALL, "pt_BR.UTF-8");
     }
 
