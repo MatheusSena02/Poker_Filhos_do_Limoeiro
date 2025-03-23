@@ -57,7 +57,7 @@ int getch() {
 
 #endif
 }
-    
+
 void programa_finalizar () {
     
     int input;
@@ -67,7 +67,7 @@ void programa_finalizar () {
     do {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 102 && input != 70);
+    } while (input != 102);
 
 
 }
@@ -81,9 +81,8 @@ void programa_iniciar () {
     do {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 102 && input != 70);
+    } while (input != 102);
 
 }
-
 
 #endif

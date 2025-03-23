@@ -153,6 +153,7 @@ void arq_criarOpcoes () {
     }
 }
 
+
 int arq_lerOpcoes (int *variavel, char scan[], char formato[]){
 // Função para obter valores para uma variável cujos valores estão dentro deu um opcoes.txt
 // Parametros: end.de memória da variável cujo valor será obtido / string a ser comparada com a linha escaneada / formatação da string q a variável tá inserida

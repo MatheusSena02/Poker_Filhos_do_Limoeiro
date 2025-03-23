@@ -6,12 +6,14 @@
 #include <unistd.h>
 
 //Bibliotecas próprias
-#include "arquivo.h"
-#include  "configs.h"
 #include "miscelanea.h"
+#include "elementosvisuais.h"
+#include "arquivo.h"
 #include "cartas.h"
+#include  "configs.h"
 #include "pilha.h"
 #include "jogador.h"
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
@@ -35,22 +37,39 @@ int main()
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     inicializacao(&opcoes);
     programa_iniciar();
+    limparTela();
+
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
-    
-    int quant=jogador_escolherQuantidade();
-    tp_jogador jogador[quant];
-    
+    tp_cursor cursor;
+    cursor_zerarCursor(&cursor);
+    while(1) if (menuinicial_navegar(&cursor) > 0) break;
+
+    limparTela();
+
+    int quant,iniciarJogo,iniciarConfig;
+    //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
+
     tp_pilha baralhoJogo;
 	tp_carta baralho[52];
 	baralho_inicializar(baralho);
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
+
+    if(cursor.navegador==2) {
+        cursor_zerarCursor(&cursor);
+        while(1) if (config_navegar(&cursor,&opcoes,baralho)) break;
+
+    } else if (cursor.navegador==1) {
+
+        quant=jogador_escolherQuantidade();
+        tp_jogador jogador[quant];
     
-    jogador_escolherNomes(jogador, quant);
-    //baralho_printar(baralho,opcoes.estiloCarta);
-    //embaralhar_cartas(&baralhoJogo);
-    //pilha_imprimir(baralhoJogo);
-    
+        jogador_escolherNomes(jogador, quant);
+        //baralho_printar(baralho,opcoes.estiloCarta);
+        //embaralhar_cartas(&baralhoJogo);
+        //pilha_imprimir(baralhoJogo);
+
+    }
 
 
 
