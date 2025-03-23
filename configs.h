@@ -82,10 +82,12 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
     switch(input) {
         case 119:
         	if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
+			else cursor->navegador=(numeroDeOpcoes-1);
         break;
 
         case 115:
         	if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
+			else cursor->navegador=0;
         break;
 
         case 102:

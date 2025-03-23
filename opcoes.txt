@@ -9,7 +9,7 @@ debug = 0
 
 // Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )
 // Recomendação:  Windows / OnlineGDB = 1 / Replit = 0
-ModoDeSalvamento = 0
+ModoDeSalvamento = 1
 
 
 
