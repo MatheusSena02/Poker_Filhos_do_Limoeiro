@@ -71,6 +71,19 @@ void programa_finalizar () {
 
 }
 
+void programa_pausar () {
+    
+    int input;
+    printf("Aperte F para continuar...\n");
+    
+    do {
+        input=-1;
+		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102);
+
+
+}
+
 void programa_iniciar () {
     
     int input;

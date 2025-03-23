@@ -26,13 +26,14 @@ void arq_atualizarOpcoes (opc *opcoes) {
 }
 
 void config_inverter(int *a) {
+	//Inverte uma configuração/booleano entre 0 e 1
 	if (*a==1) *a=0;
 	else *a=1; 
 }
 
 void inicializacao(opc *opcoes) {
     //Definir Seed como Tempo
-    srand(time(0));
+    srand(time(NULL));
     //Obter variáveis guardadas em opcoes.txt
     arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d");
     arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d");
@@ -70,6 +71,12 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 }
 
 int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
+	//Função para permitir a navegação no menu de configuração usando W,S e F
+	// W = 119
+	// S = 115
+	// F = 102
+	// Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+	// O F serve pra confirmar a seleção
 	int numeroDeOpcoes=4;
 	config_impressao(opcoes,cursor->navegador,baralho);
 

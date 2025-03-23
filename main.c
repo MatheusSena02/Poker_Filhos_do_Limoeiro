@@ -13,6 +13,7 @@
 #include "configs.h"
 #include "pilha.h"
 #include "jogador.h"
+#include "extradebug.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +41,7 @@ int main()
     limparTela();
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
+
     tp_cursor cursor;
     cursor_zerarCursor(&cursor);
     while(1) if (menuinicial_navegar(&cursor) > 0) break;
@@ -50,24 +52,23 @@ int main()
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
     tp_pilha baralhoJogo;
-	tp_carta baralho[52];
-	baralho_inicializar(baralho);
-    
+	tp_carta baralhoReferencia[52];
+	baralhoReferencia_inicializar(baralhoReferencia);
+    baralho_embaralharPosicoes(&baralhoJogo);
+
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
 
     if(cursor.navegador==2) {
         cursor_zerarCursor(&cursor);
-        while(1) if (config_navegar(&cursor,&opcoes,baralho)) break;
+        while(1) if (config_navegar(&cursor,&opcoes,baralhoReferencia)) break;
 
     } else if (cursor.navegador==1) {
+        if (opcoes.debug) debug1(baralhoReferencia, opcoes, &baralhoJogo);
 
         quant=jogador_escolherQuantidade();
         tp_jogador jogador[quant];
     
         jogador_escolherNomes(jogador, quant);
-        //baralho_printar(baralho,opcoes.estiloCarta);
-        //embaralhar_cartas(&baralhoJogo);
-        //pilha_imprimir(baralhoJogo);
 
     }
 

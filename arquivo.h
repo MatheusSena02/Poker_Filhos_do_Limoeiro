@@ -197,6 +197,13 @@ int arq_verificarOpcoes () {
         printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
         #endif
         printf("\n Geração concluida, rode o programa novamente");
+        
+        printf("\nAperte qualquer tecla para encerrar o programa\n");
+    
+        //Função de detectar se algo for apertado [Função não autoral]
+        int input=-1;
+        while (input == -1) input = getch();
+
         return 0;
     }
     return 1;
