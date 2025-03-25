@@ -74,13 +74,13 @@ int carta_setarvalor(tp_carta *carta, int valor) {
     return 1;
 }
 
-void baralho_inicializar(tp_carta *baralho) {
+void baralhoReferencia_inicializar(tp_carta *baralhoReferencia) {
     // Monta o baralho de forma organizada
     // Baralho precisa ser um vetor de struct tp_carta de tamanho 52
     for(int i=0;i<52;i++){
-        baralho[i].ID = (i+1);
-        baralho[i].naipe = (i/13);
-        carta_setarvalor(&baralho[i], ((i%13)+1));
+        baralhoReferencia[i].ID = (i+1);
+        baralhoReferencia[i].naipe = (i/13);
+        carta_setarvalor(&baralhoReferencia[i], ((i%13)+1));
     }
 }
 
@@ -119,19 +119,32 @@ void carta_printar(tp_carta *carta, int estiloCarta) {
     printf("\e[3A\e[2C");
 }
 
-void baralho_printar (tp_carta *carta, int estiloCarta) {
+void baralhoReferencia_printar (tp_carta *baralhoOG, int estiloCarta) {
     //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralho
+    //Printa todo o baralho Referencia
     //Precisa receber um vetor do struct tp_carta, de tamanho 52
     for (int i=0;i<52;i++){
-        carta_printar(&carta[i],estiloCarta);
+        carta_printar(&baralhoOG[i],estiloCarta);
+        fflush(stdout);
+        if (i==12||i==25||i==38) printf("\e[5E");
+    }
+}
+
+void baralho_printar (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha baralhoJogo) {
+    //Provavelmente inútil para o funcionamente do jogo
+    //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo
+    //Precisa receber um vetor do struct tp_carta, de tamanho 52, a configuração opcoes->EstiloCarta e a pilha que contém o embaralhamento de posições
+    tp_item cartaPos;
+    for (int i=0;!pilha_vazia(&baralhoJogo);i++){
+        pilha_pop(&baralhoJogo,&cartaPos);
+        carta_printar(&baralhoReferencia[cartaPos],estiloCarta);
         fflush(stdout);
         if (i==12||i==25||i==38) printf("\e[5E");
     }
 }
 
 
-int embaralhar_cartas(tp_pilha *baralhoJogo){
+int baralho_embaralharPosicoes(tp_pilha *baralhoJogo){
     int cpf_carta, veri, gaveta[52], tam_gaveta=0;
     pilha_inicializar(baralhoJogo);
     for(int i=0;(!pilha_cheia(baralhoJogo));i++){

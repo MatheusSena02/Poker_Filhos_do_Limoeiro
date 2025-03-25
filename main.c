@@ -10,9 +10,10 @@
 #include "elementosvisuais.h"
 #include "arquivo.h"
 #include "cartas.h"
-#include  "configs.h"
+#include "configs.h"
 #include "pilha.h"
 #include "jogador.h"
+#include "extradebug.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,44 +33,52 @@ int main()
     
 	//Variáveis das configurações -> opcoes.txt
     opc opcoes;
-    //Verifica se o opcoes.txt já foi criadof
-    if (!arq_verificarOpcoes()) return 10;
-    //Obter variáveis guardadas em opcoes.txt e inicializa srand
-    inicializacao(&opcoes);
-    programa_iniciar();
+    //Verifica se o opcoes.txt já foi criado, se não foi, tenta criá-lo
+    arq_verificarOpcoes();
     limparTela();
+    //Obter variáveis guardadas em opcoes.txt e inicializa srand
+    config_inicializacao(&opcoes);
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
-    tp_cursor cursor;
-    cursor_zerarCursor(&cursor);
-    while(1) if (menuinicial_navegar(&cursor) > 0) break;
-
-    limparTela();
 
     int quant,iniciarJogo,iniciarConfig;
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
     tp_pilha baralhoJogo;
-	tp_carta baralho[52];
-	baralho_inicializar(baralho);
+	tp_carta baralhoReferencia[52];
+
+    tp_cursor cursor;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
 
-    if(cursor.navegador==2) {
+	baralhoReferencia_inicializar(baralhoReferencia);
+    baralho_embaralharPosicoes(&baralhoJogo);
+
+
+    do {
+        programa_iniciar();
+        limparTela();
+
         cursor_zerarCursor(&cursor);
-        while(1) if (config_navegar(&cursor,&opcoes,baralho)) break;
+        while(1) if (menuinicial_navegar(&cursor) > 0) break;
 
-    } else if (cursor.navegador==1) {
+        limparTela();
 
-        quant=jogador_escolherQuantidade();
-        tp_jogador jogador[quant];
+        if(cursor.navegador==2) {
+            cursor_zerarCursor(&cursor);
+            while(1) if (config_navegar(&cursor,&opcoes,baralhoReferencia)) break;
+            limparTela();
     
-        jogador_escolherNomes(jogador, quant);
-        //baralho_printar(baralho,opcoes.estiloCarta);
-        //embaralhar_cartas(&baralhoJogo);
-        //pilha_imprimir(baralhoJogo);
+        } 
 
-    }
+    } while (cursor.navegador!=1);
+
+    if (opcoes.debug) debug1(baralhoReferencia, opcoes, &baralhoJogo);
+    
+    quant=jogador_escolherQuantidade();
+    tp_jogador jogador[quant];
+    
+    jogador_escolherNomes(jogador, quant);
 
 
 

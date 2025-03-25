@@ -26,17 +26,23 @@ void arq_atualizarOpcoes (opc *opcoes) {
 }
 
 void config_inverter(int *a) {
+	//Inverte uma configuração/booleano entre 0 e 1
 	if (*a==1) *a=0;
 	else *a=1; 
 }
 
-void inicializacao(opc *opcoes) {
+void config_inicializacao(opc *opcoes) {
     //Definir Seed como Tempo
-    srand(time(0));
+    srand(time(NULL));
     //Obter variáveis guardadas em opcoes.txt
-    arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d");
-    arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d");
-    arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d");
+    if (!arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d")) opcoes->debug = 0;
+    if (!arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d")) opcoes->estiloCarta = 1;
+
+	#ifdef _WIN32
+    if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 1;
+	#else
+	if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 0;
+	#endif
 }
 
 void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
@@ -66,10 +72,16 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("\e[33m// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\e[39m\n\n");
 	printf("===================================================================\n\n");
 
-	printf("\n\n\e[%dmFechar o programa e salvar configurações\e[39m\n",cor[3]);
+	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[3]);
 }
 
 int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
+	//Função para permitir a navegação no menu de configuração usando W,S e F
+	// W = 119
+	// S = 115
+	// F = 102
+	// Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+	// O F serve pra confirmar a seleção
 	int numeroDeOpcoes=4;
 	config_impressao(opcoes,cursor->navegador,baralho);
 
@@ -82,10 +94,12 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
     switch(input) {
         case 119:
         	if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
+			else cursor->navegador=(numeroDeOpcoes-1);
         break;
 
         case 115:
         	if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
+			else cursor->navegador=0;
         break;
 
         case 102:
@@ -114,11 +128,13 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 }
 
 
+
 // Só pra windows -----------------------------------------------------------------------------------------------------
 #ifdef _WIN32
 #include <windows.h>
 
 	void windowsconfig() {
+		// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
 		//Configuração de Console pro Windows (Cores e ANSII Escape Code) ---------------------
 	        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	        DWORD dwMode = 0;
@@ -134,6 +150,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 #include <locale.h>
 
     void linuxconfig() {
+			// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
         setlocale(LC_ALL, "pt_BR.UTF-8");
     }
 

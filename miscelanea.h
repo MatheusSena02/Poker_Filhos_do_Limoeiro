@@ -22,10 +22,12 @@ int aleatorio(int min, int max) {
 
 void limparTela() {
 //Funciona tipo um system("clear") mas com ANSII Escape Code
+//Vai funcionar tanto em LINUX (replit) quanto em WINDOWS
     printf("\x1b[H\x1b[0J\x1b[H");
 }
     
 int getch() {
+// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
 //Serve pra ler um input do usuário sem esperar pelo enter
 // Como usar no windows e linux (dessa forma pega nos 2):     while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
 
@@ -40,17 +42,14 @@ int getch() {
     struct termios oldAttr, newAttr;
     int ch;
 
-    // Obtém os atributos atuais do terminal
     tcgetattr(STDIN_FILENO, &oldAttr);
     newAttr = oldAttr;
     
-    // Desabilita o modo canônico (entrada bufferizada) e o eco
     newAttr.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newAttr);
 
     ch = getchar();
 
-    // Restaura as configurações originais do terminal
     tcsetattr(STDIN_FILENO, TCSANOW, &oldAttr);
     
     return ch;
@@ -63,6 +62,19 @@ void programa_finalizar () {
     int input;
     printf("\e[65;0H");
     printf("Aperte F para encerrar o programa\n");
+    
+    do {
+        input=-1;
+		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102);
+
+
+}
+
+void programa_pausar () {
+    
+    int input;
+    printf("Aperte F para continuar...\n");
     
     do {
         input=-1;

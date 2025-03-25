@@ -5,11 +5,11 @@ EstiloCarta = 1
 
 //Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )
 // Simples -> prinfs de avisos e monitoramento
-debug = 0
+debug = 1
 
 // Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )
 // Recomendação:  Windows / OnlineGDB = 1 / Replit = 0
-ModoDeSalvamento = 0
+ModoDeSalvamento = 1
 
 
 
