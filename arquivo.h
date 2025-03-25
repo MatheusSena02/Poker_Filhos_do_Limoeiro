@@ -134,7 +134,7 @@ int arq_gerarCopia(char arq_nome[], char arq_nomeCopia[]) {
     return 1;
 }
 
-void arq_criarOpcoes () {
+int arq_criarOpcoes () {
 // Função para gerar o conteudo de opcoes.txt
     FILE *arq;
     arq=fopen("opcoes.txt","w");
@@ -157,7 +157,9 @@ void arq_criarOpcoes () {
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows, mas tem compatibilidade quase completa para LINUX\n");
         fprintf(arq,"//-->Em sites que rodam LINUX, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora\n");
         fclose(arq);
+        return 1;
     }
+    else return 0;
 }
 
 
@@ -176,35 +178,51 @@ int arq_lerOpcoes (int *variavel, char scan[], char formato[]){
             }
         }
     } else {
-        printf("Erro na abertura de arquivo\n");
-        return 1;
+        printf("Erro na abertura de arquivo opcoes.txt\n");
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 int arq_verificarOpcoes () {
 //Função que verifica se opcoes.txt já foi criado. Se sim, retorna 0, se não, retorna 1
     FILE *arq;
     arq=fopen("opcoes.txt","r");
-    if (arq);
-    else {
-        printf(" - Gerando arquivos necessários - \n");
-        arq_criarOpcoes();
-        #ifdef _WIN32
-        printf("Ambiente Windows detectado, configurações padrão foram aplicadas\n");
-        #else
-        printf("\n=> Ambiente LINUX detectado, configurações recomendadas foram aplicadas\n");
-        printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
-        #endif
-        printf("\n Geração concluida, rode o programa novamente");
-        
-        printf("\nAperte qualquer tecla para encerrar o programa\n");
-    
-        //Função de detectar se algo for apertado [Função não autoral]
-        int input=-1;
-        while (input == -1) input = getch();
+    if (!arq) {
 
-        return 0;
+        printf(" - Gerando arquivos necessários - \n");
+        if (arq_criarOpcoes()) {
+            #ifdef _WIN32
+            printf("Ambiente Windows detectado, configurações padrão foram aplicadas\n");
+            #else
+            printf("\n=> Ambiente LINUX detectado, configurações recomendadas foram aplicadas\n");
+            printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
+            #endif
+            printf("\n Geração concluida\n");
+            
+            printf("\nAperte qualquer tecla para iniciar o programa\n");
+        
+            //Função de detectar se algo for apertado [Função não autoral]
+            int input=-1;
+            while (input == -1) input = getch();
+
+            return 0;
+        } else {
+            printf("->Falha na geração de arquivo\n");
+            printf("O programa ainda poderá ser rodado, mas nenhuma informação poderá ser salva em arquivo.\n\n");
+
+            #ifdef _WIN32
+            printf("Ambiente Windows detectado, configurações padrão foram aplicadas\n");
+            #else
+            printf("\n=> Ambiente LINUX detectado, configurações recomendadas foram aplicadas\n");
+            printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
+            #endif
+
+            printf("\nAperte qualquer tecla para iniciar o programa\n");
+            //Função de detectar se algo for apertado [Função não autoral]
+            int input=-1;
+            while (input == -1) input = getch();
+        }
     }
     return 1;
 }

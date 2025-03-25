@@ -31,13 +31,18 @@ void config_inverter(int *a) {
 	else *a=1; 
 }
 
-void inicializacao(opc *opcoes) {
+void config_inicializacao(opc *opcoes) {
     //Definir Seed como Tempo
     srand(time(NULL));
     //Obter variáveis guardadas em opcoes.txt
-    arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d");
-    arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d");
-    arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d");
+    if (!arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d")) opcoes->debug = 0;
+    if (!arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d")) opcoes->estiloCarta = 1;
+
+	#ifdef _WIN32
+    if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 1;
+	#else
+	if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 0;
+	#endif
 }
 
 void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
@@ -67,7 +72,7 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("\e[33m// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\e[39m\n\n");
 	printf("===================================================================\n\n");
 
-	printf("\n\n\e[%dmFechar o programa e salvar configurações\e[39m\n",cor[3]);
+	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[3]);
 }
 
 int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
