@@ -79,6 +79,7 @@ int main()
     tp_jogador jogador[quant];
     
     jogador_escolherNomes(jogador, quant);
+    jogador_cadastrado(jogador, quant);
 
 
 
