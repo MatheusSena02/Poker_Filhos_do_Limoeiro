@@ -95,10 +95,14 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                               JOGADORES CADASTRADOS                               \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\e[%dm",jogador[0].cor);
             printf("  Jogador [1]: %s\n",jogador[0].nome);
+            printf("\e[39m");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("\e[H\e[8E\e[36C");
+            printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[36C");
 
         break;
@@ -135,13 +139,20 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                               JOGADORES CADASTRADOS                               \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\e[%dm",jogador[0].cor);
             printf("  Jogador [1]: %s\n",jogador[0].nome);
+            printf("\e[%dm",jogador[1].cor);
             printf("  Jogador [2]: %s\n",jogador[1].nome);
+            printf("\e[39m");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("\e[H\e[8E\e[24C");
+            printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[36C");
+            printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
+            printf("\e[39m");
             printf("\e[H\e[8E\e[49C");
             
         break;
@@ -178,16 +189,26 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                               JOGADORES CADASTRADOS                               \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\e[%dm",jogador[0].cor);
             printf("  Jogador [1]: %s\n",jogador[0].nome);
+            printf("\e[%dm",jogador[1].cor);
             printf("  Jogador [2]: %s\n",jogador[1].nome);
+            printf("\e[%dm",jogador[2].cor);
             printf("  Jogador [3]: %s\n",jogador[2].nome);
+            printf("\e[39m");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("\e[H\e[8E\e[24C");
+            printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[24C");
+            printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
+            printf("\e[39m");
             printf("\e[H\e[8E\e[49C");
+            printf("\e[%dm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[49C");
         break;
         
@@ -223,19 +244,32 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                               JOGADORES CADASTRADOS                               \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\e[%dm",jogador[0].cor);
             printf("  Jogador [1]: %s\n",jogador[0].nome);
+            printf("\e[%dm",jogador[1].cor);
             printf("  Jogador [2]: %s\n",jogador[1].nome);
+            printf("\e[%dm",jogador[2].cor);
             printf("  Jogador [3]: %s\n",jogador[2].nome);
+            printf("\e[%dm",jogador[3].cor);
             printf("  Jogador [4]: %s\n",jogador[3].nome);
+            printf("\e[39m");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("\e[H\e[8E\e[17C");
+            printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[24C");
+            printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
+            printf("\e[39m");
             printf("\e[H\e[8E\e[36C");
+            printf("\e[%dm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[49C");
+            printf("\e[%dm",jogador[3].cor);
             printf("%.11s",jogador[3].nome);
+            printf("\e[39m");
             printf("\e[H\e[8E\e[55C");
         break;
         
@@ -271,22 +305,38 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                               JOGADORES CADASTRADOS                               \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\e[%dm",jogador[0].cor);
             printf("  Jogador [1]: %s\n",jogador[0].nome);
+            printf("\e[%dm",jogador[1].cor);
             printf("  Jogador [2]: %s\n",jogador[1].nome);
+            printf("\e[%dm",jogador[2].cor);
             printf("  Jogador [3]: %s\n",jogador[2].nome);
+            printf("\e[%dm",jogador[3].cor);
             printf("  Jogador [4]: %s\n",jogador[3].nome);
+            printf("\e[%dm",jogador[4].cor);
             printf("  Jogador [5]: %s\n",jogador[4].nome);
+            printf("\e[39m");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("\e[H\e[8E\e[17C");
+            printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[17C");
+            printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
+            printf("\e[39m");
             printf("\e[H\e[8E\e[36C");
+            printf("\e[%dm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[36C");
+            printf("\e[%dm",jogador[3].cor);
             printf("%.11s",jogador[3].nome);
+            printf("\e[39m");
             printf("\e[H\e[8E\e[55C");
+            printf("\e[%dm",jogador[4].cor);
             printf("%.11s",jogador[4].nome);
+            printf("\e[39m");
             printf("\e[H\e[21E\e[55C");
         break;
     }
@@ -297,33 +347,37 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
 
     for(int i=0;i<quant;i++){
         limparTela();
-        jogador_cadastroImpressao(jogador,(i+1));
-        scanf(" %[^\n]s",jogador[i].nome);
+
         switch(cont){
             case 0:
-            jogador[i].cor=41;
+            jogador[i].cor=31;
             break;
 
             case 1:
-            jogador[i].cor=42;
+            jogador[i].cor=32;
             break;
 
             case 2:
-            jogador[i].cor=43;
+            jogador[i].cor=33;
             break;
 
             case 3:
-            jogador[i].cor=44;
+            jogador[i].cor=34;
             break;
 
             case 4:
-            jogador[i].cor=45;
+            jogador[i].cor=35;
             break;
 
             case 5:
-            jogador[i].cor=46;
+            jogador[i].cor=36;
             break;
         }
+
+        jogador_cadastroImpressao(jogador,(i+1));
+        printf("\e[%dm",jogador[i].cor);
+        scanf(" %[^\n]s",jogador[i].nome);
+        printf("\e[39m");
         cont++;
     }
     limparTela();
@@ -331,7 +385,9 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
     printf("                          TODOS OS JOGADORES CADASTRADOS                           \n");
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
     for (int i=0; i<quant;i++) {
+        printf("\e[%dm",jogador[i].cor);
         printf("  Jogador [%d]: %s\n",i+1,jogador[i].nome);
+        printf("\e[39m");
     }
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
