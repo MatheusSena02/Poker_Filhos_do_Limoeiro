@@ -385,7 +385,9 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
     printf("                          TODOS OS JOGADORES CADASTRADOS                           \n");
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
     for (int i=0; i<quant;i++) {
+        printf("\e[%dm",jogador[i].cor);
         printf("  Jogador [%d]: %s\n",i+1,jogador[i].nome);
+        printf("\e[39m");
     }
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
