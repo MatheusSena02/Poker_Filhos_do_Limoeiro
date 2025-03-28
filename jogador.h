@@ -6,10 +6,10 @@
 typedef struct{
     int ID;
     char nome[30];
+    int cor;
 }tp_jogador;
 
 int jogador_escolherQuantidade(){
-    
     int quant=0, check=0;
     
     printf("Digite a quantidade de jogadores(2-6): \n");
@@ -22,31 +22,15 @@ int jogador_escolherQuantidade(){
         scanf("%d", &quant);
         if(quant>=2 && quant<=6) break;
     }
-
     return quant;
 }
 
-void jogador_escolherNomes(tp_jogador jogador[],int quant){
-    
-
-
-    
-
-
-
-    for(int i=0;i<quant;i++){
-        printf("Jogador[%d]: %s\n", i+1,jogador[i].nome);
-        scanf("%s",jogador[i].nome);
-    }
-}
-
-
-void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
+void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
     switch(player) {
 
         case 1:
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            printf("                            INFORME O NOME DOS JOGADORES                           \n");
+            printf("                                 INSIRA O JOGADOR 1                                \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -76,11 +60,12 @@ void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                               JOGADORES CADASTRADOS                               \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\e[H\e[8E\e[35C");
         break;
 
         case 2:
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            printf("                            INFORME O NOME DOS JOGADORES                           \n");
+            printf("                                 INSIRA O JOGADOR 2                                \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -114,7 +99,7 @@ void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
 
         case 3:
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            printf("                            INFORME O NOME DOS JOGADORES                           \n");
+            printf("                                 INSIRA O JOGADOR 3                                \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -148,7 +133,7 @@ void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
 
         case 4:
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            printf("                            INFORME O NOME DOS JOGADORES                           \n");
+            printf("                                 INSIRA O JOGADOR 4                                \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -182,7 +167,7 @@ void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
         
         case 5:
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            printf("                            INFORME O NOME DOS JOGADORES                           \n");
+            printf("                                 INSIRA O JOGADOR 5                                \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -216,7 +201,7 @@ void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
         
         case 6:
             printf("-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            printf("                            INFORME O NOME DOS JOGADORES                           \n");
+            printf("                                 INSIRA O JOGADOR 6                                \n");
             printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -250,5 +235,41 @@ void jogador_cadastrado(tp_jogador jogador[], int quant,int player) {
     }
 }
 
+void jogador_escolherNomes(tp_jogador jogador[],int quant){
+    int cont=0;
+
+    printf("quantidade: %d\n",quant);
+    for(int i=0;i<quant;i++){
+        jogador_cadastroImpressao(jogador,(i+1));
+        scanf(" %s",jogador[i].nome);
+        switch(cont){
+            case 0:
+            jogador[i].cor=41;
+            break;
+
+            case 1:
+            jogador[i].cor=42;
+            break;
+
+            case 2:
+            jogador[i].cor=43;
+            break;
+
+            case 3:
+            jogador[i].cor=44;
+            break;
+
+            case 4:
+            jogador[i].cor=45;
+            break;
+
+            case 5:
+            jogador[i].cor=46;
+            break;
+        }
+        limparTela();
+        cont++;
+    }
+}
 
 #endif
