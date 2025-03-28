@@ -111,7 +111,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[36C");
+            printf("\e[H\e[25E\e[36C");
 
         break;
 
@@ -161,7 +161,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[36C");
+            printf("\e[H\e[25E\e[36C");
             printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -217,7 +217,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[24C");
+            printf("\e[H\e[25E\e[24C");
             printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -225,7 +225,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[49C");
+            printf("\e[H\e[25E\e[49C");
         break;
         
         case 5:
@@ -277,7 +277,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[24C");
+            printf("\e[H\e[25E\e[24C");
             printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -285,7 +285,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[49C");
+            printf("\e[H\e[25E\e[49C");
             printf("\e[%dm",jogador[3].cor);
             printf("%.11s",jogador[3].nome);
             printf("\e[39m");
@@ -344,7 +344,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[17C");
+            printf("\e[H\e[25E\e[17C");
             printf("\e[%dm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -352,7 +352,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[36C");
+            printf("\e[H\e[25E\e[36C");
             printf("\e[%dm",jogador[3].cor);
             printf("%.11s",jogador[3].nome);
             printf("\e[39m");
@@ -360,7 +360,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%dm",jogador[4].cor);
             printf("%.11s",jogador[4].nome);
             printf("\e[39m");
-            printf("\e[H\e[21E\e[55C");
+            printf("\e[H\e[25E\e[55C");
         break;
     }
 }

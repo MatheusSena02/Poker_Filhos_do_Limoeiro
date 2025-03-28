@@ -87,6 +87,7 @@ void programa_pausar () {
 void programa_iniciar () {
     
     int input;
+    printf("Se possível, use a resolução 1680 x 720p\n");
     printf("Por favor coloque o programa em tela cheia\n");
     printf("Aperte F para continuar\n");
     
