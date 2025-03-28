@@ -23,7 +23,7 @@ int aleatorio(int min, int max) {
 void limparTela() {
 //Funciona tipo um system("clear") mas com ANSII Escape Code
 //Vai funcionar tanto em LINUX (replit) quanto em WINDOWS
-    printf("\x1b[H\x1b[0J\x1b[H");
+    printf("\e[H\e[0J\e[H");
 }
     
 int getch() {

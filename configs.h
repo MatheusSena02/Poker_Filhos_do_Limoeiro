@@ -46,6 +46,7 @@ void config_inicializacao(opc *opcoes) {
 }
 
 void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
+	//Imprime o menu de configuração
 	limparTela();
 	int cor[4]={39,39,39,39};
 	cor[pos] = 31;
@@ -82,6 +83,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 	// F = 102
 	// Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
 	// O F serve pra confirmar a seleção
+	// A posição 0 é a mais alta
 	int numeroDeOpcoes=4;
 	config_impressao(opcoes,cursor->navegador,baralho);
 

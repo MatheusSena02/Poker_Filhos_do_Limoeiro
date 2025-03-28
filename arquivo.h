@@ -64,6 +64,8 @@ int arq_ler(int limite, char arq_nome[]) {
 }
 
 void arq_obterData(char arq_nome[]) {
+    // Ele retorna em arq_nome DD-MM-YYYY-HH-MM-SS
+
     // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
     time_t agora = time(NULL);
     struct tm infoTempo;
