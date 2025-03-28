@@ -71,7 +71,7 @@ int menuinicial_navegar (tp_cursor *cursor) {
     do {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 119 && input != 115 && input != 102);
+    } while (input != 119 && input != 115 && input != 102); //119 = W / 115 = S / 192 - F
 
     switch(input) {
         case 119:
