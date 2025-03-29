@@ -75,7 +75,7 @@ int main()
     if (opcoes.debug) debug1(baralhoReferencia, opcoes, &baralhoJogo);
     
     quant=jogador_escolherQuantidade();
-    tp_jogador jogador[6];
+    tp_jogador jogador[quant];
     
     jogador_escolherNomes(jogador, quant);
     programa_pausar();
