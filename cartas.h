@@ -84,7 +84,7 @@ void baralhoReferencia_inicializar(tp_carta *baralhoReferencia) {
     }
 }
 
-void carta_printar(tp_carta *carta, int estiloCarta) {
+void carta_printarP(tp_carta *carta, int estiloCarta) {
     // Printa a carta dada, de acordo com o estilo selecionado 
     char  simbolo_naipe[4][8] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
     if (estiloCarta == 1) {
@@ -118,30 +118,90 @@ void carta_printar(tp_carta *carta, int estiloCarta) {
         }
     }
 
-    printf("\e[3A\e[2C");
+    printf("\e[3A\e[1C");
 }
 
-void baralhoReferencia_printar (tp_carta *baralhoOG, int estiloCarta) {
+void carta_printarG(tp_carta *carta, int estiloCarta) {
+    // Printa a carta dada, de acordo com o estilo selecionado 
+    char  simbolo_naipe[4][8] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
+    if (estiloCarta == 1) {
+        //Printa o estilo 1
+ 
+        if(carta->naipe == 0 || carta->naipe == 1) {
+            //Para as cartas de naipe vermelho
+            if(carta->valor_i != 10) printf("         \e[1B\e[9D\e[107m\e[91m         \e[1B\e[9D  %s      \e[1B\e[9D         \e[1B\e[9D    %s    \e[1B\e[9D         \e[1B\e[9D      %s  \e[1B\e[9D         \e[49m\e[39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf("         \e[1B\e[9D\e[107m\e[91m         \e[1B\e[9D %s      \e[1B\e[9D         \e[1B\e[9D    %s    \e[1B\e[9D         \e[1B\e[9D      %s \e[1B\e[9D         \e[49m\e[39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+    
+        } else {
+            //Para as cartas de naipe preto
+            if(carta->valor_i != 10) printf("         \e[1B\e[9D\e[107m\e[30m         \e[1B\e[9D  %s      \e[1B\e[9D         \e[1B\e[9D    %s    \e[1B\e[9D         \e[1B\e[9D      %s  \e[1B\e[9D         \e[49m\e[39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf("         \e[1B\e[9D\e[107m\e[30m         \e[1B\e[9D %s      \e[1B\e[9D         \e[1B\e[9D    %s    \e[1B\e[9D         \e[1B\e[9D      %s \e[1B\e[9D         \e[49m\e[39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+        }
+
+    } else {
+        //Printa o estilo 0
+
+        if(carta->naipe == 0 || carta->naipe == 1) {
+            //Para as cartas de naipe vermelho
+            if(carta->valor_i != 10) printf(" _______ \e[1B\e[9D|       |\e[1B\e[9D| \e[91m%s\e[39m     |\e[1B\e[9D|       |\e[1B\e[9D|   \e[91m%s\e[39m   |\e[1B\e[9D|       |\e[1B\e[9D|     \e[91m%s\e[39m |\e[1B\e[9D|_______|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf(" _______ \e[1B\e[9D|       |\e[1B\e[9D|\e[91m%s\e[39m     |\e[1B\e[9D|       |\e[1B\e[9D|   \e[91m%s\e[39m   |\e[1B\e[9D|       |\e[1B\e[9D|     \e[91m%s\e[39m|\e[1B\e[9D|_______|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+
+        } else {
+            //Para as cartas de naipe preto
+            if(carta->valor_i != 10) printf(" _______ \e[1B\e[9D|       |\e[1B\e[9D| %s     |\e[1B\e[9D|       |\e[1B\e[9D|   %s   |\e[1B\e[9D|       |\e[1B\e[9D|     %s |\e[1B\e[9D|_______|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+            else printf(" _______ \e[1B\e[9D|       |\e[1B\e[9D|%s     |\e[1B\e[9D|       |\e[1B\e[9D|   %s   |\e[1B\e[9D|       |\e[1B\e[9D|     %s|\e[1B\e[9D|_______|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
+        
+        }
+    }
+
+    printf("\e[7A\e[1C");
+}
+
+void baralhoReferencia_printarP (tp_carta *baralhoReferencia, int estiloCarta) {
     //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralho Referencia
+    //Printa todo o baralho Referencia usando cartas pequenas
     //Precisa receber um vetor do struct tp_carta, de tamanho 52
     for (int i=0;i<52;i++){
-        carta_printar(&baralhoOG[i],estiloCarta);
+        carta_printarP(&baralhoReferencia[i],estiloCarta);
         fflush(stdout);
-        if (i==12||i==25||i==38) printf("\e[5E");
+        if (i==12||i==25||i==38||i==51) printf("\e[5E");
     }
 }
 
-void baralho_printar (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha baralhoJogo) {
+void baralhoReferencia_printarG (tp_carta *baralhoReferencia, int estiloCarta) {
     //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo
+    //Printa todo o baralho Referencia usando cartas grandes
+    //Precisa receber um vetor do struct tp_carta, de tamanho 52
+    for (int i=0;i<52;i++){
+        carta_printarG(&baralhoReferencia[i],estiloCarta);
+        fflush(stdout);
+        if (i==12||i==25||i==38||i==51) printf("\e[8E");
+    }
+}
+
+void baralho_printarP (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha baralhoJogo) {
+    //Provavelmente inútil para o funcionamente do jogo
+    //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo usando cartas pequenas
     //Precisa receber um vetor do struct tp_carta, de tamanho 52, a configuração opcoes->EstiloCarta e a pilha que contém o embaralhamento de posições
     tp_item cartaPos;
     for (int i=0;!pilha_vazia(&baralhoJogo);i++){
         pilha_pop(&baralhoJogo,&cartaPos);
-        carta_printar(&baralhoReferencia[cartaPos],estiloCarta);
+        carta_printarP(&baralhoReferencia[cartaPos],estiloCarta);
         fflush(stdout);
-        if (i==12||i==25||i==38) printf("\e[5E");
+        if (i==12||i==25||i==38||i==51) printf("\e[5E");
+    }
+}
+
+void baralho_printarG (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha baralhoJogo) {
+    //Provavelmente inútil para o funcionamente do jogo
+    //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo usando cartas grandes
+    //Precisa receber um vetor do struct tp_carta, de tamanho 52, a configuração opcoes->EstiloCarta e a pilha que contém o embaralhamento de posições
+    tp_item cartaPos;
+    for (int i=0;!pilha_vazia(&baralhoJogo);i++){
+        pilha_pop(&baralhoJogo,&cartaPos);
+        carta_printarG(&baralhoReferencia[cartaPos],estiloCarta);
+        fflush(stdout);
+        if (i==12||i==25||i==38||i==51) printf("\e[8E");
     }
 }
 
