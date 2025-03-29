@@ -4,11 +4,11 @@
 #include <time.h>
 
 //pro getch
-#include <unistd.h>
 #ifdef _WIN32
 #include <conio.h>
 #else
 #include <termios.h>
+#include <unistd.h>
 #endif
 
 

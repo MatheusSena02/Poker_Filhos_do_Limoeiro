@@ -3,7 +3,6 @@
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 //Bibliotecas próprias
 #include "miscelanea.h"
@@ -76,7 +75,7 @@ int main()
     if (opcoes.debug) debug1(baralhoReferencia, opcoes, &baralhoJogo);
     
     quant=jogador_escolherQuantidade();
-    tp_jogador jogador[quant];
+    tp_jogador jogador[6];
     
     jogador_escolherNomes(jogador, quant);
     programa_pausar();
