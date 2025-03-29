@@ -88,28 +88,30 @@ void carta_printar(tp_carta *carta, int estiloCarta) {
     // Printa a carta dada, de acordo com o estilo selecionado 
     char  simbolo_naipe[4][8] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
     if (estiloCarta == 1) {
+        //Printa o estilo 1
  
         if(carta->naipe == 0 || carta->naipe == 1) {
-
+            //Para as cartas de naipe vermelho
             if(carta->valor_i != 10) printf("     \e[1B\e[5D\e[107;30m\e[31m\e[1m%s\e[22m\e[39m    \e[1B\e[5D  \e[31m\e[1m%s\e[22m\e[39m  \e[1B\e[5D    \e[31m\e[1m%s\e[22m\e[39m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
             else printf("     \e[1B\e[5D\e[107;30m\e[31m\e[1m%s\e[22m\e[39m   \e[1B\e[5D  \e[31m\e[1m%s\e[22m\e[39m  \e[1B\e[5D   \e[31m\e[1m%s\e[22m\e[39m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
     
         } else {
-    
+            //Para as cartas de naipe preto
             if(carta->valor_i != 10) printf("     \e[1B\e[5D\e[107;30m\e[1m%s\e[22m    \e[1B\e[5D  \e[1m%s\e[22m  \e[1B\e[5D    \e[1m%s\e[22m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
             else printf("     \e[1B\e[5D\e[107;30m\e[1m%s\e[22m   \e[1B\e[5D  \e[1m%s\e[22m  \e[1B\e[5D   \e[1m%s\e[22m\e[49;39m",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
     
         }
 
     } else {
+        //Printa o estilo 0
 
         if(carta->naipe == 0 || carta->naipe == 1) {
-
+            //Para as cartas de naipe vermelho
             if(carta->valor_i != 10) printf(" ___ \e[1B\e[5D|\e[91m\e[1m%s\e[22m\e[39m  |\e[1B\e[5D| \e[91m\e[1m%s\e[22m\e[39m |\e[1B\e[5D|__\e[91m\e[1m%s\e[22m\e[39m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
             else printf(" ___ \e[1B\e[5D|\e[91m\e[1m%s\e[22m\e[39m |\e[1B\e[5D| \e[91m\e[1m%s\e[22m\e[39m |\e[1B\e[5D|_\e[91m\e[1m%s\e[22m\e[39m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
 
         } else {
-
+            //Para as cartas de naipe preto
             if(carta->valor_i != 10) printf(" ___ \e[1B\e[5D|\e[1m%s\e[22m  |\e[1B\e[5D| \e[1m%s\e[22m |\e[1B\e[5D|__\e[1m%s\e[22m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
             else printf(" ___ \e[1B\e[5D|\e[1m%s\e[22m |\e[1B\e[5D| \e[1m%s\e[22m |\e[1B\e[5D|_\e[1m%s\e[22m|",carta->valor_c,simbolo_naipe[carta->naipe],carta->valor_c);
         
