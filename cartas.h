@@ -184,7 +184,7 @@ void baralho_printarP (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha bar
     //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo usando cartas pequenas
     //Precisa receber um vetor do struct tp_carta, de tamanho 52, a configuração opcoes->EstiloCarta e a pilha que contém o embaralhamento de posições
     tp_item cartaPos;
-    for (int i=0;!pilha_verificarVazia(&baralhoJogo);i++){
+    for (int i=0;!pilha_verificar_vazia(&baralhoJogo);i++){
         pilha_pop(&baralhoJogo,&cartaPos);
         carta_printarP(&baralhoReferencia[cartaPos],estiloCarta);
         fflush(stdout);
@@ -197,7 +197,7 @@ void baralho_printarG (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha bar
     //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo usando cartas grandes
     //Precisa receber um vetor do struct tp_carta, de tamanho 52, a configuração opcoes->EstiloCarta e a pilha que contém o embaralhamento de posições
     tp_item cartaPos;
-    for (int i=0;!pilha_verificarVazia(&baralhoJogo);i++){
+    for (int i=0;!pilha_verificar_vazia(&baralhoJogo);i++){
         pilha_pop(&baralhoJogo,&cartaPos);
         carta_printarG(&baralhoReferencia[cartaPos],estiloCarta);
         fflush(stdout);
@@ -209,7 +209,7 @@ void baralho_printarG (tp_carta *baralhoReferencia, int estiloCarta,tp_pilha bar
 int baralho_embaralharPosicoes(tp_pilha *baralhoJogo){
     int cpf_carta, veri, gaveta[52], tam_gaveta=0;
     pilha_inicializar(baralhoJogo);
-    for(int i=0;(!pilha_verificarCheia(baralhoJogo));i++){
+    for(int i=0;(!pilha_verificar_cheia(baralhoJogo));i++){
         veri=0;
         cpf_carta=aleatorio(0, 51);
         if(i==0){

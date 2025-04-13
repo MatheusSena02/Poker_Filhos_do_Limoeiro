@@ -1,4 +1,4 @@
-#ifndef MISCENALEA_H
+#ifndef MISCELANEA_H
 #define MISCELANEA_H
 #include <stdio.h>
 #include <time.h>
