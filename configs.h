@@ -60,8 +60,10 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("===================================================================\n\n");
 	printf("\e[%dm => \e[1mEstilo de Carta = %d\e[39m\e[22m\n",cor[0],opcoes->estiloCarta);
 	printf("\e[33m//Estilo de Carta \e[3m( \e[93m1 = Carta Branca [Padrão]\e[33m / 0 = Carta Preta)\e[39m\e[23m\n\n");
-	carta_printar(&baralho[0],opcoes->estiloCarta);
-	printf("\n\n\n\n\n");
+	printf(" ");
+	carta_printarG(&baralho[aleatorio(0,51)],opcoes->estiloCarta);
+	carta_printarP(&baralho[aleatorio(0,51)],opcoes->estiloCarta);
+	printf("\n\n\n\n\n\n\n\n\n\n");
 	printf("===================================================================\n\n");
 	printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[1],opcoes->debug);
 	printf("\e[33m//Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples)\e[39m\e[23m\n");

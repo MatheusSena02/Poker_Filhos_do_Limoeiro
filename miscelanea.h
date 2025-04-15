@@ -1,14 +1,14 @@
-#ifndef MISCENALEA_H
+#ifndef MISCELANEA_H
 #define MISCELANEA_H
 #include <stdio.h>
 #include <time.h>
 
 //pro getch
-#include <unistd.h>
 #ifdef _WIN32
 #include <conio.h>
 #else
 #include <termios.h>
+#include <unistd.h>
 #endif
 
 
@@ -87,6 +87,7 @@ void programa_pausar () {
 void programa_iniciar () {
     
     int input;
+    printf("Se possível, use a resolução 1280 x 720p\n");
     printf("Por favor coloque o programa em tela cheia\n");
     printf("Aperte F para continuar\n");
     
