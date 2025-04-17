@@ -142,8 +142,6 @@ int arq_criarOpcoes () {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
-        fprintf(arq,"// Estilo de Carta ( 1 = Carta Branca [Padrão] / 0 = Carta Preta )\n");
-        fprintf(arq,"EstiloCarta = 1\n\n");
         fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"debug = 0\n\n");

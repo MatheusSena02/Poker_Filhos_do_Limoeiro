@@ -1,8 +1,5 @@
 --- Opções ---
 
-// Estilo de Carta ( 1 = Carta Branca [Padrão] / 0 = Carta Preta )
-EstiloCarta = 1
-
 //Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )
 // Simples -> prinfs de avisos e monitoramento
 debug = 1
