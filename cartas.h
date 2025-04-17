@@ -9,7 +9,9 @@ typedef struct {
     int naipe; // ♥(0)[copas], ♦(1)[ouros], ♠(2)[espadas], ♣(3)[paus]
     int valor_i; //1,2,3,4,5,6,7,8,9,10,11,12,13
     char valor_c[4]; //A,2,3,4,5,6,7,8,9,J,Q,K
-} tp_carta;
+}tp_carta;
+
+#include "jogador.h"
 
 int carta_setarvalor(tp_carta *carta, int valor) {
     // Seta o valor da carta atual do baralho para "valor".
@@ -221,7 +223,6 @@ int baralho_embaralharPosicoes(tp_pilha *baralhoJogo){
             for(int j=0;j<tam_gaveta;j++){
                 if(gaveta[j] == cpf_carta){
                     veri = 1;
-                
                 }
             }
                 
@@ -237,13 +238,18 @@ int baralho_embaralharPosicoes(tp_pilha *baralhoJogo){
             }
             
         }
-    
-    
-    
-    
     }    
-    
-    
+}
+
+void distribuirCartas(tp_pilha *baralhoJogo, tp_jogador jogador[], int quant){
+    int e;
+    for(int i = 0; i < quant; i++){
+        pilha_pop(baralhoJogo, &e);
+        jogador[i].mao_jogador[0] = e;
+        pilha_pop(baralhoJogo, &e);
+        jogador[i].mao_jogador[1] = e;
+        printf("|%d|%d|", jogador[i].mao_jogador[0], jogador[i].mao_jogador[1]);
+    }
 }
 
 

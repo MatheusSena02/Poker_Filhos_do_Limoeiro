@@ -2,11 +2,13 @@
 #define JOGADOR_H
 #include <stdio.h>
 #include <string.h>
+#include "cartas.h"
 
 typedef struct{
     int ID;
     char nome[30];
     int cor;
+    int mao_jogador[2];
 }tp_jogador;
 
 int jogador_escolherQuantidade(){
@@ -415,5 +417,7 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
     }
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
+
+
 
 #endif

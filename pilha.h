@@ -8,6 +8,7 @@
 #define PILHA_H
 //aq pra baixo é a biblioteca
 #include <stdio.h>
+#include "cartas.h"
 #define MAX 52
 //toca vez que encontrar o termo "MAX", troca pra 100;
 
@@ -19,6 +20,7 @@ typedef struct {
     int topo;
     tp_item item[MAX];
 } tp_pilha;
+
 
 void pilha_inicializar (tp_pilha *p){
 // Prepara a pilha para interação
@@ -52,6 +54,7 @@ int pilha_pop (tp_pilha *p, tp_item *e) {
     p->topo--;
     return 1;
 }
+
 
 int pilha_top (tp_pilha *p, tp_item *e) {
 // retorna o item no topo da pilha
@@ -111,7 +114,6 @@ int pilha_push_pilha (tp_pilha *pilha1,tp_pilha *pilha2) {
     
     return 1;
 }
-
 
 
 //isso fecha o ifndef

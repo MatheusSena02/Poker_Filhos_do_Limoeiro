@@ -43,7 +43,7 @@ int main()
     int quant,iniciarJogo,iniciarConfig;
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
-    tp_pilha baralhoJogo;
+    tp_pilha baralhoJogo;       //BARALHO PARA OS JOGADORES
 	tp_carta baralhoReferencia[52];
 
     tp_cursor cursor;
@@ -79,7 +79,7 @@ int main()
     
     jogador_escolherNomes(jogador, quant);
     programa_pausar();
-
+    distribuirCartas(&baralhoJogo, jogador, quant);
 
 
 
