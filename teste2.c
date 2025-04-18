@@ -35,6 +35,46 @@ void windowsconfig() {
     SetConsoleWindowInfo(hOut, TRUE, &displayArea);
 }
 
+void imprimir_float_centralizado(float valor, int largura) {
+    char texto[64];
+    
+    //Converte o valor em string com 2 casas decimais
+    snprintf(texto, sizeof(texto), "%.2f", valor);
+    
+    //Troca ponto por vírgula
+    for (int i = 0; texto[i] != '\0'; i++) {
+        if (texto[i] == '.') {
+            texto[i] = ',';
+            break;
+        }
+    }
+    
+    int comprimento = strlen(texto);
+
+    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
+    if (comprimento > largura) {
+        printf("%s\n", texto);
+        return;
+    }
+
+    //Calcula quantos espaços são necessários
+    int espacos_esquerda = (largura - comprimento) / 2;
+    int espacos_direita = largura - comprimento - espacos_esquerda;
+
+    //Pula espaços na esquerda
+    for (int i = 0; i < espacos_esquerda; i++) {
+        printf("\e[C");
+    }
+
+    //Imprime o número
+    printf("%s", texto);
+
+    //Pula espaços na direita
+    for (int i = 0; i < espacos_direita; i++) {
+        printf("\e[C");
+    }
+}
+
 
 void desenhar_fundo() {
     printf("\e[48;2;0;77;64m                                                                                                                                                            \e[E");
@@ -87,14 +127,20 @@ void desenhar_fundo() {
 
 
 
-void desenhar_aposta() {
-    printf("\e[62C\e[38;2;244;67;54m██████████████████████████████\e[E");
-    printf("\e[62C██\e[38;2;255;255;255m██████████████████████████\e[38;2;244;67;54m██\e[E");
-    printf("\e[62C██\e[38;2;255;255;255m██\e[38;2;244;67;54m██████████████████████\e[38;2;255;255;255m██\e[38;2;244;67;54m██\e[E");
-    printf("\e[62C██\e[38;2;255;255;255m██\e[38;2;244;67;54m██████████████████████\e[38;2;255;255;255m██\e[38;2;244;67;54m██\e[E");
-    printf("\e[62C██\e[38;2;255;255;255m██\e[38;2;244;67;54m██████████████████████\e[38;2;255;255;255m██\e[38;2;244;67;54m██\e[E");
-    printf("\e[62C██\e[38;2;255;255;255m██████████████████████████\e[38;2;244;67;54m██\e[E");
-    printf("\e[62C██████████████████████████████\e[E");
+void desenhar_aposta(float totalApostado) {
+    printf("\e[62C\e[48;2;244;67;54m                              \e[E");
+    printf("\e[62C  \e[48;2;255;255;255m      \e[38;2;255;119;110mTOTAL APOSTADO\e[39m      \e[48;2;244;67;54m  \e[E");
+    printf("\e[62C  \e[48;2;255;255;255m  \e[48;2;244;67;54m                      \e[48;2;255;255;255m  \e[48;2;244;67;54m  \e[E");
+    printf("\e[62C  \e[48;2;255;255;255m  \e[48;2;244;67;54m                      \e[48;2;255;255;255m  \e[48;2;244;67;54m  \e[E",totalApostado);
+    printf("\e[62C  \e[48;2;255;255;255m  \e[48;2;244;67;54m                      \e[48;2;255;255;255m  \e[48;2;244;67;54m  \e[E");
+    printf("\e[62C  \e[48;2;255;255;255m                          \e[48;2;244;67;54m  \e[E");
+    printf("\e[62C                              \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+
+    printf("\e[3E\e[68C\e[48;2;244;67;54m\e[38;2;252;228;236mR$ ");
+    imprimir_float_centralizado(totalApostado,15);
+
     printf("\e[0m");
     printf("\e[H");
 }
@@ -118,18 +164,34 @@ void desenhar_cabecalho() {
     printf("\e[H");
 }
 
+void desenhar_corjog(char cor[]) {
+    printf("\e[34E");
+    printf("\e[%sm████████████████████\e[E",cor);
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("██\e[16C██\e[E");
+    printf("████████████████████\e[E");
+    printf("\e[0m");
+}
+
 int main () {
 
     windowsconfig();
-    int cor=34;
+    char cor[]={"38;2;38;198;218"};
     char lixo;
     scanf("%c",&lixo);
     system("cls");
 
 
     desenhar_fundo();
-    desenhar_aposta();
+    desenhar_aposta(0);
     desenhar_cabecalho();
+    desenhar_corjog(cor);
 
     scanf(" %c",&lixo);
     

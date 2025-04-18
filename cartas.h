@@ -204,15 +204,16 @@ int baralho_embaralharPosicoes(tp_pilha *baralhoJogo){
     }    
 }
 
-void distribuirCartas(tp_pilha *baralhoJogo, tp_jogador jogador[], int quant){
+int baralho_distribuirCartas_jogadores(tp_pilha *baralhoJogo, tp_jogador jogador[], int quant){
     int e;
     for(int i = 0; i < quant; i++){
-        pilha_pop(baralhoJogo, &e);
-        jogador[i].mao_jogador[0] = e;
-        pilha_pop(baralhoJogo, &e);
-        jogador[i].mao_jogador[1] = e;
-        printf("|%d|%d|", jogador[i].mao_jogador[0], jogador[i].mao_jogador[1]);
+        if (!pilha_pop(baralhoJogo, &e)) return 0;
+        jogador[i].mao[0] = e;
+        if (!pilha_pop(baralhoJogo, &e)) return 0;
+        jogador[i].mao[1] = e;
+        printf("|%d|%d|", jogador[i].mao[0], jogador[i].mao[1]);
     }
+    return 1;
 }
 
 

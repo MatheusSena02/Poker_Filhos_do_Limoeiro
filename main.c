@@ -79,11 +79,20 @@ int main()
     
     jogador_escolherNomes(jogador, quant);
     programa_pausar();
-    distribuirCartas(&baralhoJogo, jogador, quant);
 
+    if(!baralho_distribuirCartas_jogadores(&baralhoJogo, jogador, quant)) {
+        limparTela();
+        printf("Erro na distribuição de cartas.\n");
+        printf("O programa será encerrado.\n");
+
+        programa_finalizar();
+        return 22;
+    }
 
 
     programa_finalizar();
+
+    return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
