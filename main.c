@@ -40,7 +40,7 @@ int main()
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int quant,iniciarJogo,iniciarConfig;
+    int quant,iniciarJogo,iniciarConfig,mao_mesa[5];
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
     tp_pilha baralhoJogo;       //BARALHO PARA OS JOGADORES

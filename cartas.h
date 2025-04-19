@@ -216,6 +216,37 @@ int baralho_distribuirCartas_jogadores(tp_pilha *baralhoJogo, tp_jogador jogador
     return 1;
 }
 
+int inicializar_vetor_mesa(int mao_mesa[]){
+    for(int i=0;i<5;i++){
+        mao_mesa[i]=-1;
+    }
+}
+
+int baralho_distribuirCartas_mesa(tp_pilha *baralhoJogo, int mao_mesa[]){
+    int cm;
+    
+    for(int i=0;i<5;i++){
+        if(mao_mesa[i] == -1){
+            pilha_pop(baralhoJogo, &cm);
+            mao_mesa[i] = cm;
+            return i;
+        }
+        
+    }
+    else return -1;
+
+
+}
+
+int baralho_mesa_numeroCartas(int mao_mesa[]){
+    int numeroCartas = 0;
+    for(int i=0;i<5;i++){
+        if(mao_mesa[i] != -1){
+            numeroCartas++;
+        }
+    }
+}
+
 
 
 
