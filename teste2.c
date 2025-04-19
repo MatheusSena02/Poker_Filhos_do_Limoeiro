@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-#include <windows.h>
-#include <stdio.h>
+#include <string.h>
 
 void windowsconfig() {
     // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
@@ -206,6 +205,7 @@ void desenhar_dinheiro() {
     printf("\e[8C\e[38;2;0;0;0m██\e[38;2;255;255;255m██\e[38;2;0;0;0m██\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
     //Teste da tabela para digitar o valor da aposta
 void desenhar_TabelaAposta() {
@@ -223,6 +223,7 @@ void desenhar_TabelaAposta() {
     printf("\e[112C██████████████████████████████████\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
     //Coelho
 void desenhar_Coelho() {
@@ -238,6 +239,7 @@ void desenhar_Coelho() {
     printf("\e[2C██████\e[38;2;229;115;115m██\e[38;2;252;228;236m████\e[38;2;248;187;208m████\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
     //Urso
 void desenhar_Urso() {
@@ -253,6 +255,7 @@ void desenhar_Urso() {
     printf("\e[2C████\e[38;2;121;85;72m████████\e[38;2;109;76;65m████\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
     //Sapo
 void desenhar_Sapo() {
@@ -268,6 +271,7 @@ void desenhar_Sapo() {
     printf("\e[2C\e[38;2;67;160;71m████\e[38;2;255;235;238m██\e[38;2;56;142;60m██████\e[38;2;255;235;238m██\e[38;2;46;125;50m██\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
     //Esquilo
 void desenhar_Esquilo() {
@@ -283,6 +287,7 @@ void desenhar_Esquilo() {
     printf("\e[2C██\e[38;2;141;110;99m████████████\e[38;2;109;76;65m██\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
     //Gato
 void desenhar_Gato() {
@@ -298,7 +303,6 @@ void desenhar_Gato() {
     printf("\e[2C\e[38;2;0;0;0m██\e[38;2;255;204;128m████████████\e[38;2;0;0;0m██\e[E");
     printf("\e[0m");
     printf("\e[H");
-
 }
 
     //Rato
@@ -314,15 +318,6 @@ void desenhar_Rato() {
     printf("\e[2C\e[38;2;255;255;255m██\e[38;2;158;158;158m████████████\e[38;2;255;255;255m██\e[E");
     printf("\e[2C████\e[38;2;158;158;158m████████\e[38;2;255;255;255m████\e[E");
     printf("\e[0m");
-}
-
-                }
-            }
-            }
-        }
-
-    }
-
 }
 
 int main () {
@@ -349,21 +344,21 @@ int main () {
     desenhar_Rato();
 
     //Valor de dinheiro atual
-    printf("\e[13C\e[5B");
-    printf("(Valor:)");
+    //printf("\e[13C\e[5B");
+    //printf("(Valor:)");
 
     //Nome do jogador
-    printf("\e[2C\e[32B");
-    printf("[%s]\n",i+1,jogador[i].nome);
+    //printf("\e[2C\e[32B");
+    //printf("[%s]\n",i+1,jogador[i].nome);
 
     //Tabela de Aposta
-    printf("\e[61C\e[28B");
-    printf("Insira o valor que");
-    printf("\e[61C\e[29B");
-    printf("deseja apostar:"); //Aqui foi para descer a linha :P
+    //printf("\e[61C\e[28B");
+    //printf("Insira o valor que");
+    //printf("\e[61C\e[29B");
+    //printf("deseja apostar:"); //Aqui foi para descer a linha :P
 
-    printf("\e[61C\e[31B");
-    printf("(Valor:)")
+    //printf("\e[61C\e[31B");
+    //printf("(Valor:)");
 
     scanf(" %c",&lixo);
     

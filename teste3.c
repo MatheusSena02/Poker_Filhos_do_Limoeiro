@@ -251,7 +251,7 @@ int getch() {
     
 
 int menu_jogo_navegar (tp_cursor *cursor) {
-    //Função para permitir a navegação no menu de configuração usando W,S e F
+    //Função para permitir a navegação no menu de configuração usando A,D e F
     // D = 100
     // A = 97
     // F = 102
@@ -259,21 +259,22 @@ int menu_jogo_navegar (tp_cursor *cursor) {
     // O F serve pra confirmar a seleção
     // A posição 0 é a mais alta
      int numeroDeOpcoes=3;
-    config_impressao(opcoes,cursor->navegador,baralho);
+    //impressao
+    //^
 
     int input;
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 119 && input != 115 && input != 102);
+    } while (input != 100 && input != 97 && input != 102);
 
     switch(input) {
-        case 119:
+        case 100:
             if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
             else cursor->navegador=(numeroDeOpcoes-1);
         break;
    
-        case 115:
+        case 97:
             if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
             else cursor->navegador=0;
         break;
@@ -281,22 +282,22 @@ int menu_jogo_navegar (tp_cursor *cursor) {
         case 102:
             switch (cursor->navegador) {
                 case 0:
-                    config_inverter(&opcoes->debug);
+                    //confirma 1
                 break;
     
                 case 1:
-                    config_inverter(&opcoes->modoDeSalvamento);
+                    //confirma 2
                 break;
     
                 case 2:
-                    arq_atualizarOpcoes(opcoes);
-                    return 1;
+                    //confirma 3
+                    return 0;
                 break;
             }
         break;
     }
     
-    return 0;
+    return 1;
 }
 
 int main () {
