@@ -218,9 +218,85 @@ void desenhar_dinheiro() {
     printf("\e[H");
 }
 
-int menu_jogo_navegar() {
+int getch() {
+    // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
+    //Serve pra ler um input do usuário sem esperar pelo enter
+    // Como usar no windows e linux (dessa forma pega nos 2):     while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    
+    #ifdef _WIN32
+    
+        if (_kbhit()) {
+            return _getch();
+        }
+        return -1; 
+    
+    #else
+        struct termios oldAttr, newAttr;
+        int ch;
+    
+        tcgetattr(STDIN_FILENO, &oldAttr);
+        newAttr = oldAttr;
+        
+        newAttr.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &newAttr);
+    
+        ch = getchar();
+    
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldAttr);
+        
+        return ch;
+    
+    #endif
+    }
+    
 
-    return 1
+int menu_jogo_navegar (tp_cursor *cursor) {
+    //Função para permitir a navegação no menu de configuração usando W,S e F
+    // D = 100
+    // A = 97
+    // F = 102
+    // Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+    // O F serve pra confirmar a seleção
+    // A posição 0 é a mais alta
+     int numeroDeOpcoes=3;
+    config_impressao(opcoes,cursor->navegador,baralho);
+
+    int input;
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 119 && input != 115 && input != 102);
+
+    switch(input) {
+        case 119:
+            if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
+            else cursor->navegador=(numeroDeOpcoes-1);
+        break;
+   
+        case 115:
+            if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
+            else cursor->navegador=0;
+        break;
+    
+        case 102:
+            switch (cursor->navegador) {
+                case 0:
+                    config_inverter(&opcoes->debug);
+                break;
+    
+                case 1:
+                    config_inverter(&opcoes->modoDeSalvamento);
+                break;
+    
+                case 2:
+                    arq_atualizarOpcoes(opcoes);
+                    return 1;
+                break;
+            }
+        break;
+    }
+    
+    return 0;
 }
 
 int main () {
@@ -242,7 +318,7 @@ int main () {
     desenhar_corjog(cor);
     desenhar_dinheiro();
 
-    while(menu_jogo_navegar);
+    while(menu_jogo_navegar(&cursor));
 
     scanf(" %c",&lixo);
     
