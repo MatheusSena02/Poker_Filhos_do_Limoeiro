@@ -348,8 +348,6 @@ int main () {
     desenhar_Gato();
     desenhar_Rato();
 
-    //oiiiiiiiiiiiiiiii
-
     //Valor de dinheiro atual
     printf("\e[13C\e[5B");
     printf("(Valor:)");
