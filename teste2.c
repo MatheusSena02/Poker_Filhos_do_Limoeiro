@@ -224,6 +224,14 @@ int main () {
     desenhar_seletor();
     desenhar_dinheiro();
 
+    //Print dinheiro
+    printf("\e[13C\e[5B");
+    printf("valor");
+
+    //Print jogador nome
+    printf("\e[2C\e[32B");
+    printf("[%s]\n",i+1,jogador[i].nome);
+
     scanf(" %c",&lixo);
     
 }
