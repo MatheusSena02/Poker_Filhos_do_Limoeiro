@@ -4,6 +4,16 @@
 #include <windows.h>
 #include <stdio.h>
 
+typedef struct{
+    int navegador;
+    int confirmador;
+} tp_cursor;
+
+void cursor_zerarCursor(tp_cursor *cursor) {
+    cursor->navegador=0;
+    cursor->confirmador=0;
+}
+
 void windowsconfig() {
     // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
     // Configuração de Console pro Windows (Cores, ANSI Escape Code e Tamanho) -------------
@@ -208,29 +218,31 @@ void desenhar_dinheiro() {
     printf("\e[H");
 }
 
-int main () {
+int menu_jogo_navegar() {
 
+    return 1
+}
+
+int main () {
     windowsconfig();
     char cor[]={"38;2;38;198;218"};
     char lixo;
+    tp_cursor cursor;
+    cursor_zerarCursor(&cursor);
+
+    windowsconfig();
+
     scanf("%c",&lixo);
     system("cls");
 
-
+    printf("\e[?25l");
     desenhar_fundo();
     desenhar_aposta(0);
     desenhar_cabecalho();
     desenhar_corjog(cor);
-    desenhar_seletor();
     desenhar_dinheiro();
 
-    //Print dinheiro
-    printf("\e[13C\e[5B");
-    printf("valor");
-
-    //Print jogador nome
-    printf("\e[2C\e[32B");
-    printf("[%s]\n",i+1,jogador[i].nome);
+    while(menu_jogo_navegar);
 
     scanf(" %c",&lixo);
     
