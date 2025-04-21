@@ -233,7 +233,7 @@ int baralho_distribuirCartas_mesa(tp_pilha *baralhoJogo, int mao_mesa[]){
         }
         
     }
-    else return -1;
+    return -1;
 
 
 }

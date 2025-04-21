@@ -26,50 +26,6 @@ void limparTela() {
     printf("\e[H\e[0J\e[H");
 }
 
-
-void imprimir_float_centralizado(float valor, int largura) {
-    //Imprime um valor dado de forma certralizada (e com 2 casas decimais)
-    //Em largura coloca o espaço maximo que pode ocupar
-    char texto[64];
-    
-    //Converte o valor em string com 2 casas decimais
-    snprintf(texto, sizeof(texto), "%.2f", valor);
-    
-    //Troca ponto por vírgula
-    for (int i = 0; texto[i] != '\0'; i++) {
-        if (texto[i] == '.') {
-            texto[i] = ',';
-            break;
-        }
-    }
-    
-    int comprimento = strlen(texto);
-
-    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
-    if (comprimento > largura) {
-        printf("%s\n", texto);
-        return;
-    }
-
-    //Calcula quantos espaços são necessários
-    int espacos_esquerda = (largura - comprimento) / 2;
-    int espacos_direita = largura - comprimento - espacos_esquerda;
-
-    //Pula espaços na esquerda
-    for (int i = 0; i < espacos_esquerda; i++) {
-        printf("\e[C");
-    }
-
-    //Imprime o número
-    printf("%s", texto);
-
-    //Pula espaços na direita
-    for (int i = 0; i < espacos_direita; i++) {
-        printf("\e[C");
-    }
-}
-
-
 int getch() {
 // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
 //Serve pra ler um input do usuário sem esperar pelo enter

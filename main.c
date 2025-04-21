@@ -14,7 +14,6 @@
 #include "jogador.h"
 #include "extradebug.h"
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +46,10 @@ int main()
 	tp_carta baralhoReferencia[52];
 
     tp_cursor cursor;
+
+    tp_pote pote;
+    pote.maiorAposta=0;
+    pote.pote=0;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
 
@@ -89,6 +92,11 @@ int main()
         return 22;
     }
 
+    limparTela();
+    printf("\e[?25l"); //deixa cursor invisivcel
+
+    desenhar_fundo();
+    jogo_jogador_rodada(&jogador[0],&cursor,&pote);
 
     programa_finalizar();
 
