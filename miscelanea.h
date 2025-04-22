@@ -25,7 +25,7 @@ void limparTela() {
 //Vai funcionar tanto em LINUX (replit) quanto em WINDOWS
     printf("\e[H\e[0J\e[H");
 }
-    
+
 int getch() {
 // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
 //Serve pra ler um input do usuário sem esperar pelo enter

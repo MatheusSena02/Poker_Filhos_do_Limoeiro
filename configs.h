@@ -2,7 +2,7 @@
 #define CONFIGS_H
 
 typedef struct {
-	int debug, modoDeSalvamento, estiloCarta;
+	int debug, modoDeSalvamento;
 }opc;
 
 void arq_atualizarOpcoes (opc *opcoes) {
@@ -11,10 +11,9 @@ void arq_atualizarOpcoes (opc *opcoes) {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
-        fprintf(arq,"// Estilo de Carta ( 1 = Carta Branca [Padrão] / 0 = Carta Preta )\n");
-        fprintf(arq,"EstiloCarta = %d\n\n",opcoes->estiloCarta);
-        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )\n");
+        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
+        fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
         fprintf(arq,"debug = %d\n\n",opcoes->debug);
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
         fprintf(arq,"// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\n");
@@ -31,12 +30,17 @@ void config_inverter(int *a) {
 	else *a=1; 
 }
 
+void config_alternar(int *a,int numeroDeEstados) {
+	//Alterna uma configuracão em inteiros entre 0 a numeroDeEstados
+	if (((*a)+1)<numeroDeEstados) *a+=1;
+	else *a=0; 
+}
+
 void config_inicializacao(opc *opcoes) {
     //Definir Seed como Tempo
     srand(time(NULL));
     //Obter variáveis guardadas em opcoes.txt
     if (!arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d")) opcoes->debug = 0;
-    if (!arq_lerOpcoes(&opcoes->estiloCarta,"EstiloCarta = ","EstiloCarta = %d")) opcoes->estiloCarta = 1;
 
 	#ifdef _WIN32
     if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 1;
@@ -48,7 +52,7 @@ void config_inicializacao(opc *opcoes) {
 void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	//Imprime o menu de configuração
 	limparTela();
-	int cor[4]={39,39,39,39};
+	int cor[3]={39,39,39};
 	cor[pos] = 31;
 
 	printf("===================================================================\n");
@@ -58,24 +62,18 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("===================================================================\n");
 	printf("=           Use WASD para navegar e F para selecionar             =\n");
 	printf("===================================================================\n\n");
-	printf("\e[%dm => \e[1mEstilo de Carta = %d\e[39m\e[22m\n",cor[0],opcoes->estiloCarta);
-	printf("\e[33m//Estilo de Carta \e[3m( \e[93m1 = Carta Branca [Padrão]\e[33m / 0 = Carta Preta)\e[39m\e[23m\n\n");
-	printf(" ");
-	carta_printarG(&baralho[aleatorio(0,51)],opcoes->estiloCarta);
-	carta_printarP(&baralho[aleatorio(0,51)],opcoes->estiloCarta);
-	printf("\n\n\n\n\n\n\n\n\n\n");
+	printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[0],opcoes->debug);
+	printf("\e[33m//Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples / 2 = Facilita Testes)\e[39m\e[23m\n");
+	printf("\e[33m//Simples -> prinfs de avisos e monitoramento\e[39m\n");
+    printf("\e[33m//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\e[39m\n\n");
 	printf("===================================================================\n\n");
-	printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[1],opcoes->debug);
-	printf("\e[33m//Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples)\e[39m\e[23m\n");
-	printf("\e[33m//Simples -> prinfs de avisos e monitoramento\e[39m\n\n");
-	printf("===================================================================\n\n");
-	printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[2],opcoes->modoDeSalvamento);
+	printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[1],opcoes->modoDeSalvamento);
 	printf("\e[33m// Seleciona a formatação do .txt que salva o histórico\e[39m\n");
 	printf("\e[33m//\e[3m( \e[93m1 = Data e Hora [Padrão]\e[33m / 0 = partida.txt)\e[39m\n\e[23m");
 	printf("\e[33m// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\e[39m\n\n");
 	printf("===================================================================\n\n");
 
-	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[3]);
+	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[2]);
 }
 
 int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
@@ -86,7 +84,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 	// Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
 	// O F serve pra confirmar a seleção
 	// A posição 0 é a mais alta
-	int numeroDeOpcoes=4;
+	int numeroDeOpcoes=3;
 	config_impressao(opcoes,cursor->navegador,baralho);
 
     int input;
@@ -109,18 +107,14 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
         case 102:
 			switch (cursor->navegador) {
 				case 0:
-					config_inverter(&opcoes->estiloCarta);
+					config_alternar(&opcoes->debug,3);
 				break;
 
 				case 1:
-					config_inverter(&opcoes->debug);
-				break;
-
-				case 2:
 					config_inverter(&opcoes->modoDeSalvamento);
 				break;
 
-				case 3:
+				case 2:
 					arq_atualizarOpcoes(opcoes);
 					return 1;
 				break;
@@ -137,18 +131,37 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 #ifdef _WIN32
 #include <windows.h>
 
-	void windowsconfig() {
-		// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
-		//Configuração de Console pro Windows (Cores e ANSII Escape Code) ---------------------
-	        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	        DWORD dwMode = 0;
-	        if (GetConsoleMode(hOut, &dwMode)) {
-	            dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-	            SetConsoleMode(hOut, dwMode);
-	        }
-	        SetConsoleOutputCP(65001);
-	
-	}
+void windowsconfig() {
+    // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
+    // Configuração de Console pro Windows (Cores, ANSI Escape Code e Tamanho) -------------
+
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+
+    // Habilita processamento de ANSI Escape Sequences
+    if (GetConsoleMode(hOut, &dwMode)) {
+        dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+        SetConsoleMode(hOut, dwMode);
+    }
+
+    // Define código de página UTF‑8
+    SetConsoleOutputCP(CP_UTF8);
+
+    // Redimensiona buffer e janela para 100 colunas × 40 linhas
+    COORD newSize = { 156, 44 };
+    // Ajusta o tamanho do buffer de tela
+    SetConsoleScreenBufferSize(hOut, newSize);
+
+    // Define a área visível da janela igual ao tamanho do buffer
+    SMALL_RECT displayArea = {
+        0,               // Left
+        0,               // Top
+        newSize.X - 1,   // Right
+        newSize.Y - 1    // Bottom
+    };
+    SetConsoleWindowInfo(hOut, TRUE, &displayArea);
+}
+
 //Só pra linux --------------------------------------------------------------------------------------------------------
 #else
 #include <locale.h>

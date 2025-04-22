@@ -142,10 +142,9 @@ int arq_criarOpcoes () {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
-        fprintf(arq,"// Estilo de Carta ( 1 = Carta Branca [Padrão] / 0 = Carta Preta )\n");
-        fprintf(arq,"EstiloCarta = 1\n\n");
-        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )\n");
+        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
+        fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
         fprintf(arq,"debug = 0\n\n");
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
         fprintf(arq,"// Recomendação:  Windows ou OnlineGDB = 1 / Replit = 0\n");
