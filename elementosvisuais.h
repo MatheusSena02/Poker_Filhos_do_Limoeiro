@@ -13,6 +13,7 @@ void cursor_zerarCursor(tp_cursor *cursor) {
 
 void imprimir__centralizado_float(float valor, int largura) {
     //Imprime um valor dado de forma certralizada (e com 2 casas decimais)
+    //OBS: o float deve ocupar no máximo um espaço de 64 caracteres (2 casas decimais + vírgula inclusas)
     //Em largura coloca o espaço maximo que pode ocupar
     char texto[64];
     
@@ -35,7 +36,6 @@ void imprimir__centralizado_float(float valor, int largura) {
         return;
     }
 
-    //Calcula quantos espaços são necessários
     int espacos_esquerda = (largura - comprimento) / 2;
     int espacos_direita = largura - comprimento - espacos_esquerda;
 
@@ -53,67 +53,10 @@ void imprimir__centralizado_float(float valor, int largura) {
     }
 }
 
-void imprimir__centralizado_string_max20(char texto[], int largura) {
-    //Imprime uma string dada de forma certralizada (e com 2 casas decimais)
-    //Em largura coloca o espaço maximo que pode ocupar
-
-    int comprimento = strlen(texto);
-
-    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
-    if (comprimento > largura) {
-        printf("%.20s\n", texto);
-        return;
-    }
-
-    //Calcula quantos espaços são necessários
-    int espacos_esquerda = (largura - comprimento) / 2;
-    int espacos_direita = largura - comprimento - espacos_esquerda;
-
-    //Pula espaços na esquerda
-    for (int i = 0; i < espacos_esquerda; i++) {
-        printf("\e[C");
-    }
-
-    //Imprime a string
-    printf("%.20s", texto);
-
-    //Pula espaços na direita
-    for (int i = 0; i < espacos_direita; i++) {
-        printf("\e[C");
-    }
-}
-
-void imprimir__centralizado_string_max100(char texto[], int largura) {
-    //Imprime uma string dada de forma certralizada (e com 2 casas decimais)
-    //Em largura coloca o espaço maximo que pode ocupar
-
-    int comprimento = strlen(texto);
-
-    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
-    if (comprimento > largura) {
-        printf("%.100s\n", texto);
-        return;
-    }
-
-    //Calcula quantos espaços são necessários
-    int espacos_esquerda = (largura - comprimento) / 2;
-    int espacos_direita = largura - comprimento - espacos_esquerda;
-
-    //Pula espaços na esquerda
-    for (int i = 0; i < espacos_esquerda; i++) {
-        printf("\e[C");
-    }
-
-    //Imprime a string
-    printf("%.100s", texto);
-
-    //Pula espaços na direita
-    for (int i = 0; i < espacos_direita; i++) {
-        printf("\e[C");
-    }
-}
-
 void imprimir_centralizado_float_dinheiro(float valor, int largura) {
+    //Imprime um valor dado de forma certralizada (e com 2 casas decimais) e com R$
+    //OBS: o float+"R$ " deve ocupar no máximo um espaço de 64 caracteres (2 casas decimais + vírgula inclusas)
+    //Em largura coloca o espaço maximo que pode ocupar
     char texto[64];
     
     //Converte o valor em string com 2 casas decimais
@@ -135,7 +78,6 @@ void imprimir_centralizado_float_dinheiro(float valor, int largura) {
         return;
     }
 
-    //Calcula quantos espaços são necessários
     int espacos_esquerda = (largura - comprimento) / 2;
     int espacos_direita = largura - comprimento - espacos_esquerda;
 
@@ -146,6 +88,66 @@ void imprimir_centralizado_float_dinheiro(float valor, int largura) {
 
     //Imprime o número
     printf("%s", texto);
+
+    //Pula espaços na direita
+    for (int i = 0; i < espacos_direita; i++) {
+        printf("\e[C");
+    }
+}
+
+void imprimir__centralizado_string_max20(char texto[], int largura) {
+    //Imprime uma string (de ate 20 caracteres) dada de forma certralizada
+    //Caso a string seja maior q 20 caracteres, o texto vai ser cortado
+    //Em largura coloca o espaço maximo que pode ocupar
+
+    int comprimento = strlen(texto);
+
+    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
+    if (comprimento > largura) {
+        printf("%.20s\n", texto);
+        return;
+    }
+
+    int espacos_esquerda = (largura - comprimento) / 2;
+    int espacos_direita = largura - comprimento - espacos_esquerda;
+
+    //Pula espaços na esquerda
+    for (int i = 0; i < espacos_esquerda; i++) {
+        printf("\e[C");
+    }
+
+    //Imprime a string
+    printf("%.20s", texto);
+
+    //Pula espaços na direita
+    for (int i = 0; i < espacos_direita; i++) {
+        printf("\e[C");
+    }
+}
+
+void imprimir__centralizado_string_max100(char texto[], int largura) {
+    //Imprime uma string (de ate 100 caracteres) dada de forma certralizada
+    //Caso a string seja maior q 20 caracteres, o texto vai ser cortado
+    //Em largura coloca o espaço maximo que pode ocupar
+
+    int comprimento = strlen(texto);
+
+    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
+    if (comprimento > largura) {
+        printf("%.100s\n", texto);
+        return;
+    }
+
+    int espacos_esquerda = (largura - comprimento) / 2;
+    int espacos_direita = largura - comprimento - espacos_esquerda;
+
+    //Pula espaços na esquerda
+    for (int i = 0; i < espacos_esquerda; i++) {
+        printf("\e[C");
+    }
+
+    //Imprime a string
+    printf("%.100s", texto);
 
     //Pula espaços na direita
     for (int i = 0; i < espacos_direita; i++) {

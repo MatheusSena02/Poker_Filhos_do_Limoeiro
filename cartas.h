@@ -211,12 +211,11 @@ int baralho_distribuirCartas_jogadores(tp_pilha *baralhoJogo, tp_jogador jogador
         jogador[i].mao[0] = e;
         if (!pilha_pop(baralhoJogo, &e)) return 0;
         jogador[i].mao[1] = e;
-        printf("|%d|%d|", jogador[i].mao[0], jogador[i].mao[1]);
     }
     return 1;
 }
 
-int inicializar_vetor_mesa(int mao_mesa[]){
+int mesa_mao_inicializar(int mao_mesa[]){
     for(int i=0;i<5;i++){
         mao_mesa[i]=-1;
     }

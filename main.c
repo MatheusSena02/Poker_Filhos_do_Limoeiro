@@ -36,6 +36,7 @@ int main()
     limparTela();
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
+    printf("\e[?25l"); //deixa cursor invisível
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
@@ -52,11 +53,11 @@ int main()
     pote.pote=0;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
-
+    //Inicializa os baralhos
 	baralhoReferencia_inicializar(baralhoReferencia);
     baralho_embaralharPosicoes(&baralhoJogo);
 
-
+    //Menu inicial e configurações
     do {
         programa_iniciar();
         limparTela();
@@ -75,16 +76,23 @@ int main()
 
     } while (cursor.navegador!=1);
 
-    if (opcoes.debug) debug1(baralhoReferencia, opcoes, &baralhoJogo);
+    //Mostrar baralhos se debug for 1
+    if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, &baralhoJogo);
     
-    quant=jogador_escolherQuantidade();
-    tp_jogador jogador[quant];
-    
-    jogador_escolherNomes(jogador, quant);
-    programa_pausar();
+    //Se debug estiver desligado, escolhe quantidade de players
+    if (opcoes.debug>1) quant=3;
+    else quant=jogador_escolherQuantidade();
 
+    tp_jogador jogador[quant];
+
+    //Se debug for diferente de 2, escolhe os nomes dos players
+    if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, quant);
+    else jogador_escolherNomes(jogador, quant);
+    programa_pausar();
+    limparTela();
+
+    //Distribuição de cartas para os jogadores
     if(!baralho_distribuirCartas_jogadores(&baralhoJogo, jogador, quant)) {
-        limparTela();
         printf("Erro na distribuição de cartas.\n");
         printf("O programa será encerrado.\n");
 
@@ -92,8 +100,7 @@ int main()
         return 22;
     }
 
-    limparTela();
-    printf("\e[?25l"); //deixa cursor invisivcel
+    if (opcoes.debug==1) debug_mostrarMaos (baralhoReferencia, jogador, quant);
 
     desenhar_fundo();
     jogo_jogador_rodada(&jogador[0],&cursor,&pote);

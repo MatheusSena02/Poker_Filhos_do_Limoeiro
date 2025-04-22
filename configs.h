@@ -11,8 +11,9 @@ void arq_atualizarOpcoes (opc *opcoes) {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
-        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples )\n");
+        fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
+        fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
         fprintf(arq,"debug = %d\n\n",opcoes->debug);
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
         fprintf(arq,"// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\n");
@@ -27,6 +28,12 @@ void config_inverter(int *a) {
 	//Inverte uma configuração/booleano entre 0 e 1
 	if (*a==1) *a=0;
 	else *a=1; 
+}
+
+void config_alternar(int *a,int numeroDeEstados) {
+	//Alterna uma configuracão em inteiros entre 0 a numeroDeEstados
+	if (((*a)+1)<numeroDeEstados) *a+=1;
+	else *a=0; 
 }
 
 void config_inicializacao(opc *opcoes) {
@@ -56,8 +63,9 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("=           Use WASD para navegar e F para selecionar             =\n");
 	printf("===================================================================\n\n");
 	printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[0],opcoes->debug);
-	printf("\e[33m//Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples)\e[39m\e[23m\n");
-	printf("\e[33m//Simples -> prinfs de avisos e monitoramento\e[39m\n\n");
+	printf("\e[33m//Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples / 2 = Facilita Testes)\e[39m\e[23m\n");
+	printf("\e[33m//Simples -> prinfs de avisos e monitoramento\e[39m\n");
+    printf("\e[33m//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\e[39m\n\n");
 	printf("===================================================================\n\n");
 	printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[1],opcoes->modoDeSalvamento);
 	printf("\e[33m// Seleciona a formatação do .txt que salva o histórico\e[39m\n");
@@ -99,7 +107,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
         case 102:
 			switch (cursor->navegador) {
 				case 0:
-					config_inverter(&opcoes->debug);
+					config_alternar(&opcoes->debug,3);
 				break;
 
 				case 1:
