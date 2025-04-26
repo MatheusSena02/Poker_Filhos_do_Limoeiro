@@ -2,7 +2,6 @@
 #define CARTAS_H
 #include <stdio.h>
 #include <string.h>
-#include "pilha.h"
 
 typedef struct {
     int ID;
@@ -11,6 +10,7 @@ typedef struct {
     char valor_c[4]; //A,2,3,4,5,6,7,8,9,J,Q,K
 }tp_carta;
 
+#include "pilhaLEcarta.h"
 #include "jogador.h"
 
 int carta_setarvalor(tp_carta *carta, int valor) {
@@ -122,94 +122,86 @@ void carta_printarG(tp_carta *carta) {
     printf("\e[7A\e[1C");
 }
 
-void baralhoReferencia_printarP (tp_carta *baralhoReferencia) {
+void baralho_printarP (tp_pilhaLEcarta *baralhoJogo) {
     //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralho Referencia usando cartas pequenas
-    //Precisa receber um vetor do struct tp_carta, de tamanho 52
+    //Printa todo o baralhoJogo usando cartas pequenas
+    //Precisa receber uma pilhaLEcarta 
+    int cont=0;
+    tp_pilhaLEcarta *pilha_aux;
+    tp_pilhaLEcarta_item carta;
+    //cria e inicializa uma pilha auxiliar
+    pilha_aux=pilhaLEcarta_inicializar();
+    
+    while (!pilhaLEcarta_verificar_vazia(baralhoJogo))
+          {
+           pilhaLEcarta_pop(baralhoJogo,&carta);
+           carta_printarP(&carta);
+           fflush(stdout);
+           pilhaLEcarta_push(pilha_aux, carta);
+           if (cont==12||cont==25||cont==38||cont==51) printf("\e[5E");
+           cont++;           
+           }
+   
+   while (!pilhaLEcarta_verificar_vazia(pilha_aux))
+          {
+           pilhaLEcarta_pop(pilha_aux,&carta);
+           pilhaLEcarta_push(baralhoJogo, carta);           
+           }
+    pilha_aux = pilhaLEcarta_destruir(pilha_aux);
+
+}
+
+void baralho_printarG (tp_pilhaLEcarta *baralhoJogo) {
+    //Provavelmente inútil para o funcionamente do jogo
+    //Printa todo o baralhoJogo usando cartas grandes
+    //Precisa receber uma pilhaLEcarta 
+
+    int cont=0;
+    tp_pilhaLEcarta *pilha_aux;
+    tp_pilhaLEcarta_item carta;
+    //cria e inicializa uma pilha auxiliar
+    pilha_aux=pilhaLEcarta_inicializar();
+    
+    while (!pilhaLEcarta_verificar_vazia(baralhoJogo))
+          {
+           pilhaLEcarta_pop(baralhoJogo,&carta);
+           carta_printarG(&carta);
+           fflush(stdout);
+           pilhaLEcarta_push(pilha_aux, carta);
+           if (cont==12||cont==25||cont==38||cont==51) printf("\e[8E");
+           cont++;  
+           }
+   
+   while (!pilhaLEcarta_verificar_vazia(pilha_aux))
+          {
+           pilhaLEcarta_pop(pilha_aux,&carta);
+           pilhaLEcarta_push(baralhoJogo, carta);           
+           }
+    pilha_aux = pilhaLEcarta_destruir(pilha_aux);
+
+}
+
+
+int baralho_embaralhar(tp_carta baralhoReferencia[],tp_pilhaLEcarta *baralhoJogo){
+    int aleat;
+    tp_carta aux;
+    for(int i=0;i<52;i++){
+        aleat=aleatorio(i, 51);
+        aux = baralhoReferencia[i];
+        baralhoReferencia[i] = baralhoReferencia[aleat];
+        baralhoReferencia[aleat] = aux;
+    }
     for (int i=0;i<52;i++){
-        carta_printarP(&baralhoReferencia[i]);
-        fflush(stdout);
-        if (i==12||i==25||i==38||i==51) printf("\e[5E");
+        pilhaLEcarta_push(baralhoJogo,baralhoReferencia[i]);
     }
 }
 
-void baralhoReferencia_printarG (tp_carta *baralhoReferencia) {
-    //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralho Referencia usando cartas grandes
-    //Precisa receber um vetor do struct tp_carta, de tamanho 52
-    for (int i=0;i<52;i++){
-        carta_printarG(&baralhoReferencia[i]);
-        fflush(stdout);
-        if (i==12||i==25||i==38||i==51) printf("\e[8E");
-    }
-}
-
-void baralho_printarP (tp_carta *baralhoReferencia,tp_pilha baralhoJogo) {
-    //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo usando cartas pequenas
-    //Precisa receber um vetor do struct tp_carta, de tamanho 52 e a pilha que contém o embaralhamento de posições
-    tp_item cartaPos;
-    for (int i=0;!pilha_verificar_vazia(&baralhoJogo);i++){
-        pilha_pop(&baralhoJogo,&cartaPos);
-        carta_printarP(&baralhoReferencia[cartaPos]);
-        fflush(stdout);
-        if (i==12||i==25||i==38||i==51) printf("\e[5E");
-    }
-}
-
-void baralho_printarG (tp_carta *baralhoReferencia,tp_pilha baralhoJogo) {
-    //Provavelmente inútil para o funcionamente do jogo
-    //Printa todo o baralhoReferencia com base nas posições embaralhadas na pilha BaralhoJogo usando cartas grandes
-    //Precisa receber um vetor do struct tp_carta, de tamanho 52, e a pilha que contém o embaralhamento de posições
-    tp_item cartaPos;
-    for (int i=0;!pilha_verificar_vazia(&baralhoJogo);i++){
-        pilha_pop(&baralhoJogo,&cartaPos);
-        carta_printarG(&baralhoReferencia[cartaPos]);
-        fflush(stdout);
-        if (i==12||i==25||i==38||i==51) printf("\e[8E");
-    }
-}
-
-
-int baralho_embaralharPosicoes(tp_pilha *baralhoJogo){
-    int cpf_carta, veri, gaveta[52], tam_gaveta=0;
-    pilha_inicializar(baralhoJogo);
-    for(int i=0;(!pilha_verificar_cheia(baralhoJogo));i++){
-        veri=0;
-        cpf_carta=aleatorio(0, 51);
-        if(i==0){
-            gaveta[0]=cpf_carta;
-            pilha_push(baralhoJogo,cpf_carta);
-            tam_gaveta++;
-        }
-        else{
-            for(int j=0;j<tam_gaveta;j++){
-                if(gaveta[j] == cpf_carta){
-                    veri = 1;
-                }
-            }
-                
-            if(veri==0){
-                gaveta[i]=cpf_carta;
-                pilha_push(baralhoJogo,cpf_carta);
-                tam_gaveta++;
-            }
-            else{
-                if(veri==1){
-                    i-=1;    
-                }
-            }
-            
-        }
-    }    
-}
-
-int baralho_distribuirCartas_jogadores(tp_pilha *baralhoJogo, tp_jogador jogador[], int quant){
-    int e;
+int baralho_distribuirCartas_jogadores(tp_pilhaLEcarta *baralhoJogo, tp_jogador jogador[], int quant){
+    tp_pilhaLEcarta_item e;
     for(int i = 0; i < quant; i++){
-        if (!pilha_pop(baralhoJogo, &e)) return 0;
+        if (!pilhaLEcarta_pop(baralhoJogo, &e)) return 0;
         jogador[i].mao[0] = e;
-        if (!pilha_pop(baralhoJogo, &e)) return 0;
+        if (!pilhaLEcarta_pop(baralhoJogo, &e)) return 0;
         jogador[i].mao[1] = e;
     }
     return 1;
@@ -221,12 +213,12 @@ int mesa_mao_inicializar(int mao_mesa[]){
     }
 }
 
-int baralho_distribuirCartas_mesa(tp_pilha *baralhoJogo, int mao_mesa[]){
+/*int baralho_distribuirCartas_mesa(tp_pilhaLEcarta *baralhoJogo, int mao_mesa[]){
     int cm;
     
     for(int i=0;i<5;i++){
         if(mao_mesa[i] == -1){
-            pilha_pop(baralhoJogo, &cm);
+            pilhaLEcarta_pop(baralhoJogo, &cm);
             mao_mesa[i] = cm;
             return i;
         }
@@ -245,7 +237,7 @@ int baralho_mesa_numeroCartas(int mao_mesa[]){
         }
     }
 }
-
+*/
 
 
 

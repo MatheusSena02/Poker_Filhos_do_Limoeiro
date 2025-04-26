@@ -8,7 +8,7 @@
 typedef struct{
     int ID;
     char nome[30], cor[16];
-    int mao[2];
+    tp_carta mao[2];
     float dinheiro;
     float aposta;
 }tp_jogador;

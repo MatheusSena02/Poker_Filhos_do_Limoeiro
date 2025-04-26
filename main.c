@@ -10,7 +10,6 @@
 #include "arquivo.h"
 #include "cartas.h"
 #include "configs.h"
-#include "pilha.h"
 #include "jogador.h"
 #include "extradebug.h"
 
@@ -40,11 +39,11 @@ int main()
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int quant,iniciarJogo,iniciarConfig,mao_mesa[5];
+    int quant,iniciarJogo,iniciarConfig;
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
-    tp_pilha baralhoJogo;       //BARALHO PARA OS JOGADORES
-	tp_carta baralhoReferencia[52];
+    tp_pilhaLEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
+	tp_carta baralhoReferencia[52],mao_mesa[5];
 
     tp_cursor cursor;
 
@@ -55,7 +54,8 @@ int main()
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     //Inicializa os baralhos
 	baralhoReferencia_inicializar(baralhoReferencia);
-    baralho_embaralharPosicoes(&baralhoJogo);
+    baralhoJogo=pilhaLEcarta_inicializar();
+    baralho_embaralhar(baralhoReferencia,baralhoJogo);
 
     //Menu inicial e configurações
     do {
@@ -77,7 +77,7 @@ int main()
     } while (cursor.navegador!=1);
 
     //Mostrar baralhos se debug for 1
-    if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, &baralhoJogo);
+    if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
     //Se debug estiver desligado, escolhe quantidade de players
     if (opcoes.debug>1) quant=3;
@@ -92,7 +92,7 @@ int main()
     limparTela();
 
     //Distribuição de cartas para os jogadores
-    if(!baralho_distribuirCartas_jogadores(&baralhoJogo, jogador, quant)) {
+    if(!baralho_distribuirCartas_jogadores(baralhoJogo, jogador, quant)) {
         printf("Erro na distribuição de cartas.\n");
         printf("O programa será encerrado.\n");
 

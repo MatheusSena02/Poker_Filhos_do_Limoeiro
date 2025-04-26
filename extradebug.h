@@ -1,28 +1,16 @@
 #ifndef EXTRADEBUG_H
 #define EXTRADEBUG_H
 
-void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilha *baralhoJogo) {
-    printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
-    printf("\e[5EBaralho Original P:\n");
-    baralhoReferencia_printarP(baralhoReferencia);
-    printf("\e[5E");
-    programa_pausar();
-    limparTela();
+void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilhaLEcarta *baralhoJogo) {
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[5EBaralho Embaralhado P:\n");
-    baralho_printarP(baralhoReferencia,*baralhoJogo);
-    printf("\e[5E");
-    programa_pausar();
-    limparTela();
-    printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
-    printf("\e[2EBaralho Original G:\n");
-    baralhoReferencia_printarG(baralhoReferencia);
+    baralho_printarP(baralhoJogo);
     printf("\e[5E");
     programa_pausar();
     limparTela();
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[2EBaralho Embaralhado G:\n");
-    baralho_printarG(baralhoReferencia,*baralhoJogo);
+    baralho_printarG(baralhoJogo);
     printf("\e[5E");
     programa_pausar();
     limparTela();
@@ -78,8 +66,8 @@ void debug_mostrarMaos (tp_carta baralhoReferencia[],tp_jogador jogador[],int qu
     printf("Maos dos jogadores:\n");
     for (int i=0;i<quant;i++){
         printf("Jogador %d: ",i);
-        carta_printarP(&baralhoReferencia[jogador[i].mao[0]]);
-        carta_printarP(&baralhoReferencia[jogador[i].mao[1]]);
+        carta_printarP(&jogador[i].mao[0]);
+        carta_printarP(&jogador[i].mao[1]);
         printf("\n\n\n\n");
     }
     programa_pausar();
