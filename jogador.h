@@ -528,10 +528,40 @@ void desenhar_menu_jogador(tp_jogador jogador) {
     desenhar_dinheiro(jogador.dinheiro);
 }
 
+void carta_printarG(tp_carta *carta);
+
+void desenhar_mao_jogador(tp_jogador jogador) {
+    printf("\e[26E\e[64C");
+    printf("\e[48;2;29;78;99m");
+    carta_printarG(&jogador.mao[0]);
+    printf("\e[7C");
+    printf("\e[48;2;29;78;99m");
+    carta_printarG(&jogador.mao[1]);
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_maiorAposta(float valor) {
+    printf("\e[48;2;255;193;7m");
+    printf("\e[41E\e[132C");
+    printf("\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Aposta mais alta:",22);
+    printf("\e[H");
+    printf("\e[42E\e[132C");
+    imprimir_centralizado_float_dinheiro(valor,22);
+
+    printf("\e[0m");
+    printf("\e[H");
+}
+
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
 
     desenhar_pote(pote->pote);
     desenhar_menu_jogador(*jogador);
+    desenhar_marcadormaojogador();
+    desenhar_mao_jogador(*jogador);
+    desenhar_porcoaposta();
+    desenhar_maiorAposta(pote->maiorAposta);
 
 
     desenhar_limpar_seletorEaumentar();

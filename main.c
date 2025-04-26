@@ -63,6 +63,9 @@ int main()
         limparTela();
 
         cursor_zerarCursor(&cursor);
+        desenhar_fundoinicial();
+        desenhar_fichainicial();
+
         while(1) if (menuinicial_navegar(&cursor) > 0) break;
 
         limparTela();
