@@ -12,7 +12,13 @@
 #endif
 
 
+void console_cursor_invisivel(){
+    printf("\e[?25l"); // cursor invisivel
+}
 
+void console_cursor_visivel(){
+    printf("\e[?25h");
+}
 
 int aleatorio(int min, int max) {
     //Obter numero aleatorio e retornar

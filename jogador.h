@@ -20,6 +20,7 @@ typedef struct{
 
 
 int jogador_escolherQuantidade(){
+    console_cursor_visivel();
     int quant=0, check=0;
     
     printf("Digite a quantidade de jogadores(2-6): \n");
@@ -32,6 +33,7 @@ int jogador_escolherQuantidade(){
         scanf("%d", &quant);
         if(quant>=2 && quant<=6) break;
     }
+    console_cursor_invisivel();
     return quant;
 }
 
@@ -49,20 +51,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");           
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
+            desenhar_inserirjogadormesa();
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -88,20 +77,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");           
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
+            desenhar_inserirjogadormesa();
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -121,7 +97,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[36C");
+            printf("\e[H\e[26E\e[36C");
 
         break;
 
@@ -136,20 +112,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");           
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
+            desenhar_inserirjogadormesa();
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -171,7 +134,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[36C");
+            printf("\e[H\e[26E\e[36C");
             printf("\e[%sm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -190,20 +153,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");           
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
+            desenhar_inserirjogadormesa();
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -227,7 +177,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[24C");
+            printf("\e[H\e[26E\e[24C");
             printf("\e[%sm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -235,7 +185,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[49C");
+            printf("\e[H\e[26E\e[49C");
         break;
         
         case 5:
@@ -249,20 +199,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");           
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
+            desenhar_inserirjogadormesa();
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -288,7 +225,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[24C");
+            printf("\e[H\e[26E\e[24C");
             printf("\e[%sm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -296,7 +233,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[49C");
+            printf("\e[H\e[26E\e[49C");
             printf("\e[%sm",jogador[3].cor);
             printf("%.11s",jogador[3].nome);
             printf("\e[39m");
@@ -314,20 +251,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");           
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("           \e[90m██\e[39m\e[32m█████████████████████████████████████████████████████████\e[39m\e[90m██\e[39m             \n");
-            printf("            \e[90m██\e[39m\e[32m███████████████████████████████████████████████████████\e[39m\e[90m██\e[39m              \n");
-            printf("             \e[90m███\e[39m\e[32m███████████████████████████████████████████████████\e[39m\e[90m███\e[39m               \n");
-            printf("               \e[90m███████\e[39m\e[32m███████████████████████████████████████\e[39m\e[90m███████\e[39m                 \n");
-            printf("                    \e[90m███████████████████████████████████████████\e[39m                                              \n");
+            desenhar_inserirjogadormesa();
             printf("                                                                                   \n");
             printf("                                                                                   \n");
             printf("                                                                                   \n");
@@ -355,7 +279,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[0].cor);
             printf("%.11s",jogador[0].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[17C");
+            printf("\e[H\e[26E\e[17C");
             printf("\e[%sm",jogador[1].cor);
             printf("%.11s",jogador[1].nome);
             printf("\e[39m");
@@ -363,7 +287,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[2].cor);
             printf("%.11s",jogador[2].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[36C");
+            printf("\e[H\e[26E\e[36C");
             printf("\e[%sm",jogador[3].cor);
             printf("%.11s",jogador[3].nome);
             printf("\e[39m");
@@ -371,7 +295,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
             printf("\e[%sm",jogador[4].cor);
             printf("%.11s",jogador[4].nome);
             printf("\e[39m");
-            printf("\e[H\e[25E\e[55C");
+            printf("\e[H\e[26E\e[55C");
         break;
     }
 }
@@ -381,7 +305,7 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
 
     for(int i=0;i<quant;i++){
         limparTela();
-
+        
         switch(cont){
             case 0:
             strcpy(jogador[i].cor,"38;2;38;198;218");
@@ -392,11 +316,11 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
 
             case 2:
-            strcpy(jogador[i].cor,"38;2;255;152;0");
+            strcpy(jogador[i].cor,"38;2;76;175;80");
             break;
 
             case 3:
-            strcpy(jogador[i].cor,"38;2;76;175;80");
+            strcpy(jogador[i].cor,"38;2;255;152;0");
             break;
 
             case 4:
@@ -408,9 +332,13 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
         }
         jogador[i].ID=i;
+        jogador[i].dinheiro=0;
+        jogador[i].aposta=0;
         jogador_cadastroImpressao(jogador,(i+1));
         printf("\e[%sm",jogador[i].cor);
+        console_cursor_visivel();
         scanf(" %[^\n]s",jogador[i].nome);
+        console_cursor_invisivel();
         printf("\e[39m");
         cont++;
     }
@@ -529,8 +457,32 @@ void desenhar_menu_jogador(tp_jogador jogador) {
 }
 
 void carta_printarG(tp_carta *carta);
+void carta_printarG_verso();
 
 void desenhar_mao_jogador(tp_jogador jogador) {
+    printf("\e[48;2;29;78;99m");
+    printf("\e[25E\e[58C");
+    printf("  Pressione W para começar a rodada");
+    printf("\e[H");
+
+    printf("\e[26E\e[64C");
+    carta_printarG_verso();
+    printf("\e[7C");
+    printf("\e[48;2;29;78;99m");
+    carta_printarG_verso();
+    printf("\e[H");
+    
+    int input;
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 119);
+
+    printf("\e[25E\e[58C");
+    printf("\e[48;2;29;78;99m");
+    printf("                                   ");
+    printf("\e[H");
+
     printf("\e[26E\e[64C");
     printf("\e[48;2;29;78;99m");
     carta_printarG(&jogador.mao[0]);
@@ -556,13 +508,14 @@ void desenhar_maiorAposta(float valor) {
 
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
 
+    desenhar_limpar_seletorEaumentar();
     desenhar_pote(pote->pote);
     desenhar_menu_jogador(*jogador);
     desenhar_marcadormaojogador();
-    desenhar_mao_jogador(*jogador);
     desenhar_porcoaposta();
     desenhar_maiorAposta(pote->maiorAposta);
 
+    desenhar_mao_jogador(*jogador);
 
     desenhar_limpar_seletorEaumentar();
     desenhar_bordaseletor();

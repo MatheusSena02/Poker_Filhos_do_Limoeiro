@@ -31,11 +31,11 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
 
             case 2:
-            strcpy(jogador[i].cor,"38;2;255;152;0");
+            strcpy(jogador[i].cor,"38;2;205;220;57");
             break;
 
             case 3:
-            strcpy(jogador[i].cor,"38;2;76;175;80");
+            strcpy(jogador[i].cor,"38;2;255;152;0");
             break;
 
             case 4:
@@ -47,6 +47,8 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
         }
         jogador[i].ID=i;
+        jogador[i].dinheiro=0;
+        jogador[i].aposta=0;
         strcpy(jogador[i].nome,nomes[i]);
         cont++;
     }

@@ -35,7 +35,7 @@ int main()
     limparTela();
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
-    printf("\e[?25l"); //deixa cursor invisível
+    console_cursor_invisivel(); //deixa cursor invisível
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
@@ -83,7 +83,7 @@ int main()
     if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
     //Se debug estiver desligado, escolhe quantidade de players
-    if (opcoes.debug>1) quant=3;
+    if (opcoes.debug>1) quant=6;
     else quant=jogador_escolherQuantidade();
 
     tp_jogador jogador[quant];
@@ -91,6 +91,7 @@ int main()
     //Se debug for diferente de 2, escolhe os nomes dos players
     if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, quant);
     else jogador_escolherNomes(jogador, quant);
+
     programa_pausar();
     limparTela();
 
@@ -105,8 +106,11 @@ int main()
 
     if (opcoes.debug==1) debug_mostrarMaos (baralhoReferencia, jogador, quant);
 
+    
     desenhar_fundo();
-    jogo_jogador_rodada(&jogador[0],&cursor,&pote);
+    for(int i=0;i<quant;i++) {
+    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+    }
 
     programa_finalizar();
 

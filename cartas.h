@@ -104,6 +104,18 @@ void carta_printarP(tp_carta *carta) {
     printf("\e[3A\e[1C");
 }
 
+void carta_printarP_verso() {
+    // Printa a carta dada
+    printf("xxxxx\e[1B\e[5D\e[41;37m\e[1mx\e[22mxxxx\e[1B\e[5Dxx\e[1mx\e[22mxx\e[1B\e[5Dxxxx\e[1mx\e[22m\e[49;39m");
+    printf("\e[3A\e[1C");
+}
+
+void carta_printarG_verso() {
+    // Printa a carta dada
+    printf("         \e[1B\e[9D\e[41;37mXXXXXXXXX\e[1B\e[9DXXXXXXXXX\e[1B\e[9DXXXXXXXXX\e[1B\e[9DXXXXXXXXX\e[1B\e[9DXXXXXXXXX\e[1B\e[9DXXXXXXXXX\e[1B\e[9DXXXXXXXXX\e[49m\e[39m");
+    printf("\e[7A\e[1C");
+}
+
 void carta_printarG(tp_carta *carta) {
     // Printa a carta dada
     char  simbolo_naipe[4][8] = {"\u2665", "\u2666", "\u2660", "\u2663"};  // ♥, ♦, ♠, ♣;
