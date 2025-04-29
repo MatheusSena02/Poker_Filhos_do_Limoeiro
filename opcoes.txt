@@ -3,7 +3,7 @@
 //Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)
 // Simples -> prinfs de avisos e monitoramento
 //Facilita Testes -> Simples + pula partes do jogo para facilitar os testes
-debug = 2
+debug = 1
 
 // Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )
 // Recomendação:  Windows / OnlineGDB = 1 / Replit = 0

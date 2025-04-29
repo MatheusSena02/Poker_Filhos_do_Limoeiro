@@ -68,8 +68,8 @@ void debug_mostrarMaos (tp_carta baralhoReferencia[],tp_jogador jogador[],int qu
     printf("Maos dos jogadores:\n");
     for (int i=0;i<quant;i++){
         printf("Jogador %d: ",i);
-        carta_printarP(&jogador[i]->mao);
-        carta_printarP(&jogador[i]->mao->prox);
+        carta_printarP(&jogador[i].mao->info);
+        carta_printarP(&jogador[i].mao->prox->info);
         printf("\n\n\n\n");
     }
     programa_pausar();

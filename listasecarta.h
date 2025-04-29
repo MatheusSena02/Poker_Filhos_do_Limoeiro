@@ -81,7 +81,7 @@ int listaSEcarta_inserir_fim(tp_listasecarta **l, tp_listasecarta_item e) {
 }
 
 
-int listaSEcarta_remover(tp_listasecarta **lista, tp_listasecarta_item e) {
+/*int listaSEcarta_remover(tp_listasecarta **lista, tp_listasecarta_item e) {
     // Remove a primeira ocorrência de um item na lista
     // Parâmetros a serem passados na main: endereço de memória do ponteiro que aponta para o início da lista e o item a ser removido
     // Exemplo: listaSEcarta_remover(&lista, 10);
@@ -97,61 +97,7 @@ int listaSEcarta_remover(tp_listasecarta **lista, tp_listasecarta_item e) {
 
     free(atu);
     return 1;
-}
-
-
-int listaSEcarta_remover_impares(tp_listasecarta **lista) {
-    // Remove todos os nós com valores ímpares
-    // Parâmetros a serem passados na main: endereço de memória do ponteiro que aponta para o início da lista
-    // Exemplo: listaSEcarta_remover_impares(&lista);
-    tp_listasecarta *ant = NULL, *atu = *lista;
-    int cont = 0;
-
-    while (atu != NULL) {
-        if (atu->info % 2 != 0) {
-            cont++;
-            if (ant == NULL) {
-                *lista = atu->prox;
-                free(atu);
-                atu = *lista;
-            } else {
-                ant->prox = atu->prox;
-                free(atu);
-                atu = ant;
-            }
-        }
-        ant = atu;
-        atu = atu->prox;
-    }
-    return cont;
-}
-
-
-int listaSEcarta_remover_pares(tp_listasecarta **lista) {
-    // Remove todos os nós com valores pares
-    // Parâmetros a serem passados na main: endereço de memória do ponteiro que aponta para o início da lista
-    // Exemplo: listaSEcarta_remover_pares(&lista);
-    tp_listasecarta *ant = NULL, *atu = *lista;
-    int cont = 0;
-
-    while (atu != NULL) {
-        if (atu->info % 2 == 0) {
-            cont++;
-            if (ant == NULL) {
-                *lista = atu->prox;
-                free(atu);
-                atu = *lista;
-            } else {
-                ant->prox = atu->prox;
-                free(atu);
-                atu = ant;
-            }
-        }
-        ant = atu;
-        atu = atu->prox;
-    }
-    return cont;
-}
+}*/
 
 void listaSEcarta_destruir(tp_listasecarta **l){
     // Destrói uma lista e libera a memória alocada
@@ -183,7 +129,7 @@ int listaSEcarta_verificar_tamanho(tp_listasecarta *lista) {
 
 
 
-tp_listasecarta *listaSEcarta_buscar(tp_listasecarta *lista, tp_listasecarta_item e) {
+/*tp_listasecarta *listaSEcarta_buscar(tp_listasecarta *lista, tp_listasecarta_item e) {
     // Busca um valor na lista e retorna o endereço de memória do nó que o contém
     // Parâmetros a serem passados na main: endereço de memória do início lista e o valor a ser buscado
     // Exemplo: encontrado = listaSEcarta_buscar(lista, 5);
@@ -192,93 +138,7 @@ tp_listasecarta *listaSEcarta_buscar(tp_listasecarta *lista, tp_listasecarta_ite
         atu = atu->prox;
     }
     return atu;
-}
-
-
-int listaSEcarta_comparar_Listas(tp_listasecarta *lista1, tp_listasecarta *lista2) {
-    // Compara duas listas e retorna 1 se forem iguais, 0 caso contrário
-    // Parâmetros a serem passados na main: endereço de memória do início de duas listas
-    // Exemplo: iguais = listaSEcarta_comparar_Listas(lista1, lista2);
-    if (listaSEcarta_verificar_tamanho(lista1) != listaSEcarta_verificar_tamanho(lista2)) return 0;
-    tp_listasecarta *atu1 = lista1, *atu2 = lista2;
-    while (atu1 != NULL) {
-        if (atu1->info != atu2->info) return 0;
-        atu1 = atu1->prox;
-        atu2 = atu2->prox;
-    }
-    return 1;
-}
-
-
-int listaSEcarta_comparar_valores_maioresQue(tp_listasecarta *lista, tp_listasecarta_item e) {
-    // Compara quantos elementos da lista são maiores que um valor específico. Retorna essa quantidade de elementos.
-    // Parâmetros a serem passados na main: endereço de memória do início da lista e o valor para comparação
-    // Exemplo: qtde = listaSEcarta_comparar_valores_maioresQue(lista, 10);
-    int cont = 0;
-    tp_listasecarta *atu = lista;
-    while (atu != NULL) {
-        if (atu->info > e) cont++;
-        atu = atu->prox;
-    }
-    return cont;
-}
-
-
-int listaSEcarta_comparar_valores_menoresQue(tp_listasecarta *lista, tp_listasecarta_item e) {
-    // Compara quantos elementos da lista são menores que um valor específico. Retorna essa quantidade de elementos.
-    // Parâmetros a serem passados na main: endereço de memória do início da lista e o valor para comparação
-    // Exemplo: qtde = listaSEcarta_comparar_valores_menoresQue(lista, 10);
-    int cont = 0;
-    tp_listasecarta *atu = lista;
-    while (atu != NULL) {
-        if (atu->info < e) cont++;
-        atu = atu->prox;
-    }
-    return cont;
-}
-
-
-int listaSEcarta_comparar_valores_iguais(tp_listasecarta *lista, tp_listasecarta_item e) {
-    // Compara quantos elementos da lista são iguais a um valor específico. Retorna essa quantidade
-    // Parâmetros a serem passados na main: endereço de memória do início da lista e o valor para comparação
-    // Exemplo: qtde = listaSEcarta_comparar_valores_iguais(lista, 10);
-    int cont = 0;
-    tp_listasecarta *atu = lista;
-    while (atu != NULL) {
-        if (atu->info == e) cont++;
-        atu = atu->prox;
-    }
-    return cont;
-}
-
-
-int listaSEcarta_comparar_valores_pares(tp_listasecarta *lista) {
-    // Compara quantos elementos da lista são pares. Retorna essa quantidade
-    // Parâmetros a serem passados na main: endereço de memória do início da lista
-    // Exemplo: qtde = listaSEcarta_comparar_valores_pares(lista);
-    int cont = 0;
-    tp_listasecarta *atu = lista;
-    while (atu != NULL) {
-        if ((atu->info % 2) == 0) cont++;
-        atu = atu->prox;
-    }
-    return cont;
-}
-
-
-int listaSEcarta_comparar_valores_impares(tp_listasecarta *lista) {
-    // Compara quantos elementos da lista são ímpares. Retorna essa quantidade
-    // Parâmetros a serem passados na main: endereço de memória do início da lista
-    // Exemplo: qtde = listaSEcarta_comparar_valores_impares(lista);
-    int cont = 0;
-    tp_listasecarta *atu = lista;
-    while (atu != NULL) {
-        if ((atu->info % 2) != 0) cont++;
-        atu = atu->prox;
-    }
-    return cont;
-}
-
+}*/
 
 int listaSEcarta_especiais_criarLoop_entreListas(tp_listasecarta **l1, tp_listasecarta **l2) {
     // Cria um loop entre o final de duas listas, ligando o fim da l1 ao início da l2 e vice-versa

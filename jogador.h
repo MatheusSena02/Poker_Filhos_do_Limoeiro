@@ -485,10 +485,10 @@ void desenhar_mao_jogador(tp_jogador jogador) {
 
     printf("\e[26E\e[64C");
     printf("\e[48;2;29;78;99m");
-    carta_printarG(&jogador->mao->info);
+    carta_printarG(&jogador.mao->info);
     printf("\e[7C");
     printf("\e[48;2;29;78;99m");
-    carta_printarG(&jogador->mao->prox->info);
+    carta_printarG(&jogador.mao->prox->info);
     printf("\e[0m");
     printf("\e[H");
 }
@@ -531,7 +531,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
 
 int jogador_inicializar_mao(tp_jogador jogador[], int quant ){
     for(int i=0;i<quant;i++){
-    jogador[i]-->mao=listaSEcarta_inicializar(); 
+    jogador[i].mao=listaSEcarta_inicializar(); 
     }
 }
 
