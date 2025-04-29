@@ -42,7 +42,7 @@ int main()
     int quant,iniciarJogo,iniciarConfig;
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
-    tp_pilhaLEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
+    tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
 	tp_carta baralhoReferencia[52],mao_mesa[5];
 
     tp_cursor cursor;
@@ -54,7 +54,7 @@ int main()
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     //Inicializa os baralhos
 	baralhoReferencia_inicializar(baralhoReferencia);
-    baralhoJogo=pilhaLEcarta_inicializar();
+    baralhoJogo=pilhaSEcarta_inicializar();
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
 
     //Menu inicial e configurações
