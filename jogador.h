@@ -316,7 +316,7 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
 
             case 2:
-            strcpy(jogador[i].cor,"38;2;76;175;80");
+            strcpy(jogador[i].cor,"38;2;205;220;57");
             break;
 
             case 3:
