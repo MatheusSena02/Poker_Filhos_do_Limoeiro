@@ -12,7 +12,7 @@
 //Alterar o tipo de tp_listasecarta_item altera em toda a biblioteca
 // ATENÇÃO -> precisa trocar no printf de impressão
 
-typedef int tp_listasecarta_item;
+typedef tp_carta tp_listasecarta_item;
 
 typedef struct tp_listasecarta_no { // tp_no = Apelido da struct (tipo sinonimo)
     tp_listasecarta_item info;
@@ -76,77 +76,6 @@ int listaSEcarta_inserir_fim(tp_listasecarta **l, tp_listasecarta_item e) {
         tp_listasecarta *atu = *l;
         while (atu->prox != NULL) atu = atu->prox;
         atu->prox = novo_no;
-    }
-    return 1;
-}
-
-int listaSEcarta_inserir_numericamenteOrdenado_crescente(tp_listasecarta **l, tp_listasecarta_item e) {
-    // Insere um item respeitando a ordem numérica crescente
-    // IMPORTANTE -> caso decida por utilizar esse metodo de inserção, não utilize nenhum outro, isso pode quebrar a ordem crescente.
-    // Parâmetros a serem passados na main: endereço de memória do ponteiro que aponta para o início da lista e o item a ser inserido
-    // Exemplo: listaSEcarta_inserir_numericamenteOrdenado(&lista, 10);
-    tp_listasecarta *novo_no, *atu, *ant;
-    novo_no=listaSEcarta_alocar();
-    if (novo_no==NULL) return 0;
-    
-    novo_no->info=e;
-    novo_no->prox=NULL;
-    
-    ant=NULL;
-    
-    if (listaSEcarta_verificar_vazia(*l)) {
-        *l=novo_no;
-    } else {
-        atu=*l;
-        while((atu->prox!=NULL) && (atu->info <= e)) {
-            ant=atu;
-            atu=atu->prox;
-        }
-        
-        if (ant==NULL) {
-            *l=novo_no;
-            novo_no->prox=atu;
-        }
-        else {
-            if (atu->info>e) {
-                ant->prox=novo_no;
-                novo_no->prox=atu;
-            }
-            else if (atu->prox==NULL) atu->prox = novo_no;
-        }
-    }
-    return 1;
-}
-
-int listaSEcarta_inserir_numericamenteOrdenado_decrescente(tp_listasecarta **l, tp_listasecarta_item e) {
-    // Insere um item respeitando a ordem numérica decrescente
-    // IMPORTANTE -> caso decida por utilizar esse metodo de inserção, não utilize nenhum outro, isso pode quebrar a ordem crescente.
-    // Parâmetros a serem passados na main: endereço de memória do ponteiro que aponta para o início da lista e o item a ser inserido
-    // Exemplo: listaSEcarta_inserir_numericamenteOrdenado(&lista, 10);
-    tp_listasecarta *novo_no, *atu, *ant;
-    novo_no = listaSEcarta_alocar();
-    if (novo_no == NULL) return 0;
-    
-    novo_no->info = e;
-    novo_no->prox = NULL;
-    ant = NULL;
-    
-    if (listaSEcarta_verificar_vazia(*l)) {
-        *l = novo_no;
-    } else {
-        atu = *l;
-        while (atu != NULL && atu->info >= e) {
-            ant = atu;
-            atu = atu->prox;
-        }
-        
-        if (ant == NULL) {
-            novo_no->prox = *l;
-            *l = novo_no;
-        } else {
-            ant->prox = novo_no;
-            novo_no->prox = atu;
-        }
     }
     return 1;
 }
@@ -252,17 +181,6 @@ int listaSEcarta_verificar_tamanho(tp_listasecarta *lista) {
     return cont;
 }
 
-
-void listaSEcarta_imprimir(tp_listasecarta *lista) {
-    // Imprime todos os elementos da lista na tela
-    // Parâmetros a serem passados na main: endereço de memória do início da lista
-    // Exemplo: listaSEcarta_imprimir(lista);
-    tp_listasecarta *atu = lista;
-    while (atu != NULL) {
-        printf("%d\n", atu->info);
-        atu = atu->prox;
-    }
-}
 
 
 tp_listasecarta *listaSEcarta_buscar(tp_listasecarta *lista, tp_listasecarta_item e) {

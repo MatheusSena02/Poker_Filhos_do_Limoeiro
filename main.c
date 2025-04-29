@@ -43,8 +43,8 @@ int main()
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
-	tp_carta baralhoReferencia[52],mao_mesa[5];
-
+	tp_carta baralhoReferencia[52];
+    tp_listasecarta *mao_mesa;
     tp_cursor cursor;
 
     tp_pote pote;
@@ -56,6 +56,7 @@ int main()
 	baralhoReferencia_inicializar(baralhoReferencia);
     baralhoJogo=pilhaSEcarta_inicializar();
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
+    mao_mesa=listaSEcarta_inicializar();
 
     //Menu inicial e configurações
     do {
@@ -87,6 +88,7 @@ int main()
     else quant=jogador_escolherQuantidade();
 
     tp_jogador jogador[quant];
+    jogador_inicializar_mao(jogador, quant);
 
     //Se debug for diferente de 2, escolhe os nomes dos players
     if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, quant);
