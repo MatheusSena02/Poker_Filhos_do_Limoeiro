@@ -33,22 +33,31 @@ void windowsconfig() {
     SetConsoleWindowInfo(hOut, TRUE, &displayArea);
 }
 
-void desenhar_aumentar_aposta_fundo() {
-    printf("\e[s");
-    printf("\e[38E");
-    printf("\e[42C\e[48;2;35;48;54m                                                                      \e[E");
-    printf("\e[40C  \e[48;2;255;255;255m      \e[48;2;33;150;243m                                                                \e[48;2;35;48;54m  \e[E");
-    printf("\e[40C  \e[48;2;255;255;255m  \e[48;2;33;150;243m                                                                  \e[48;2;255;255;255m  \e[48;2;35;48;54m  \e[E");
-    printf("\e[40C  \e[48;2;33;150;243m                                                                \e[48;2;255;255;255m      \e[48;2;35;48;54m  \e[E");
-    printf("\e[42C                                                                      \e[E");
+void desenhar_jogadoraposta() {
+    printf("\e[28E");
+    printf("\e[48;2;0;0;0m                      \e[E");
+    printf("\e[48;2;140;158;255m                    \e[48;2;0;0;0m  \e[E");
+    printf("\e[48;2;140;158;255m                    \e[48;2;0;0;0m  \e[E");
+    printf("\e[0m");
     printf("\e[H");
+    
+    printf("\e[28E");
+    printf("\e[E");
+    printf("\e[48;2;140;158;255m");
+    printf("01234567890123456789");
+    printf("\e[E");
+    printf("01234567890123456789");
+    printf("\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+
 }
 
 
 int main() {
     windowsconfig();
 
-    desenhar_aumentar_aposta_fundo();
+    desenhar_jogadoraposta();
 
     programa_pausar();
 }

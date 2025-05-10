@@ -675,6 +675,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
 void desenhar_menu_jogador(tp_jogador jogador) {
     desenhar_cabecalho(jogador.cor,jogador.nome,jogador.ID);
     desenhar_dinheiro(jogador.dinheiro);
+    desenhar_jogadoraposta(jogador.aposta);
 }
 
 void carta_printarG(tp_carta *carta);
@@ -801,6 +802,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
     desenhar_pote(pote->pote);
     desenhar_dinheiro(jogador->dinheiro);
     desenhar_maiorAposta(pote->maiorAposta);
+    desenhar_jogadoraposta(jogador->aposta);
 
     jogo_jogador_rodada_finalizar(jogador,cursor,pote);
 

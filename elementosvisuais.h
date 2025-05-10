@@ -243,7 +243,7 @@ void desenhar_fichainicial() {
 
     printf("\e[48;2;17;52;66m");
     printf("\e[12E\e[87C[WASD -> Selecionar]\e[E");
-    printf("\e[87C[F -> Confirmar]");
+    printf("\e[87C[F -> Confirmar] [X -> Voltar]");
     printf("\e[0m");
     printf("\e[H");
 
@@ -760,5 +760,24 @@ void desenhar_aumentar_aposta_absoluto() {
     printf("\e[H");
 }
 
+void desenhar_jogadoraposta(float aposta) {
+    printf("\e[28E");
+    printf("\e[48;2;0;0;0m                      \e[E");
+    printf("\e[48;2;140;158;255m                    \e[48;2;0;0;0m  \e[E");
+    printf("\e[48;2;140;158;255m                    \e[48;2;0;0;0m  \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+    
+    printf("\e[28E");
+    printf("\e[E");
+    printf("\e[48;2;140;158;255m\e[38;2;0;0;0m");
+    imprimir__centralizado_string_max20("Valor Já Apostado",20);
+    printf("\e[E");
+    imprimir_centralizado_float_dinheiro(aposta,20);
+    printf("\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+
+}
 
 #endif
