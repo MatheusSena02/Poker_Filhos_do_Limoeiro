@@ -4,7 +4,7 @@
 #define SEGUNDO_ROUND 2
 #define TERCEIRO_ROUND 3
 #define MOSTRAR_CARTAS 4
-#define QUANTPLAYERDEBUG 6 //Define a quantidade de players no modo debug 2
+#define QUANTPLAYERDEBUG 3 //Define a quantidade de players no modo debug 2
 
 //Bibliotecas do C
 #include <stdio.h>
@@ -119,40 +119,73 @@ int main()
     while(1) {
         switch(etapa){
             case PRE_ROUND:
-
-            // esse aq vai ser o pre round onde n tem nenhuma carta na mesa ainda
-            // porem tem as cartas dos jogadores
-            //aq vai ocorrer as primeiras apostas e dessistencias
+                // esse aq vai ser o pre round onde n tem nenhuma carta na mesa ainda
+                // porem tem as cartas dos jogadores
+                //aq vai ocorrer as primeiras apostas e dessistencias
                 desenhar_fundo();
+                if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
 
                 for(int i=0;i<quant;i++) {
-                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-                    jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    //teste
+                    //baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
                 }
+
                 etapa = PRIMEIRO_ROUND;
 
             break;
 
             case PRIMEIRO_ROUND:
-            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq ja temos o primeiro round com tres cartas na mesa;
-            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-            etapa = SEGUNDO_ROUND;
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq ja temos o primeiro round com tres cartas na mesa;
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                
+                desenhar_fundo();
+                if(opcoes.debug>0) printf("E%d\e[H", etapa);
+                desenhar_mesaapoiodamesa();
+
+                for(int i=0;i<quant;i++) {
+                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                }
+            
+                etapa = SEGUNDO_ROUND;
+            
             break;
 
             case SEGUNDO_ROUND:
-            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o segundo roud adicionando mais uma carta a mesa
-            etapa = TERCEIRO_ROUND;
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o segundo roud adicionando mais uma carta a mesa
+
+                desenhar_fundo();
+                if(opcoes.debug>0) printf("E%d\e[H", etapa);
+                desenhar_mesaapoiodamesa();
+                
+                for(int i=0;i<quant;i++) {
+                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                }
+
+                etapa = TERCEIRO_ROUND;
+
             break;
 
             case TERCEIRO_ROUND:
-            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o terceiro round e o ultimo antes de mostrar as cartas, adicionando tmb mais uma carta a mesa
-            etapa = MOSTRAR_CARTAS;
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o terceiro round e o ultimo antes de mostrar as cartas, adicionando tmb mais uma carta a mesa
+                
+                desenhar_fundo();
+                if(opcoes.debug>0) printf("E%d\e[H", etapa);
+                desenhar_mesaapoiodamesa();
+
+                for(int i=0;i<quant;i++) {
+                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                }
+
+                etapa = MOSTRAR_CARTAS;
+            
             break;
 
             case MOSTRAR_CARTAS:
-            // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
+                if(opcoes.debug>0) printf("E%d\n", etapa);
+                // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
             break;
 
             default:
