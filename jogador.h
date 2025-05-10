@@ -11,6 +11,7 @@ typedef struct{
     tp_listasecarta *mao;
     float dinheiro;
     float aposta;
+    int desistir;
 }tp_jogador;
 
 typedef struct{
@@ -334,6 +335,7 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
         jogador[i].ID=i;
         jogador[i].dinheiro=1000;
         jogador[i].aposta=0;
+        jogador[i].desistir=0;
         jogador_cadastroImpressao(jogador,(i+1));
         printf("\e[%sm",jogador[i].cor);
         console_cursor_visivel();
@@ -786,6 +788,10 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
             }
         }
 
+        else if (escolha==1) {
+            jogador->desistir=1;
+        }
+
         else if (escolha==2) {
             if ((pote->maiorAposta - jogador->aposta) < 0) jogador->aposta=jogador->dinheiro;
             else {
@@ -814,6 +820,22 @@ int jogador_inicializar_mao(tp_jogador jogador[], int quant ){
     }
 }
 
+
+int condicao_rodada(tp_jogador jogador[], tp_listasecarta **mao_mesa, int quant){
+int veri=0;
+for(int i=0;i<quant;i++){
+    if(jogador[i].desistir == 1){
+       veri++; 
+    }
+}
+ if(veri>= quant - 1){
+       return 0;
+    }
+if(listaSEcarta_verificar_tamanho(*mao_mesa)>=4){
+   return 0;
+}
+return 1;
+}
 
 
 #endif

@@ -1,3 +1,10 @@
+//Defines
+#define PRE_ROUND 0
+#define PRIMEIRO_ROUND 1
+#define SEGUNDO_ROUND 2
+#define TERCEIRO_ROUND 3
+#define MOSTRAR_CARTAS 4
+
 //Bibliotecas do C
 #include <stdio.h>
 #include <string.h>
@@ -39,7 +46,7 @@ int main()
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int quant,iniciarJogo,iniciarConfig;
+    int quant,iniciarJogo,iniciarConfig,etapa=PRE_ROUND;;
     //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -57,6 +64,8 @@ int main()
     baralhoJogo=pilhaSEcarta_inicializar();
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
     mao_mesa=listaSEcarta_inicializar();
+
+    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
 
     //Menu inicial e configurações
     do {
@@ -110,8 +119,48 @@ int main()
 
     
     desenhar_fundo();
-    for(int i=0;i<quant;i++) {
-    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+
+    while(1) {
+        switch(etapa){
+            case PRE_ROUND:
+
+            // esse aq vai ser o pre round onde n tem nenhuma carta na mesa ainda
+            // porem tem as cartas dos jogadores
+            //aq vai ocorrer as primeiras apostas e dessistencias
+
+                for(int i=0;i<quant;i++) {
+                    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+                }
+                etapa = PRIMEIRO_ROUND;
+
+            break;
+
+            case PRIMEIRO_ROUND:
+            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq ja temos o primeiro round com tres cartas na mesa;
+            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+            etapa = SEGUNDO_ROUND;
+            break;
+
+            case SEGUNDO_ROUND:
+            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o segundo roud adicionando mais uma carta a mesa
+            etapa = TERCEIRO_ROUND;
+            break;
+
+            case TERCEIRO_ROUND:
+            baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o terceiro round e o ultimo antes de mostrar as cartas, adicionando tmb mais uma carta a mesa
+            etapa = MOSTRAR_CARTAS;
+            break;
+
+            case MOSTRAR_CARTAS:
+            // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
+            break;
+
+            default:
+            break;
+        }
+
+        if(!condicao_rodada(jogador,&mao_mesa,quant)) break;
     }
 
     programa_finalizar();

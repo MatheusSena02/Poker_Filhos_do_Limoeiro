@@ -221,7 +221,13 @@ int baralho_distribuirCartas_jogadores(tp_pilhaSEcarta *baralhoJogo, tp_jogador 
     return 1;
 }
 
+int baralho_distribuirCartas_mesa(tp_pilhaSEcarta *baralhoJogo, tp_listasecarta **mao_mesa){
+    tp_pilhaSEcarta_item e;
+    pilhaSEcarta_pop(baralhoJogo, &e);
+    listaSEcarta_inserir_inicio(mao_mesa, e);
 
+
+}
 
 
 
