@@ -65,8 +65,6 @@ int main()
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
     mao_mesa=listaSEcarta_inicializar();
 
-    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-
     //Menu inicial e configurações
     do {
         programa_iniciar();
@@ -93,7 +91,7 @@ int main()
     if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
     //Se debug estiver desligado, escolhe quantidade de players
-    if (opcoes.debug>1) quant=6;
+    if (opcoes.debug>1) quant=3;
     else quant=jogador_escolherQuantidade();
 
     tp_jogador jogador[quant];
@@ -123,7 +121,7 @@ int main()
     while(1) {
         switch(etapa){
             case PRE_ROUND:
-
+            if(opcoes.debug>0) printf("=== Entrou em ETAPA %d ===\n", etapa);
             // esse aq vai ser o pre round onde n tem nenhuma carta na mesa ainda
             // porem tem as cartas dos jogadores
             //aq vai ocorrer as primeiras apostas e dessistencias
@@ -136,19 +134,32 @@ int main()
             break;
 
             case PRIMEIRO_ROUND:
+            if(opcoes.debug>0) printf("=== Entrou em ETAPA %d ===\n", etapa);
             baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq ja temos o primeiro round com tres cartas na mesa;
             baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
             baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+            for(int i=0;i<quant;i++) {
+                    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+                }
             etapa = SEGUNDO_ROUND;
             break;
 
             case SEGUNDO_ROUND:
+            if(opcoes.debug>0) printf("=== Entrou em ETAPA %d ===\n", etapa);
             baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o segundo roud adicionando mais uma carta a mesa
+            for(int i=0;i<quant;i++) {
+                    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+                }
             etapa = TERCEIRO_ROUND;
             break;
 
             case TERCEIRO_ROUND:
+
+            if(opcoes.debug>0) printf("=== Entrou em ETAPA %d ===\n", etapa);
             baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o terceiro round e o ultimo antes de mostrar as cartas, adicionando tmb mais uma carta a mesa
+            for(int i=0;i<quant;i++) {
+                    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+                }
             etapa = MOSTRAR_CARTAS;
             break;
 

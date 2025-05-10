@@ -831,7 +831,7 @@ for(int i=0;i<quant;i++){
  if(veri>= quant - 1){
        return 0;
     }
-if(listaSEcarta_verificar_tamanho(*mao_mesa)>=4){
+if(listaSEcarta_verificar_tamanho(*mao_mesa)>=5){
    return 0;
 }
 return 1;
