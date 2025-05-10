@@ -712,6 +712,53 @@ void desenhar_inserirjogadormesa() {
     printf("\e[0m");
 }
 
+void desenhar_aumentar_aposta_fundo() {
+    printf("\e[s");
+    printf("\e[38E");
+    printf("\e[42C\e[48;2;35;48;54m                                                                      \e[E");
+    printf("\e[40C  \e[48;2;255;255;255m      \e[48;2;33;150;243m                                                                \e[48;2;35;48;54m  \e[E");
+    printf("\e[40C  \e[48;2;255;255;255m  \e[48;2;33;150;243m                                                                  \e[48;2;255;255;255m  \e[48;2;35;48;54m  \e[E");
+    printf("\e[40C  \e[48;2;33;150;243m                                                                \e[48;2;255;255;255m      \e[48;2;35;48;54m  \e[E");
+    printf("\e[42C                                                                      \e[E");
+    printf("\e[H");
+}
+
+void desenhar_aumentar_aposta_percentual() {
+    printf("\e[s");
+    printf("\e[38E");
+    printf("\e[42C\e[48;2;35;48;54m                                                                      \e[E");
+    printf("\e[40C  \e[48;2;255;255;255m      \e[48;2;33;150;243m                                                                \e[48;2;35;48;54m  \e[E");
+    printf("\e[40C  \e[48;2;255;255;255m  \e[48;2;33;150;243m                                                                  \e[48;2;255;255;255m  \e[48;2;35;48;54m  \e[E");
+    printf("\e[40C  \e[48;2;33;150;243m                                                                \e[48;2;255;255;255m      \e[48;2;35;48;54m  \e[E");
+    printf("\e[42C                                                                      \e[E");
+    printf("\e[H");
+}
+
+void desenhar_aumentar_aposta_percentual_barrinha() {
+    printf("\e[40E");
+    printf("\e[58C\e[48;2;41;121;255m        \e[6C          \e[6C        \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_aumentar_aposta_absoluto() {
+    
+    printf("\e[s");
+    printf("\e[38E");
+    printf("\e[42C\e[48;2;35;48;54m                                                                      \e[E");
+    printf("\e[40C  \e[48;2;255;255;255m      \e[48;2;33;150;243m                                                                \e[48;2;35;48;54m  \e[E");
+    printf("\e[40C  \e[48;2;255;255;255m  \e[48;2;33;150;243m                                                                  \e[48;2;255;255;255m  \e[48;2;35;48;54m  \e[E");
+    printf("\e[40C  \e[48;2;33;150;243m                                                                \e[48;2;255;255;255m      \e[48;2;35;48;54m  \e[E");
+    printf("\e[42C                                                                      \e[E");
+    printf("\e[H");
+
+    printf("\e[39E\e[42C");
+    printf("\e[48;2;33;150;243m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("DIGITE O VALOR A SER APOSTADO",70);
+    printf("\e[E\e[46C Aperte F para digitar");
+    printf("\e[0m");
+    printf("\e[H");
+}
 
 
 #endif

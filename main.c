@@ -48,7 +48,7 @@ int main()
     tp_cursor cursor;
 
     tp_pote pote;
-    pote.maiorAposta=0;
+    pote.maiorAposta=1;
     pote.pote=0;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////

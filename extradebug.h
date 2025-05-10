@@ -47,7 +47,7 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
         }
         jogador[i].ID=i;
-        jogador[i].dinheiro=0;
+        jogador[i].dinheiro=1000;
         jogador[i].aposta=0;
         strcpy(jogador[i].nome,nomes[i]);
         cont++;
