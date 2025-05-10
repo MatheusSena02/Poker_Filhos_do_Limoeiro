@@ -4,6 +4,7 @@
 #define SEGUNDO_ROUND 2
 #define TERCEIRO_ROUND 3
 #define MOSTRAR_CARTAS 4
+#define QUANTPLAYERDEBUG 6 //Define a quantidade de players no modo debug 2
 
 //Bibliotecas do C
 #include <stdio.h>
@@ -65,8 +66,6 @@ int main()
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
     mao_mesa=listaSEcarta_inicializar();
 
-    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-
     //Menu inicial e configurações
     do {
         programa_iniciar();
@@ -93,7 +92,7 @@ int main()
     if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
     //Se debug estiver desligado, escolhe quantidade de players
-    if (opcoes.debug>1) quant=6;
+    if (opcoes.debug>1) quant=QUANTPLAYERDEBUG;
     else quant=jogador_escolherQuantidade();
 
     tp_jogador jogador[quant];
@@ -115,10 +114,7 @@ int main()
         return 22;
     }
 
-    if (opcoes.debug==1) debug_mostrarMaos (baralhoReferencia, jogador, quant);
-
-    
-    desenhar_fundo();
+    if (opcoes.debug==1) debug_mostrarMaos (baralhoJogo, jogador, quant);
 
     while(1) {
         switch(etapa){
@@ -127,9 +123,12 @@ int main()
             // esse aq vai ser o pre round onde n tem nenhuma carta na mesa ainda
             // porem tem as cartas dos jogadores
             //aq vai ocorrer as primeiras apostas e dessistencias
+                desenhar_fundo();
+                desenhar_mesaapoiodamesa();
 
                 for(int i=0;i<quant;i++) {
-                    jogo_jogador_rodada(&jogador[i],&cursor,&pote);
+                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                    jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
                 }
                 etapa = PRIMEIRO_ROUND;
 

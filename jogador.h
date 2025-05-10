@@ -748,7 +748,38 @@ void jogo_jogador_rodada_finalizar(tp_jogador *jogador,tp_cursor *cursor,tp_pote
     while((getch())!=102);
 }
 
-int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
+void jogo_jogador_rodada_mostrar_maoMesa(tp_listasecarta *maomesa) {
+    printf("\e[11E\e[53C\e[48;2;163;114;49m");
+    
+        tp_listasecarta *atu = maomesa;
+        while (atu != NULL) {
+            printf("\e[48;2;163;114;49m");
+            carta_printarG(&atu->info);
+            atu = atu->prox;
+    }
+    printf("\e[0m\e[H");
+}
+
+void desenhar_mesaapoiodamesa() {
+    printf("\e[9E");
+    printf("\e[44C\e[48;2;163;114;49m    \e[48;2;54;45;40m                                                          \e[48;2;163;114;49m    \e[E");
+    printf("\e[44C  \e[48;2;54;45;40m                                                              \e[48;2;163;114;49m  \e[E");
+    printf("\e[44C\e[48;2;54;45;40m         \e[48;2;163;114;49m                                                 \e[48;2;54;45;40m        \e[E");
+    printf("\e[44C       \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                 \e[48;2;163;114;49m  \e[48;2;54;45;40m      \e[E");
+    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
+    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
+    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
+    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
+    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
+    printf("\e[44C       \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                 \e[48;2;163;114;49m  \e[48;2;54;45;40m      \e[E");
+    printf("\e[44C         \e[48;2;163;114;49m                                                 \e[48;2;54;45;40m        \e[E");
+    printf("\e[44C\e[48;2;163;114;49m  \e[48;2;54;45;40m                                                              \e[48;2;163;114;49m  \e[E");
+    printf("\e[44C    \e[48;2;54;45;40m                                                          \e[48;2;163;114;49m    \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa) {
 
     int sel=-1;
     cursor_zerarCursor(cursor);
@@ -761,9 +792,10 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
     desenhar_marcadormaojogador();
     desenhar_porcoaposta();
     desenhar_maiorAposta(pote->maiorAposta);
+    jogo_jogador_rodada_mostrar_maoMesa(mao_mesa);
 
     desenhar_mao_jogador(*jogador);
-
+    
     desenhar_limpar_seletorEaumentar();
     desenhar_bordaseletor();
 
