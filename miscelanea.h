@@ -12,7 +12,13 @@
 #endif
 
 
+void console_cursor_invisivel(){
+    printf("\e[?25l"); // cursor invisivel
+}
 
+void console_cursor_visivel(){
+    printf("\e[?25h");
+}
 
 int aleatorio(int min, int max) {
     //Obter numero aleatorio e retornar
@@ -85,7 +91,12 @@ void programa_pausar () {
 }
 
 void programa_iniciar () {
-    
+
+    FILE *arq;
+    arq=fopen("teste.txt","w");
+
+    if(arq==NULL) printf("-> Erro - Não é possível alterar arquivos\n--> O jogo poderá ser jogado, mas nada será salvo em disco.\n");
+	
     int input;
     printf("Se possível, use a resolução 1280 x 720p\n");
     printf("Por favor coloque o programa em tela cheia\n");

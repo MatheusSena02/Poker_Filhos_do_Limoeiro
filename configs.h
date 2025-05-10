@@ -91,7 +91,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
     do {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 119 && input != 115 && input != 102);
+    } while (input != 119 && input != 115 && input != 102 && input != 120);
 
     switch(input) {
         case 119:
@@ -120,6 +120,10 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 				break;
 			}
         break;
+
+        case 120:
+        arq_atualizarOpcoes(opcoes);
+        return 1;
     }
 
 	return 0;

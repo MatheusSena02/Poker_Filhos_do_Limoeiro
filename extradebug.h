@@ -1,29 +1,17 @@
 #ifndef EXTRADEBUG_H
 #define EXTRADEBUG_H
 
-void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilha *baralhoJogo) {
-    printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
-    printf("\e[5EBaralho Original P:\n");
-    baralhoReferencia_printarP(baralhoReferencia);
-    printf("\e[5E");
-    programa_pausar();
-    limparTela();
+void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilhaSEcarta *baralhoJogo) {
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[5EBaralho Embaralhado P:\n");
-    baralho_printarP(baralhoReferencia,*baralhoJogo);
-    printf("\e[5E");
-    programa_pausar();
-    limparTela();
-    printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
-    printf("\e[2EBaralho Original G:\n");
-    baralhoReferencia_printarG(baralhoReferencia);
+    baralho_printarP(baralhoJogo);
     printf("\e[5E");
     programa_pausar();
     limparTela();
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[2EBaralho Embaralhado G:\n");
-    baralho_printarG(baralhoReferencia,*baralhoJogo);
-    printf("\e[5E");
+    baralho_printarG(baralhoJogo);
+    printf("\e[10E");
     programa_pausar();
     limparTela();
 }
@@ -43,11 +31,11 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
 
             case 2:
-            strcpy(jogador[i].cor,"38;2;255;152;0");
+            strcpy(jogador[i].cor,"38;2;205;220;57");
             break;
 
             case 3:
-            strcpy(jogador[i].cor,"38;2;76;175;80");
+            strcpy(jogador[i].cor,"38;2;255;152;0");
             break;
 
             case 4:
@@ -59,6 +47,9 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
         }
         jogador[i].ID=i;
+        jogador[i].dinheiro=1000;
+        jogador[i].aposta=0;
+        jogador[i].desistir=0;
         strcpy(jogador[i].nome,nomes[i]);
         cont++;
     }
@@ -74,14 +65,40 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
 
-void debug_mostrarMaos (tp_carta baralhoReferencia[],tp_jogador jogador[],int quant) {
+void debug_mostrarMaos (tp_pilhaSEcarta *baralhoJogo,tp_jogador jogador[],int quant) {
     printf("Maos dos jogadores:\n");
     for (int i=0;i<quant;i++){
         printf("Jogador %d: ",i);
-        carta_printarP(&baralhoReferencia[jogador[i].mao[0]]);
-        carta_printarP(&baralhoReferencia[jogador[i].mao[1]]);
+        carta_printarP(&jogador[i].mao->info);
+        carta_printarP(&jogador[i].mao->prox->info);
         printf("\n\n\n\n");
     }
+    programa_pausar();
+    limparTela();
+
+    printf("Mão da mesa:\n");
+
+    int cont=0;
+    tp_pilhaSEcarta *pilha_aux;
+    tp_pilhaSEcarta_item carta;
+    pilha_aux=pilhaSEcarta_inicializar();
+    
+    while (cont<5) {
+        pilhaSEcarta_pop(baralhoJogo,&carta);
+        carta_printarP(&carta);
+        fflush(stdout);
+        pilhaSEcarta_push(pilha_aux, carta);
+        cont++;  
+    }
+   
+    while (!pilhaSEcarta_verificar_vazia(pilha_aux)) {
+        pilhaSEcarta_pop(pilha_aux,&carta);
+        pilhaSEcarta_push(baralhoJogo, carta);           
+    }
+
+    pilha_aux = pilhaSEcarta_destruir(pilha_aux);
+
+    printf("\n\n\n\n");
     programa_pausar();
     limparTela();
 }
