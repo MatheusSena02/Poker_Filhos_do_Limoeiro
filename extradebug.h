@@ -11,7 +11,7 @@ void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilhaSEca
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[2EBaralho Embaralhado G:\n");
     baralho_printarG(baralhoJogo);
-    printf("\e[5E");
+    printf("\e[10E");
     programa_pausar();
     limparTela();
 }
@@ -65,7 +65,7 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
 
-void debug_mostrarMaos (tp_carta baralhoReferencia[],tp_jogador jogador[],int quant) {
+void debug_mostrarMaos (tp_pilhaSEcarta *baralhoJogo,tp_jogador jogador[],int quant) {
     printf("Maos dos jogadores:\n");
     for (int i=0;i<quant;i++){
         printf("Jogador %d: ",i);
@@ -73,6 +73,32 @@ void debug_mostrarMaos (tp_carta baralhoReferencia[],tp_jogador jogador[],int qu
         carta_printarP(&jogador[i].mao->prox->info);
         printf("\n\n\n\n");
     }
+    programa_pausar();
+    limparTela();
+
+    printf("Mão da mesa:\n");
+
+    int cont=0;
+    tp_pilhaSEcarta *pilha_aux;
+    tp_pilhaSEcarta_item carta;
+    pilha_aux=pilhaSEcarta_inicializar();
+    
+    while (cont<5) {
+        pilhaSEcarta_pop(baralhoJogo,&carta);
+        carta_printarP(&carta);
+        fflush(stdout);
+        pilhaSEcarta_push(pilha_aux, carta);
+        cont++;  
+    }
+   
+    while (!pilhaSEcarta_verificar_vazia(pilha_aux)) {
+        pilhaSEcarta_pop(pilha_aux,&carta);
+        pilhaSEcarta_push(baralhoJogo, carta);           
+    }
+
+    pilha_aux = pilhaSEcarta_destruir(pilha_aux);
+
+    printf("\n\n\n\n");
     programa_pausar();
     limparTela();
 }
