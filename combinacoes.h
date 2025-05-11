@@ -1,9 +1,12 @@
 #ifndef COMBINACOES.H
 #define COMBINACOES.H
 
+<<<<<<< Updated upstream
 #include "cartas.h"
 #include "jogador.h"
 
+=======
+>>>>>>> Stashed changes
 //Tentativa de Combinação de 1 par
 void combinacao_1par_verificar (tp_jogador *jogador, tp_carta baralho[], tp_carta mesa[]) {
     tp_carta cartas[2];
