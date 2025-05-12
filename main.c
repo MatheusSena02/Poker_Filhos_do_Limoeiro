@@ -4,7 +4,6 @@
 #define SEGUNDO_ROUND 2
 #define TERCEIRO_ROUND 3
 #define MOSTRAR_CARTAS 4
-#define QUANTPLAYERDEBUG 3 //Define a quantidade de players no modo debug 2
 
 //Bibliotecas do C
 #include <stdio.h>
@@ -20,6 +19,8 @@
 #include "configs.h"
 #include "jogador.h"
 #include "extradebug.h"
+#include "combinacoes.h"
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
@@ -92,7 +93,7 @@ int main()
     if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
     //Se debug estiver desligado, escolhe quantidade de players
-    if (opcoes.debug>1) quant=QUANTPLAYERDEBUG;
+    if (opcoes.debug>1) quant=opcoes.nplayersdebug;
     else quant=jogador_escolherQuantidade();
 
     tp_jogador jogador[quant];

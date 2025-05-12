@@ -146,6 +146,11 @@ int arq_criarOpcoes () {
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
         fprintf(arq,"debug = 0\n\n");
+
+        fprintf(arq,"//Número de Players do Modo Debug ( 6 = [Padrão])\n");
+        fprintf(arq,"// Só é utilizado no modo debug 2\n");
+        fprintf(arq,"NumeroDePlayersDebug = 6\n\n");
+
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
         fprintf(arq,"// Recomendação:  Windows ou OnlineGDB = 1 / Replit = 0\n");
 

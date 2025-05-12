@@ -6,12 +6,40 @@
 #include "elementosvisuais.h"
 
 typedef struct{
+    int quant;
+    int naipeMaisAlto;
+    int valorMaisAlto;
+    int naipeMaisAltoReserva;
+    int valorMaisAltoReserva;
+} tp_combinacaoInfo;
+
+typedef struct{
+    tp_combinacaoInfo par;
+    tp_combinacaoInfo trinca;
+    tp_combinacaoInfo straight;
+    tp_combinacaoInfo flush;
+    tp_combinacaoInfo fullHouse;
+    tp_combinacaoInfo quadra;
+    tp_combinacaoInfo straightFlush;
+    tp_combinacaoInfo royalFlush;
+} tp_combinacoes;
+
+typedef struct{
+    int valor;
+    int naipe;
+} tp_maiorInfo;
+
+typedef struct{
     int ID;
     char nome[30], cor[16];
     tp_listasecarta *mao;
     float dinheiro;
     float aposta;
     int desistir;
+    tp_combinacaoInfo comparadorValor[15];
+    tp_combinacaoInfo comparadorNaipe[4];
+    tp_combinacoes combinacoes;
+    tp_maiorInfo maiorInfo;
 }tp_jogador;
 
 typedef struct{
@@ -301,6 +329,72 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
     }
 }
 
+void jogador_inicializacao(tp_jogador *jogador) {
+    for(int i=0;i<15;i++){
+        jogador->comparadorValor[i].quant=0;
+        jogador->comparadorValor[i].naipeMaisAlto=-1;
+        jogador->comparadorValor[i].naipeMaisAltoReserva=-1;
+        jogador->comparadorValor[i].valorMaisAlto=-1;
+        jogador->comparadorValor[i].valorMaisAltoReserva=-1;
+    }
+    
+    for(int i=0;i<4;i++){
+        jogador->comparadorNaipe[i].quant=0;
+        jogador->comparadorNaipe[i].naipeMaisAlto=-1;
+        jogador->comparadorNaipe[i].naipeMaisAltoReserva=-1;
+        jogador->comparadorNaipe[i].valorMaisAlto=-1;
+        jogador->comparadorNaipe[i].valorMaisAltoReserva=-1;
+    }
+
+    jogador->combinacoes.par.quant=0;
+    jogador->combinacoes.par.naipeMaisAlto=-1;
+    jogador->combinacoes.par.valorMaisAlto=-1;
+    jogador->combinacoes.par.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.par.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.trinca.quant=0;
+    jogador->combinacoes.trinca.naipeMaisAlto=-1;
+    jogador->combinacoes.trinca.valorMaisAlto=-1;
+    jogador->combinacoes.trinca.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.trinca.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.straight.quant=0;
+    jogador->combinacoes.straight.naipeMaisAlto=-1;
+    jogador->combinacoes.straight.valorMaisAlto=-1;
+    jogador->combinacoes.straight.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.straight.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.flush.quant=0;
+    jogador->combinacoes.flush.naipeMaisAlto=-1;
+    jogador->combinacoes.flush.valorMaisAlto=-1;
+    jogador->combinacoes.flush.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.flush.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.fullHouse.quant=0;
+    jogador->combinacoes.fullHouse.naipeMaisAlto=-1;
+    jogador->combinacoes.fullHouse.valorMaisAlto=-1;
+    jogador->combinacoes.fullHouse.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.fullHouse.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.quadra.quant=0;
+    jogador->combinacoes.quadra.naipeMaisAlto=-1;
+    jogador->combinacoes.quadra.valorMaisAlto=-1;
+    jogador->combinacoes.quadra.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.quadra.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.straightFlush.quant=0;
+    jogador->combinacoes.straightFlush.naipeMaisAlto=-1;
+    jogador->combinacoes.straightFlush.valorMaisAlto=-1;
+    jogador->combinacoes.straightFlush.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.straightFlush.valorMaisAltoReserva=-1;
+
+    jogador->combinacoes.royalFlush.quant=0;
+    jogador->combinacoes.royalFlush.naipeMaisAlto=-1;
+    jogador->combinacoes.royalFlush.valorMaisAlto=-1;
+    jogador->combinacoes.royalFlush.naipeMaisAltoReserva=-1;
+    jogador->combinacoes.royalFlush.valorMaisAltoReserva=-1;
+}
+
 void jogador_escolherNomes(tp_jogador jogador[],int quant){
     int cont=0;
 
@@ -332,11 +426,19 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
             strcpy(jogador[i].cor,"38;2;255;209;128");
             break;
         }
-        jogador[i].ID=i;
-        jogador[i].dinheiro=1000;
-        jogador[i].aposta=0;
-        jogador[i].desistir=0;
+
+        jogador->ID=i;
+        jogador->dinheiro=1000;
+        jogador->aposta=0;
+        jogador->desistir=0;
+
+        jogador->maiorInfo.naipe=-1;
+        jogador->maiorInfo.valor=-1;
+
+        jogador_inicializacao(&jogador[i]);
+        
         jogador_cadastroImpressao(jogador,(i+1));
+
         printf("\e[%sm",jogador[i].cor);
         console_cursor_visivel();
         scanf(" %[^\n]s",jogador[i].nome);
@@ -760,24 +862,74 @@ void jogo_jogador_rodada_mostrar_maoMesa(tp_listasecarta *maomesa) {
     printf("\e[0m\e[H");
 }
 
-void desenhar_mesaapoiodamesa() {
-    printf("\e[9E");
-    printf("\e[44C\e[48;2;163;114;49m    \e[48;2;54;45;40m                                                          \e[48;2;163;114;49m    \e[E");
-    printf("\e[44C  \e[48;2;54;45;40m                                                              \e[48;2;163;114;49m  \e[E");
-    printf("\e[44C\e[48;2;54;45;40m         \e[48;2;163;114;49m                                                 \e[48;2;54;45;40m        \e[E");
-    printf("\e[44C       \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                 \e[48;2;163;114;49m  \e[48;2;54;45;40m      \e[E");
-    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
-    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
-    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
-    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
-    printf("\e[44C     \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                     \e[48;2;163;114;49m  \e[48;2;54;45;40m    \e[E");
-    printf("\e[44C       \e[48;2;163;114;49m  \e[48;2;54;45;40m                                                 \e[48;2;163;114;49m  \e[48;2;54;45;40m      \e[E");
-    printf("\e[44C         \e[48;2;163;114;49m                                                 \e[48;2;54;45;40m        \e[E");
-    printf("\e[44C\e[48;2;163;114;49m  \e[48;2;54;45;40m                                                              \e[48;2;163;114;49m  \e[E");
-    printf("\e[44C    \e[48;2;54;45;40m                                                          \e[48;2;163;114;49m    \e[E");
-    printf("\e[0m");
-    printf("\e[H");
+void jogo_jogador_rodada_mostrar_possibilidades(tp_jogador *jogador) {
+    printf("\e[1E\e[137C\e[48;2;121;134;203m");
+    char corletra[9][18]={"38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209"};
+    
+    if (jogador->combinacoes.par.quant==1) strcpy(corletra[0],"38;2;194;205;240");
+    if (jogador->combinacoes.par.quant==2) strcpy(corletra[1],"38;2;194;205;240");
+    if (jogador->combinacoes.trinca.quant>0) strcpy(corletra[2],"38;2;194;205;240");
+    if (jogador->combinacoes.quadra.quant>0) strcpy(corletra[3],"38;2;194;205;240");
+    if (jogador->combinacoes.fullHouse.quant>0) strcpy(corletra[4],"38;2;194;205;240");
+    if (jogador->combinacoes.flush.quant>0) strcpy(corletra[5],"38;2;194;205;240");
+    if (jogador->combinacoes.straight.quant>0) strcpy(corletra[6],"38;2;194;205;240");
+    if (jogador->combinacoes.straightFlush.quant>0) strcpy(corletra[7],"38;2;194;205;240");
+    if (jogador->combinacoes.royalFlush.quant>0) strcpy(corletra[8],"38;2;194;205;240");
+
+    imprimir__centralizado_string_max20("Combinações",18);
+    printf("\e[1E\e[136C");
+    imprimir__centralizado_string_max20("Possíveis",18);
+    
+    printf("\e[2E\e[136C");
+    printf("\e[%sm",corletra[0]);
+
+    imprimir__centralizado_string_max20("Par",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[1]);
+
+    imprimir__centralizado_string_max20("2 Pares",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[2]);
+
+    imprimir__centralizado_string_max20("Trinca",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[3]);
+
+    imprimir__centralizado_string_max20("Quadra",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[4]);
+
+    imprimir__centralizado_string_max20("Full House",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[5]);
+
+    imprimir__centralizado_string_max20("Flush",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[6]);
+
+    imprimir__centralizado_string_max20("Straight",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[7]);
+
+    imprimir__centralizado_string_max20("Straight Flush",18);
+
+    printf("\e[1E\e[136C");
+    printf("\e[%sm",corletra[8]);
+
+    imprimir__centralizado_string_max20("Royal Flush",18);
+    
+    printf("\e[0m\e[H");
 }
+
+int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]);
+int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]);
 
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa) {
 
@@ -794,10 +946,18 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     desenhar_maiorAposta(pote->maiorAposta);
     jogo_jogador_rodada_mostrar_maoMesa(mao_mesa);
 
+    desenhar_areacombinacoes();
+
     desenhar_mao_jogador(*jogador);
     
     desenhar_limpar_seletorEaumentar();
     desenhar_bordaseletor();
+
+    jogador_inicializacao(jogador);
+    combinacoes_verificar_valores(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
+    combinacoes_verificar_naipes(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
+    
+    jogo_jogador_rodada_mostrar_possibilidades(jogador);
 
     int escolha=-1;
 

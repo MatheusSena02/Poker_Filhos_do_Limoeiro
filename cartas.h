@@ -7,7 +7,7 @@
 typedef struct {
     int ID;
     int naipe; // ♥(0)[copas], ♦(1)[ouros], ♠(2)[espadas], ♣(3)[paus]
-    int valor_i; //1,2,3,4,5,6,7,8,9,10,11,12,13
+    int valor_i; //2,3,4,5,6,7,8,9,10,11,12,13,14
     char valor_c[4]; //A,2,3,4,5,6,7,8,9,J,Q,K
 }tp_carta;
 
@@ -18,58 +18,70 @@ typedef struct {
 int carta_setarvalor(tp_carta *carta, int valor) {
     // Seta o valor da carta atual do baralho para "valor".
     // ele guarda o valor de 2 formas diferentes, uma em caractere (A,2 a 10, J, Q e K) e outra em int (1 a 13)
-    carta->valor_i = valor;
     switch (valor) {
         case 1:
         strcpy(carta->valor_c, "A");
+        carta->valor_i = 14;
         break;
 
         case 2:
         strcpy(carta->valor_c, "2");
+        carta->valor_i = valor;
         break;
 
         case 3:
         strcpy(carta->valor_c, "3");
+        carta->valor_i = valor;
         break;
 
         case 4:
         strcpy(carta->valor_c, "4");
+        carta->valor_i = valor;
         break;
 
         case 5:
         strcpy(carta->valor_c, "5");
+        carta->valor_i = valor;
         break;
 
         case 6:
         strcpy(carta->valor_c, "6");
+        carta->valor_i = valor;
         break;
 
         case 7:
         strcpy(carta->valor_c, "7");
+        carta->valor_i = valor;
         break;
 
         case 8:
         strcpy(carta->valor_c, "8");
+        carta->valor_i = valor;
         break;
 
         case 9:
         strcpy(carta->valor_c, "9");
+        carta->valor_i = valor;
         break;
 
         case 10:
         strcpy(carta->valor_c, "10");
+        carta->valor_i = valor;
         break;
 
         case 11:
         strcpy(carta->valor_c, "J");
+        carta->valor_i = valor;
         break;
 
         case 12:
+        carta->valor_i = valor;
         strcpy(carta->valor_c, "Q");
         break;
 
         case 13:
         strcpy(carta->valor_c, "K");
+        carta->valor_i = valor;
         break;
 
         default:
