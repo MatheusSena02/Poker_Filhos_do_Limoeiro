@@ -17,12 +17,6 @@ void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilhaSEca
 }
 
 void debug_jogador_inicializacao(tp_jogador *jogador) {
-    jogador->dinheiro=1000;
-    jogador->aposta=0;
-    jogador->desistir=0;
-
-    jogador->maiorInfo.naipe=-1;
-    jogador->maiorInfo.valor=-1;
 
     for(int i=0;i<15;i++){
         jogador->comparadorValor[i].quant=0;
@@ -120,7 +114,15 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
         }
 
-        jogador->ID=i;
+
+        jogador[i].ID=i;
+        jogador[i].dinheiro=1000;
+        jogador[i].aposta=0;
+        jogador[i].desistir=0;
+
+        jogador[i].maiorInfo.naipe=-1;
+        jogador[i].maiorInfo.valor=-1;
+        
         debug_jogador_inicializacao(&jogador[i]);
 
         strcpy(jogador[i].nome,nomes[i]);

@@ -427,13 +427,13 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
             break;
         }
 
-        jogador->ID=i;
-        jogador->dinheiro=1000;
-        jogador->aposta=0;
-        jogador->desistir=0;
+        jogador[i].ID=i;
+        jogador[i].dinheiro=1000;
+        jogador[i].aposta=0;
+        jogador[i].desistir=0;
 
-        jogador->maiorInfo.naipe=-1;
-        jogador->maiorInfo.valor=-1;
+        jogador[i].maiorInfo.naipe=-1;
+        jogador[i].maiorInfo.valor=-1;
 
         jogador_inicializacao(&jogador[i]);
         
@@ -574,27 +574,27 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
         break;
     
         case 102:
-            switch (cursor->navegador) {
-                case 0:// confirma 0
-                    jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.25)+(pote->maiorAposta - jogador->aposta));
-                    return 0;
-                break;
-    
-                case 1: //confirma 1
-                    jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.5)+(pote->maiorAposta - jogador->aposta));
-                    return 1;
-                break;
+                switch (cursor->navegador) {
+                    case 0:// confirma 0
+                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.25)+(pote->maiorAposta - jogador->aposta));
+                        return 0;
+                    break;
+        
+                    case 1: //confirma 1
+                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.5)+(pote->maiorAposta - jogador->aposta));
+                        return 1;
+                    break;
 
-                case 2: //confirma 2
-                    jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.75)+(pote->maiorAposta - jogador->aposta));
-                    return 2;
-                break;
+                    case 2: //confirma 2
+                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.75)+(pote->maiorAposta - jogador->aposta));
+                        return 2;
+                    break;
 
-                case 3: //confirma 3
-                    jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*1)+(pote->maiorAposta - jogador->aposta));
-                    return 3;
-                break;
-            }
+                    case 3: //confirma 3
+                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*1)+(pote->maiorAposta - jogador->aposta));
+                        return 3;
+                    break;
+                }
         break;
     }
     
@@ -608,14 +608,14 @@ void menu_jogo_navegar_aposta_absoluto(tp_jogador *jogador,tp_pote *pote){
     printf("\e[E\e[46C                      ");
 
     console_cursor_visivel();
-    while(input<((jogador->aposta - pote->maiorAposta)+1) || input <= 0) {
+    while(input<((jogador->aposta - pote->maiorAposta)+1) || input <= 0 || input > jogador ->dinheiro) {
         printf("\e[H\e[40E\e[46C");
         printf("                                                               ");
         printf("\e[H\e[40E\e[46C");
         printf("Valor: ");
         scanf("%f",&input);
 
-        if (input<(jogador->aposta - pote->maiorAposta || input <= 0)) printf("\e[H\e[41E\e[46C\e[38;2;244;67;54mValor inválido!\e[38;2;255;255;255m");
+        if (input<((jogador->aposta - pote->maiorAposta)+1) || input <= 0 || input > jogador ->dinheiro) printf("\e[H\e[41E\e[46C\e[38;2;244;67;54mValor inválido!\e[38;2;255;255;255m");
 
     }
 
