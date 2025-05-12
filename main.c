@@ -20,6 +20,8 @@
 #include "configs.h"
 #include "jogador.h"
 #include "extradebug.h"
+#include "combinacoes.h"
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //

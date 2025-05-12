@@ -139,6 +139,7 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
    
     
     for(int i=0;i<numcartas;i++) {
+        printf("%d: ",i);
         
         jogador->comparadorNaipe[cartas[i].naipe].quant+=1;
         
@@ -146,8 +147,11 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
             jogador->comparadorNaipe[cartas[i].naipe].valorMaisAltoReserva = jogador->comparadorNaipe[cartas[i].naipe].valorMaisAlto;
             jogador->comparadorNaipe[cartas[i].naipe].valorMaisAlto=cartas[i].valor_i;
         }
+
+        carta_printarP(&cartas[i]);
     }
     
+    printf("\n\n\n\n\n\n");
 
     int flush=0;
 

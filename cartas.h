@@ -7,7 +7,7 @@
 typedef struct {
     int ID;
     int naipe; // ♥(0)[copas], ♦(1)[ouros], ♠(2)[espadas], ♣(3)[paus]
-    int valor_i; //1,2,3,4,5,6,7,8,9,10,11,12,13
+    int valor_i; //2,3,4,5,6,7,8,9,10,11,12,13,14
     char valor_c[4]; //A,2,3,4,5,6,7,8,9,J,Q,K
 }tp_carta;
 
