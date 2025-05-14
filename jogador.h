@@ -608,14 +608,14 @@ void menu_jogo_navegar_aposta_absoluto(tp_jogador *jogador,tp_pote *pote){
     printf("\e[E\e[46C                      ");
 
     console_cursor_visivel();
-    while(input<((jogador->aposta - pote->maiorAposta)+1) || input <= 0 || input > jogador ->dinheiro) {
+    while(input<(pote->maiorAposta) || input <= 0 || input > jogador ->dinheiro) {
         printf("\e[H\e[40E\e[46C");
         printf("                                                               ");
         printf("\e[H\e[40E\e[46C");
         printf("Valor: ");
         scanf("%f",&input);
 
-        if (input<((jogador->aposta - pote->maiorAposta)+1) || input <= 0 || input > jogador ->dinheiro) printf("\e[H\e[41E\e[46C\e[38;2;244;67;54mValor inválido!\e[38;2;255;255;255m");
+        if (input<(pote->maiorAposta)  || input <= 0 || input > jogador ->dinheiro) printf("\e[H\e[41E\e[46C\e[38;2;244;67;54mValor inválido!\e[38;2;255;255;255m");
 
     }
 
