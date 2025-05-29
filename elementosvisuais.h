@@ -127,7 +127,7 @@ void imprimir__centralizado_string_max20(char texto[], int largura) {
 
 void imprimir__centralizado_string_max100(char texto[], int largura) {
     //Imprime uma string (de ate 100 caracteres) dada de forma certralizada
-    //Caso a string seja maior q 20 caracteres, o texto vai ser cortado
+    //Caso a string seja maior q 100 caracteres, o texto vai ser cortado
     //Em largura coloca o espaço maximo que pode ocupar
 
     int comprimento = strlen(texto);
@@ -135,6 +135,36 @@ void imprimir__centralizado_string_max100(char texto[], int largura) {
     //Se o tamanho do texto for maior que a largura, imprime sem centralizar
     if (comprimento > largura) {
         printf("%.100s\n", texto);
+        return;
+    }
+
+    int espacos_esquerda = (largura - comprimento) / 2;
+    int espacos_direita = largura - comprimento - espacos_esquerda;
+
+    //Pula espaços na esquerda
+    for (int i = 0; i < espacos_esquerda; i++) {
+        printf("\e[C");
+    }
+
+    //Imprime a string
+    printf("%.100s", texto);
+
+    //Pula espaços na direita
+    for (int i = 0; i < espacos_direita; i++) {
+        printf("\e[C");
+    }
+}
+
+void imprimir__centralizado_string_max200(char texto[], int largura) {
+    //Imprime uma string (de ate 200 caracteres) dada de forma certralizada
+    //Caso a string seja maior q 200 caracteres, o texto vai ser cortado
+    //Em largura coloca o espaço maximo que pode ocupar
+
+    int comprimento = strlen(texto);
+
+    //Se o tamanho do texto for maior que a largura, imprime sem centralizar
+    if (comprimento > largura) {
+        printf("%.200s\n", texto);
         return;
     }
 
@@ -602,7 +632,7 @@ void desenhar_bordaseletor() {
     printf("\e[H");
 }
 
-void desenhar_seletor(tp_cursor *cursor) {
+void desenhar_seletor(tp_cursor *cursor, float maiorAposta) {
     char corfundo[3][18]={"48;2;96;125;139","48;2;96;125;139","48;2;96;125;139"};
     strcpy(corfundo[cursor->navegador],"48;2;33;150;243");
     char corletra[3][18]={"38;2;74;74;74","38;2;74;74;74","38;2;74;74;74"};
@@ -611,7 +641,8 @@ void desenhar_seletor(tp_cursor *cursor) {
     printf("\e[s");
     printf("\e[39E");
     printf("\e[42C\e[48;2;255;255;255m    \e[%sm            \e[48;2;255;255;255m      \e[2C    \e[%sm              \e[48;2;255;255;255m    \e[2C      \e[%sm            \e[48;2;255;255;255m    \e[E",corfundo[0],corfundo[1],corfundo[2]);
-    printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm      \e[%smPAGAR       \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
+    if (maiorAposta > 0) printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm      \e[%smPAGAR       \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
+    else     printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm    \e[%smCONTINUAR     \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
     printf("\e[42C\e[%sm                      \e[2C\e[%sm                      \e[2C\e[%sm                      \e[E",corfundo[0],corfundo[1],corfundo[2]);
     printf("\e[0m");
     printf("\e[H");
@@ -818,6 +849,32 @@ void desenhar_areacombinacoes() {
     printf("\e[134C                      \e[E");
     printf("\e[0m");
     printf("\e[H");
+}
+
+void desenhar_seletorficoupobre() {
+    printf("\e[38E");
+    printf("\e[42C\e[48;2;34;44;49m                                                                      \e[E");
+    printf("\e[40C  \e[48;2;245;53;51m                                                                      \e[48;2;34;44;49m  \e[E");
+    printf("\e[40C  \e[48;2;245;53;51m                                                                      \e[48;2;34;44;49m  \e[E");
+    printf("\e[40C  \e[48;2;245;53;51m                                                                      \e[48;2;34;44;49m  \e[E");
+    printf("\e[42C                                                                      \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+
+    printf("\e[39E\e[42C");
+    printf("\e[48;2;245;53;51m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Você não tem mais dinheiro para jogar :(",70);
+    printf("\e[E\e[42C");
+    imprimir__centralizado_string_max100("Aperte F para desistir",70);
+    printf("\e[0m");
+    printf("\e[H");
+
+}
+
+void desenhar_tutorial(char RGBfundo[]){
+    printf("\e[43E\e[48;2;%sm",RGBfundo);
+    imprimir__centralizado_string_max200("Navegar: [WASD] | Confirmar: [F] | Voltar: [X]",155);
+    printf("\e[H\e[0m");
 }
 
 #endif

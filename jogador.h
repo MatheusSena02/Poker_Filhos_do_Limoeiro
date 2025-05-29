@@ -500,7 +500,7 @@ void desenhar_aumentar_aposta_percentual_selecao(tp_jogador *jogador,tp_cursor *
             printf("\e[48;2;0;77;64m");
             printf("-                 ");
             printf("\e[18D");
-            imprimir_centralizado_float_dinheiro((((pote->pote+(pote->maiorAposta - jogador->aposta))*0.25)+(pote->maiorAposta - jogador->aposta)),18);
+            imprimir_centralizado_float_dinheiro((1.25*(pote->maiorAposta)),18);
             printf("\e[H");
             printf("\e[0m");
         break;
@@ -510,7 +510,7 @@ void desenhar_aumentar_aposta_percentual_selecao(tp_jogador *jogador,tp_cursor *
             printf("\e[48;2;0;77;64m");
             printf("-                 ");
             printf("\e[18D");
-            imprimir_centralizado_float_dinheiro((((pote->pote+(pote->maiorAposta - jogador->aposta))*0.5)+(pote->maiorAposta - jogador->aposta)),18);
+            imprimir_centralizado_float_dinheiro((1.5*(pote->maiorAposta)),18);
             printf("\e[H");
             printf("\e[0m");
         break;
@@ -520,7 +520,7 @@ void desenhar_aumentar_aposta_percentual_selecao(tp_jogador *jogador,tp_cursor *
             printf("\e[48;2;0;77;64m");
             printf("-                 ");
             printf("\e[18D");
-            imprimir_centralizado_float_dinheiro((((pote->pote+(pote->maiorAposta - jogador->aposta))*0.75)+(pote->maiorAposta - jogador->aposta)),18);
+            imprimir_centralizado_float_dinheiro((1.75*(pote->maiorAposta)),18);
             printf("\e[H");
             printf("\e[0m");
         break;
@@ -530,7 +530,7 @@ void desenhar_aumentar_aposta_percentual_selecao(tp_jogador *jogador,tp_cursor *
             printf("\e[48;2;0;77;64m");
             printf("-                 ");
             printf("\e[18D");
-            imprimir_centralizado_float_dinheiro((((pote->pote+(pote->maiorAposta - jogador->aposta))*1)+(pote->maiorAposta - jogador->aposta)),18);
+            imprimir_centralizado_float_dinheiro((2*(pote->maiorAposta)),18);
             printf("\e[H");
             printf("\e[0m");
         break;
@@ -561,12 +561,10 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
     switch(input) {
         case 97:
             if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
-            else cursor->navegador=(numeroDeOpcoes-1);
         break;
    
         case 100:
             if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
-            else cursor->navegador=0;
         break;
 
         case 120:
@@ -576,23 +574,31 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
         case 102:
                 switch (cursor->navegador) {
                     case 0:// confirma 0
-                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.25)+(pote->maiorAposta - jogador->aposta));
-                        return 0;
+                        if ((1.25*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
+                            jogador->aposta=(1.25*(pote->maiorAposta));
+                            return 0;
+                        } else return -1;
                     break;
         
                     case 1: //confirma 1
-                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.5)+(pote->maiorAposta - jogador->aposta));
-                        return 1;
+                        if ((1.5*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
+                            jogador->aposta=(1.5*(pote->maiorAposta));
+                            return 1;
+                        } else return -1;
                     break;
 
                     case 2: //confirma 2
-                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*0.75)+(pote->maiorAposta - jogador->aposta));
-                        return 2;
+                        if ((1.75*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
+                            jogador->aposta=(1.75*(pote->maiorAposta));
+                            return 2;
+                        } else return -1;
                     break;
 
                     case 3: //confirma 3
-                        jogador->aposta=(((pote->pote+(pote->maiorAposta - jogador->aposta))*1)+(pote->maiorAposta - jogador->aposta));
-                        return 3;
+                        if ((2*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
+                            jogador->aposta=(2*(pote->maiorAposta));
+                            return 3;
+                        } else return -1;
                     break;
                 }
         break;
@@ -726,6 +732,23 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
     return -1;
 }
 
+int menu_jogo_jogador_desqualificado (tp_jogador *jogador,tp_cursor *cursor) {
+    //Função para permitir a navegação no menu de jogoo usando e F
+    // F = 102
+    // Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+    // O F serve pra confirmar a seleção
+    // A posição 0 é a mais a esquerda
+
+
+    desenhar_seletorficoupobre();
+
+    int input;
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102);
+}
+
 int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
     //Função para permitir a navegação no menu de jogoo usando A,D e F
     // D = 100
@@ -736,7 +759,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
     // A posição 0 é a mais a esquerda
      int numeroDeOpcoes=3;
     //impressao
-    desenhar_seletor(cursor);
+    desenhar_seletor(cursor,pote->maiorAposta);
     //^
 
     int input;
@@ -862,7 +885,7 @@ void jogo_jogador_rodada_mostrar_maoMesa(tp_listasecarta *maomesa) {
     printf("\e[0m\e[H");
 }
 
-void jogo_jogador_rodada_mostrar_possibilidades(tp_jogador *jogador) {
+int jogo_jogador_rodada_mostrar_possibilidades(tp_jogador *jogador) {
     printf("\e[1E\e[137C\e[48;2;121;134;203m");
     char corletra[9][18]={"38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209","38;2;100;124;209"};
     
@@ -958,14 +981,22 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     combinacoes_verificar_naipes(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
     
     jogo_jogador_rodada_mostrar_possibilidades(jogador);
+    
+    desenhar_tutorial("0;77;64");
 
     int escolha=-1;
 
 
+    if (jogador->dinheiro==0) {
+        menu_jogo_jogador_desqualificado(jogador,cursor);
+        jogador->desistir=1;
+        return 1;
+    }
+    
     while(escolha == -1) {
         sel=-1;
         escolha=menu_jogo_navegar(jogador,cursor,pote);
-
+        
         if (escolha==0) {
             cursor_zerarCursor(cursor);
             while (sel==-1){
@@ -1003,7 +1034,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     desenhar_jogadoraposta(jogador->aposta);
 
     jogo_jogador_rodada_finalizar(jogador,cursor,pote);
-
+    return 1;
 }
 
 int jogador_inicializar_mao(tp_jogador jogador[], int quant ){
