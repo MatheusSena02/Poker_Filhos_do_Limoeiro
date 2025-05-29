@@ -57,7 +57,7 @@ int main()
     tp_cursor cursor;
 
     tp_pote pote;
-    pote.maiorAposta=1;
+    pote.maiorAposta=10;
     pote.pote=0;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
@@ -145,6 +145,7 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
+                jogo_zerar_apostas(jogador, &pote, quant);
 
                 for(int i=0;i<quant;i++) {
                     if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
@@ -160,6 +161,7 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
+                jogo_zerar_apostas(jogador, &pote, quant);
                 
                 for(int i=0;i<quant;i++) {
                     if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
@@ -175,6 +177,7 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
+                jogo_zerar_apostas(jogador, &pote, quant);
 
                 for(int i=0;i<quant;i++) {
                     if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);

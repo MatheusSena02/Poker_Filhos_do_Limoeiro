@@ -1029,5 +1029,13 @@ if(listaSEcarta_verificar_tamanho(*mao_mesa)>=5){
 return 1;
 }
 
+ void jogo_zerar_apostas(tp_jogador jogador[], tp_pote *pote, int quant){
+    for(int i=0;i<quant;i++){
+        jogador[i].aposta=0;
+    }
+    pote->maiorAposta=0;
+}
+
+
 
 #endif
