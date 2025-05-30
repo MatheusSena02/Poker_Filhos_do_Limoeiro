@@ -620,6 +620,30 @@ void desenhar_dinheiro(float dinheiro) {
     printf("\e[0m");
 }
 
+void desenhar_dinheirocifra(float dinheiro) {
+    printf("\e[E");
+    printf("\e[8C\e[38;2;164;119;32m██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
+    printf("\e[4C██\e[38;2;102;58;9m██\e[38;2;59;35;6m██\e[38;2;166;98;12m██\e[38;2;59;35;6m██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
+    printf("\e[4C\e[38;2;102;58;9m██\e[38;2;59;35;6m██\e[38;2;223;152;18m██████\e[38;2;59;35;6m██\e[38;2;102;58;9m██\e[E");
+    printf("\e[2C\e[38;2;164;119;32m██\e[38;2;59;35;6m████\e[38;2;223;152;18m██\e[38;2;166;98;12m██\e[38;2;59;35;6m██████\e[38;2;164;119;32m██\e[E");
+    printf("\e[2C\e[38;2;102;58;9m██\e[38;2;59;35;6m████\e[38;2;223;152;18m██████\e[38;2;59;35;6m████\e[38;2;102;58;9m██\e[E");
+    printf("\e[2C\e[38;2;164;119;32m██\e[38;2;59;35;6m██████\e[38;2;166;98;12m██\e[38;2;223;152;18m██\e[38;2;59;35;6m████\e[38;2;164;119;32m██\e[E");
+    printf("\e[4C\e[38;2;102;58;9m██\e[38;2;59;35;6m██\e[38;2;223;152;18m██████\e[38;2;59;35;6m██\e[38;2;102;58;9m██\e[E");
+    printf("\e[4C\e[38;2;164;119;32m██\e[38;2;102;58;9m██\e[38;2;59;35;6m██\e[38;2;166;98;12m██\e[38;2;59;35;6m██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
+    printf("\e[8C██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+
+    printf("\e[2C\e[11B");
+    printf("\e[48;2;0;77;64m");
+    printf("\e[1m");
+    printf("                  ");
+    printf("\e[18D");
+    imprimir_centralizado_float_dinheiro(dinheiro,18);
+    printf("\e[H");
+    printf("\e[0m");
+}
+
 void desenhar_bordaseletor() {
     printf("\e[s");
     printf("\e[38E");
@@ -632,7 +656,7 @@ void desenhar_bordaseletor() {
     printf("\e[H");
 }
 
-void desenhar_seletor(tp_cursor *cursor, float maiorAposta) {
+void desenhar_seletor(tp_cursor *cursor, float maiorAposta,float jogadorAposta) {
     char corfundo[3][18]={"48;2;96;125;139","48;2;96;125;139","48;2;96;125;139"};
     strcpy(corfundo[cursor->navegador],"48;2;33;150;243");
     char corletra[3][18]={"38;2;74;74;74","38;2;74;74;74","38;2;74;74;74"};
@@ -641,7 +665,7 @@ void desenhar_seletor(tp_cursor *cursor, float maiorAposta) {
     printf("\e[s");
     printf("\e[39E");
     printf("\e[42C\e[48;2;255;255;255m    \e[%sm            \e[48;2;255;255;255m      \e[2C    \e[%sm              \e[48;2;255;255;255m    \e[2C      \e[%sm            \e[48;2;255;255;255m    \e[E",corfundo[0],corfundo[1],corfundo[2]);
-    if (maiorAposta > 0) printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm      \e[%smPAGAR       \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
+    if (maiorAposta != jogadorAposta) printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm      \e[%smPAGAR       \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
     else     printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm    \e[%smCONTINUAR     \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
     printf("\e[42C\e[%sm                      \e[2C\e[%sm                      \e[2C\e[%sm                      \e[E",corfundo[0],corfundo[1],corfundo[2]);
     printf("\e[0m");

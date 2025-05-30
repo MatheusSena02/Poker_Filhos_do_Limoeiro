@@ -759,7 +759,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
     // A posição 0 é a mais a esquerda
      int numeroDeOpcoes=3;
     //impressao
-    desenhar_seletor(cursor,pote->maiorAposta);
+    desenhar_seletor(cursor,pote->maiorAposta,jogador->aposta);
     //^
 
     int input;
@@ -801,7 +801,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
 
 void desenhar_menu_jogador(tp_jogador jogador) {
     desenhar_cabecalho(jogador.cor,jogador.nome,jogador.ID);
-    desenhar_dinheiro(jogador.dinheiro);
+    desenhar_dinheirocifra(jogador.dinheiro);
     desenhar_jogadoraposta(jogador.aposta);
 }
 
@@ -1060,13 +1060,21 @@ if(listaSEcarta_verificar_tamanho(*mao_mesa)>=5){
 return 1;
 }
 
- void jogo_zerar_apostas(tp_jogador jogador[], tp_pote *pote, int quant){
+void jogo_zerar_apostas(tp_jogador jogador[], tp_pote *pote, int quant){
     for(int i=0;i<quant;i++){
         jogador[i].aposta=0;
     }
     pote->maiorAposta=0;
 }
 
+int jogo_rodada_verificar_continuarRodada(tp_jogador jogador[],tp_pote *pote,int quant) {
+    int veri=0;
+    for(int i=0;i<quant;i++){
+        if (jogador[i].aposta!=pote->maiorAposta) veri=1;
+        break;
+    }
+    return veri;
+}
 
 
 #endif
