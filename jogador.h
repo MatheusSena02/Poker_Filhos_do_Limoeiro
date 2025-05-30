@@ -1029,7 +1029,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     if (jogador->aposta > pote->maiorAposta) pote->maiorAposta=jogador->aposta;
 
     desenhar_pote(pote->pote);
-    desenhar_dinheiro(jogador->dinheiro);
+    desenhar_dinheirocifra(jogador->dinheiro);
     desenhar_maiorAposta(pote->maiorAposta);
     desenhar_jogadoraposta(jogador->aposta);
 
