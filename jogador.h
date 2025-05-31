@@ -38,6 +38,7 @@ typedef struct{
     int desistir;
     tp_combinacaoInfo comparadorValor[15];
     tp_combinacaoInfo comparadorNaipe[4];
+    tp_combinacaoInfo comparadorSequencia;
     tp_combinacoes combinacoes;
     tp_maiorInfo maiorInfo;
 }tp_jogador;

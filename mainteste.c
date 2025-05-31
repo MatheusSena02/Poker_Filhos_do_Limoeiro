@@ -84,6 +84,8 @@ int main()
     printf("O maior valor de carta do jogador[0] é %d\n",jogador[0].maiorInfo.valor);
     printf("O maior valor de naipe do jogador[0] é %d\n",jogador[0].maiorInfo.naipe);
 
+    combinacoes_verificar_sequencias(jogador,mao_mesa,jogador[0].mao);
+
     programa_pausar();
     programa_finalizar();
 

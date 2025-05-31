@@ -5,6 +5,7 @@
 #include "jogador.h"
 #include "listasecarta.h"
 #include "pilhasecarta.h"
+#include "listadecarta.h"
 
 //Tentativa de Combinação de 1 par
 int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]) {
@@ -139,7 +140,6 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
    
     
     for(int i=0;i<numcartas;i++) {
-        printf("%d: ",i);
         
         jogador->comparadorNaipe[cartas[i].naipe].quant+=1;
         
@@ -147,11 +147,8 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
             jogador->comparadorNaipe[cartas[i].naipe].valorMaisAltoReserva = jogador->comparadorNaipe[cartas[i].naipe].valorMaisAlto;
             jogador->comparadorNaipe[cartas[i].naipe].valorMaisAlto=cartas[i].valor_i;
         }
-
-        carta_printarP(&cartas[i]);
     }
     
-    printf("\n\n\n\n\n\n");
 
     int flush=0;
 
@@ -176,6 +173,124 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
             }
         }
     }
+}
+
+int vetor_inteiro_busca_maiorValor(const int vet[], int ini, int fim) {
+    int maior  = vet[ini];
+    int indice = ini;
+
+    for (int i = ini + 1; i <= fim; i++) {
+        if (vet[i] > maior) {
+            maior  = vet[i];
+            indice = i;
+        } else if (vet[i] == maior) {
+            indice = i;
+        }
+    }
+    return indice;
+}
+
+
+int vetor_inteiro_maiorValor(int vet[],int ini,int fim) {
+    int maior=0;
+
+    for(int i=ini;i<=fim;i++){
+        if (vet[i]>=maior) maior=vet[i];
+    }
+
+    return maior;
+}
+
+int combinacoes_verificar_sequencias (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador) {
+
+    tp_carta cartas[7];
+
+    int cartas_da_mesa = listaSEcarta_verificar_tamanho(mao_mesa);
+
+    int numcartas = (cartas_da_mesa + 2);
+
+    int cont = 0;
+    tp_listasecarta *atu = mao_jogador;
+
+    while (cont < 2) {
+        cartas[cont]=atu->info;
+
+        if (jogador->maiorInfo.valor < cartas[cont].valor_i) jogador->maiorInfo.valor=cartas[cont].valor_i;
+        if (jogador->maiorInfo.naipe < cartas[cont].naipe) jogador->maiorInfo.naipe=cartas[cont].naipe;
+
+        atu = atu->prox;
+        cont++;
+    }
+
+    atu = mao_mesa;
+    while (cont < numcartas) {
+        cartas[cont]=atu->info;
+        atu = atu->prox;
+        cont++;
+    }
+    
+    //Até aq foi pra guardar no vetor
+
+    tp_listadecarta *maoOrdenada;
+    maoOrdenada = listaDEcarta_inicializar();
+
+    for(int i=0;i<numcartas;i++) {
+        listaDEcarta_inserir_ordenado(maoOrdenada,cartas[i]);
+    }
+
+    tp_listadecarta_no *atual = maoOrdenada->ini;
+    while (atual!= NULL) {
+        carta_printarP(&(atual->info));
+        atual=atual->prox;
+    }
+
+    printf("\n\n\n\n");
+
+    int ultimovalor=-1;
+    int contSequencia[8]={0,0,0,0,0,0,0,0};
+  
+
+    atual = maoOrdenada->ini;
+
+    for (int i=0;i<numcartas;i++) {
+        if (atual->info.valor_i==(ultimovalor+1)) contSequencia[i]=contSequencia[i-1]+1;
+        else if (atual->info.valor_i==ultimovalor) contSequencia[i]=contSequencia[i-1];
+        else contSequencia[i]=0;
+        carta_printarP(&(atual->info));
+        ultimovalor=atual->info.valor_i;
+        atual=atual->prox;
+    }
+
+    atual = maoOrdenada->fim;
+
+    int maiorSequencia = vetor_inteiro_maiorValor(contSequencia,0,6);
+    int PosMaiorSequencia = vetor_inteiro_busca_maiorValor(contSequencia,0,6);
+    printf("Maior Sequencia: %d Posição: %d ",maiorSequencia,PosMaiorSequencia);
+    if (maiorSequencia>0) {
+        int PosAVoltar = (numcartas-1) - PosMaiorSequencia;
+        printf("Pos a voltar: %d ",PosAVoltar);
+        for(int i=0;i<PosAVoltar;i++){
+            maoOrdenada->fim=atual->ant;
+            free(atual);
+            maoOrdenada->fim->prox=NULL;
+            atual = maoOrdenada->fim;
+        }
+
+        printf("\n\n\n\n");
+        for (int i=0;i<numcartas;i++) printf("[%d] ",contSequencia[i]);
+
+
+        printf("\n\n\n\n");
+        atual = maoOrdenada->ini;
+        while (atual!= NULL) {
+            carta_printarP(&(atual->info));
+            atual=atual->prox;
+        }
+        printf("\n\n\n\n");
+
+
+    }
+
 }
 
 #endif
