@@ -4,13 +4,7 @@
 #include <time.h>
 
 //pro getch
-#ifdef _WIN32
 #include <conio.h>
-#else
-#include <termios.h>
-#include <unistd.h>
-#endif
-
 
 void console_cursor_invisivel(){
     printf("\e[?25l"); // cursor invisivel
@@ -37,30 +31,10 @@ int getch() {
 //Serve pra ler um input do usuário sem esperar pelo enter
 // Como usar no windows e linux (dessa forma pega nos 2):     while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
 
-#ifdef _WIN32
-
 	if (_kbhit()) {
         return _getch();
 	}
     return -1; 
-
-#else
-    struct termios oldAttr, newAttr;
-    int ch;
-
-    tcgetattr(STDIN_FILENO, &oldAttr);
-    newAttr = oldAttr;
-    
-    newAttr.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newAttr);
-
-    ch = getchar();
-
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldAttr);
-    
-    return ch;
-
-#endif
 }
 
 void programa_finalizar () {

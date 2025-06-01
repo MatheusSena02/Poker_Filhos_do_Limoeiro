@@ -872,22 +872,6 @@ void desenhar_bordaseletor() {
     printf("\e[H");
 }
 
-void desenhar_seletor(tp_cursor *cursor, float maiorAposta,float jogadorAposta) {
-    char corfundo[3][18]={"48;2;96;125;139","48;2;96;125;139","48;2;96;125;139"};
-    strcpy(corfundo[cursor->navegador],"48;2;33;150;243");
-    char corletra[3][18]={"38;2;74;74;74","38;2;74;74;74","38;2;74;74;74"};
-    strcpy(corletra[cursor->navegador],"38;2;255;209;255");
-
-    printf("\e[s");
-    printf("\e[39E");
-    printf("\e[42C\e[48;2;255;255;255m    \e[%sm            \e[48;2;255;255;255m      \e[2C    \e[%sm              \e[48;2;255;255;255m    \e[2C      \e[%sm            \e[48;2;255;255;255m    \e[E",corfundo[0],corfundo[1],corfundo[2]);
-    if (maiorAposta != jogadorAposta) printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm      \e[%smPAGAR       \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
-    else     printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm    \e[%smCONTINUAR     \e[48;2;255;255;255m  \e[E",corfundo[0],corletra[0],corfundo[1],corletra[1],corfundo[2],corletra[2]);
-    printf("\e[42C\e[%sm                      \e[2C\e[%sm                      \e[2C\e[%sm                      \e[E",corfundo[0],corfundo[1],corfundo[2]);
-    printf("\e[0m");
-    printf("\e[H");
-}
-
 void desenhar_aumentar(tp_cursor *cursor) {
     char corletra[3][18]={"38;2;74;74;74","38;2;74;74;74"};
     strcpy(corletra[cursor->navegador],"38;2;255;209;255");
@@ -1115,6 +1099,146 @@ void desenhar_tutorial(char RGBfundo[]){
     printf("\e[43E\e[48;2;%sm",RGBfundo);
     imprimir__centralizado_string_max200("Navegar: [WASD] | Confirmar: [F] | Voltar: [X]",155);
     printf("\e[H\e[0m");
+}
+
+void desenhar_popupavisolimpar() {
+    printf("\e[18E");
+    printf("\e[48;2;0;77;64m                                      \e[E");
+    printf("                                    \e[E");
+    printf("                                  \e[E");
+    printf("                                \e[E");
+    printf("                                \e[E");
+    printf("                              \e[E");
+    printf("                              \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_popupaviso(char texto1[],char texto2[],char texto3[]) {
+    printf("\e[18E");
+    printf("\e[48;2;49;0;0m                                      \e[E");
+    printf("  \e[48;2;89;0;0m                            \e[48;2;71;0;0m  \e[48;2;49;0;0m    \e[E");
+    printf("  \e[48;2;89;0;0m                          \e[48;2;71;0;0m  \e[48;2;49;0;0m    \e[E");
+    printf("  \e[48;2;89;0;0m                          \e[48;2;71;0;0m  \e[48;2;49;0;0m  \e[E");
+    printf("  \e[48;2;89;0;0m                        \e[48;2;71;0;0m  \e[48;2;49;0;0m    \e[E");
+    printf("  \e[48;2;89;0;0m                        \e[48;2;71;0;0m  \e[48;2;49;0;0m  \e[E");
+    printf("                              \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+
+    printf("\e[48;2;89;0;0m\e[38;2;255;255;255m\e[20E\e[4C");
+    imprimir__centralizado_string_max100(texto1,21);
+    printf("\e[E\e[4C");
+    imprimir__centralizado_string_max100(texto2,21);
+    printf("\e[E\e[4C");
+    imprimir__centralizado_string_max100(texto3,19);
+    printf("\e[1E\e[4C");
+    imprimir__centralizado_string_max100("[Pressione F]",19);
+    int input;
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102);
+    printf("\e[H\e[0m");
+    desenhar_popupavisolimpar();
+
+}
+
+void desenhar_guia() {
+    printf("\e[27E");
+    printf("\e[108C\e[38;2;72;125;178m████████████\e[E");
+    printf("\e[106C██\e[38;2;180;202;212m██\e[38;2;200;224;236m██\e[38;2;72;125;178m██\e[38;2;180;202;212m██\e[38;2;200;224;236m██\e[38;2;72;125;178m████\e[E");
+    printf("\e[104C████\e[38;2;200;224;236m████\e[38;2;72;125;178m██\e[38;2;200;224;236m████\e[38;2;72;125;178m██████\e[E");
+    printf("\e[104C████\e[38;2;200;224;236m██\e[38;2;180;202;212m██\e[38;2;147;172;183m██\e[38;2;200;224;236m██\e[38;2;180;202;212m██\e[38;2;147;172;183m██\e[38;2;72;125;178m████\e[E");
+    printf("\e[104C██████\e[38;2;147;172;183m████\e[38;2;72;125;178m██\e[38;2;147;172;183m████\e[38;2;72;125;178m████\e[E");
+    printf("\e[106C████\e[38;2;147;172;183m██\e[38;2;98;124;136m██\e[38;2;72;125;178m██\e[38;2;147;172;183m██\e[38;2;98;124;136m██\e[38;2;72;125;178m██\e[E");
+    printf("\e[108C████████████\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_guiadesligado() {
+    printf("\e[27E");
+    printf("\e[108C\e[38;2;34;44;49m████████████\e[E");
+    printf("\e[106C██\e[38;2;85;96;100m██\e[38;2;103;117;122m██\e[38;2;34;44;49m██\e[38;2;85;96;100m██\e[38;2;103;117;122m██\e[38;2;34;44;49m████\e[E");
+    printf("\e[104C████\e[38;2;103;117;122m████\e[38;2;34;44;49m██\e[38;2;103;117;122m████\e[38;2;34;44;49m██████\e[E");
+    printf("\e[104C████\e[38;2;103;117;122m██\e[38;2;85;96;100m██\e[38;2;61;69;70m██\e[38;2;103;117;122m██\e[38;2;85;96;100m██\e[38;2;61;69;70m██\e[38;2;34;44;49m████\e[E");
+    printf("\e[104C██████\e[38;2;61;69;70m████\e[38;2;34;44;49m██\e[38;2;61;69;70m████\e[38;2;34;44;49m████\e[E");
+    printf("\e[106C████\e[38;2;61;69;70m██\e[38;2;42;46;47m██\e[38;2;34;44;49m██\e[38;2;61;69;70m██\e[38;2;42;46;47m██\e[38;2;34;44;49m██\e[E");
+    printf("\e[108C████████████\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+void desenhar_guialimpar() {
+    printf("\e[27E");
+    printf("\e[108C\e[48;2;0;77;64m            \e[E");
+    printf("\e[106C                \e[E");
+    printf("\e[104C                    \e[E");
+    printf("\e[104C                    \e[E");
+    printf("\e[104C                    \e[E");
+    printf("\e[106C                \e[E");
+    printf("\e[108C            \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_jogadores() {
+    printf("\e[27E");
+    printf("\e[34C\e[38;2;72;125;178m████████████\e[E");
+    printf("\e[32C██\e[38;2;3;15;21m████\e[38;2;72;125;178m████\e[38;2;7;22;37m████\e[38;2;72;125;178m██\e[E");
+    printf("\e[32C██\e[38;2;3;15;21m████\e[38;2;15;41;79m████\e[38;2;7;22;37m████\e[38;2;72;125;178m██\e[E");
+    printf("\e[30C██\e[38;2;3;15;21m██████\e[38;2;15;41;79m████\e[38;2;7;22;37m██████\e[38;2;72;125;178m██\e[E");
+    printf("\e[30C██\e[38;2;3;15;21m████\e[38;2;15;41;79m████████\e[38;2;7;22;37m████\e[38;2;72;125;178m██\e[E");
+    printf("\e[32C████\e[38;2;15;41;79m████████\e[38;2;72;125;178m████\e[E");
+    printf("\e[34C████████████\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_jogadoresdesligado() {
+    printf("\e[27E");
+    printf("\e[34C\e[38;2;34;44;49m████████████\e[E");
+    printf("\e[32C██\e[38;2;28;28;28m████\e[38;2;34;44;49m████\e[38;2;40;40;40m████\e[38;2;34;44;49m██\e[E");
+    printf("\e[32C██\e[38;2;28;28;28m████\e[38;2;81;82;83m████\e[38;2;40;40;40m████\e[38;2;34;44;49m██\e[E");
+    printf("\e[30C██\e[38;2;28;28;28m██████\e[38;2;81;82;83m████\e[38;2;40;40;40m██████\e[38;2;34;44;49m██\e[E");
+    printf("\e[30C██\e[38;2;28;28;28m████\e[38;2;81;82;83m████████\e[38;2;40;40;40m████\e[38;2;34;44;49m██\e[E");
+    printf("\e[32C████\e[38;2;81;82;83m████████\e[38;2;34;44;49m████\e[E");
+    printf("\e[34C████████████\e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_jogadoreslimpar() {
+    printf("\e[27E");
+    printf("\e[34C\e[48;2;0;77;64m            \e[E");
+    printf("\e[32C                \e[E");
+    printf("\e[32C                \e[E");
+    printf("\e[30C                    \e[E");
+    printf("\e[30C                    \e[E");
+    printf("\e[32C                \e[E");
+    printf("\e[34C            \e[E");
+    printf("\e[0m");
+    printf("\e[H");
+}
+
+void desenhar_seletor(tp_cursor *cursor, float maiorAposta,float jogadorAposta) {
+    char corfundo[5][18]={"48;2;96;125;139","48;2;96;125;139","48;2;96;125;139","48;2;96;125;139","48;2;96;125;139"};
+    strcpy(corfundo[cursor->navegador],"48;2;33;150;243");
+    char corletra[5][18]={"38;2;74;74;74","38;2;74;74;74","38;2;74;74;74","38;2;74;74;74","38;2;74;74;74"};
+    strcpy(corletra[cursor->navegador],"38;2;255;209;255");
+    if(cursor->navegador==0) desenhar_jogadores();
+    else desenhar_jogadoresdesligado();
+    if(cursor->navegador==4) desenhar_guia();
+    else desenhar_guiadesligado();
+
+    printf("\e[s");
+    printf("\e[39E");
+    printf("\e[42C\e[48;2;255;255;255m    \e[%sm            \e[48;2;255;255;255m      \e[2C    \e[%sm              \e[48;2;255;255;255m    \e[2C      \e[%sm            \e[48;2;255;255;255m    \e[E",corfundo[1],corfundo[2],corfundo[3]);
+    if (maiorAposta != jogadorAposta) printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm      \e[%smPAGAR       \e[48;2;255;255;255m  \e[E",corfundo[1],corletra[1],corfundo[2],corletra[2],corfundo[3],corletra[3]);
+    else     printf("\e[42C  \e[%sm     \e[%smAUMENTAR     \e[48;2;255;255;255m  \e[2C  \e[%sm     \e[%smDESISTIR     \e[48;2;255;255;255m  \e[2C  \e[%sm    \e[%smCONTINUAR     \e[48;2;255;255;255m  \e[E",corfundo[1],corletra[1],corfundo[2],corletra[2],corfundo[3],corletra[3]);
+    printf("\e[42C\e[%sm                      \e[2C\e[%sm                      \e[2C\e[%sm                      \e[E",corfundo[1],corfundo[2],corfundo[3]);
+    printf("\e[0m");
+    printf("\e[H");
 }
 
 #endif

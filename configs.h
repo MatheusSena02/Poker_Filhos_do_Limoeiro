@@ -50,11 +50,7 @@ void config_inicializacao(opc *opcoes) {
     //Obter variáveis guardadas em opcoes.txt
     if (!arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d")) opcoes->debug = 0;
 
-	#ifdef _WIN32
     if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 1;
-	#else
-	if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 0;
-	#endif
 
     if (!arq_lerOpcoes(&opcoes->nplayersdebug,"NumeroDePlayersDebug = ","NumeroDePlayersDebug = %d")) opcoes->nplayersdebug = 6;
 
