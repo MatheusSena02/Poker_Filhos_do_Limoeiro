@@ -7,14 +7,38 @@
 #include "pilhasecarta.h"
 #include "listadecarta.h"
 
-//Tentativa de Combinação de 1 par
-int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]) {
+int vetor_inteiro_busca_maiorValor(const int vet[], int ini, int fim) {
+    int maior  = vet[ini];
+    int indice = ini;
 
-    tp_carta cartas[7];
+    for (int i = ini + 1; i <= fim; i++) {
+        if (vet[i] > maior) {
+            maior  = vet[i];
+            indice = i;
+        } else if (vet[i] == maior) {
+            indice = i;
+        }
+    }
+    return indice;
+}
 
+
+int vetor_inteiro_maiorValor(int vet[],int ini,int fim) {
+    int maior=0;
+
+    for(int i=ini;i<=fim;i++){
+        if (vet[i]>=maior) maior=vet[i];
+    }
+
+    return maior;
+}
+
+int combinacoes_criar_vetorDeCartas(tp_carta cartas[],int *ncartas, tp_listasecarta *mao_jogador,tp_jogador *jogador, tp_listasecarta *mao_mesa){
+    
     int cartas_da_mesa = listaSEcarta_verificar_tamanho(mao_mesa);
-
-    int numcartas = (cartas_da_mesa + 2);
+    *ncartas = (cartas_da_mesa + 2);
+    
+    int numcartas = *ncartas;
 
     int cont = 0;
     tp_listasecarta *atu = mao_jogador;
@@ -35,6 +59,15 @@ int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mes
         atu = atu->prox;
         cont++;
     }
+
+}
+
+//Tentativa de Combinação de 1 par
+int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]) {
+
+    tp_carta cartas[7];
+    int numcartas;
+    combinacoes_criar_vetorDeCartas(cartas,&numcartas,mao_jogador,jogador,mao_mesa);
    
     
     for(int i=0;i<numcartas;i++) {
@@ -60,7 +93,6 @@ int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mes
         if (jogador->comparadorValor[i].quant==2) {
 
             jogador->combinacoes.par.quant = pares;
-
             if (jogador->combinacoes.par.valorMaisAlto < i) {
                 jogador->combinacoes.par.valorMaisAltoReserva = jogador->combinacoes.par.valorMaisAlto;
                 jogador->combinacoes.par.valorMaisAlto = i;
@@ -113,30 +145,8 @@ int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mes
 int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]) {
 
     tp_carta cartas[7];
-
-    int cartas_da_mesa = listaSEcarta_verificar_tamanho(mao_mesa);
-
-    int numcartas = (cartas_da_mesa + 2);
-
-    int cont = 0;
-    tp_listasecarta *atu = mao_jogador;
-
-    while (cont < 2) {
-        cartas[cont]=atu->info;
-
-        if (jogador->maiorInfo.valor < cartas[cont].valor_i) jogador->maiorInfo.valor=cartas[cont].valor_i;
-        if (jogador->maiorInfo.naipe < cartas[cont].naipe) jogador->maiorInfo.naipe=cartas[cont].naipe;
-
-        atu = atu->prox;
-        cont++;
-    }
-
-    atu = mao_mesa;
-    while (cont < numcartas) {
-        cartas[cont]=atu->info;
-        atu = atu->prox;
-        cont++;
-    }
+    int numcartas;
+    combinacoes_criar_vetorDeCartas(cartas,&numcartas,mao_jogador,jogador,mao_mesa);
    
     
     for(int i=0;i<numcartas;i++) {
@@ -160,7 +170,7 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
     for (int i=0;i<4;i++){
         if (jogador->comparadorNaipe[i].quant>=5) {
 
-            jogador->combinacoes.par.quant = flush;
+            jogador->combinacoes.flush.quant = flush;
 
             if (jogador->combinacoes.flush.naipeMaisAlto < i) {
                 jogador->combinacoes.flush.naipeMaisAltoReserva = jogador->combinacoes.flush.naipeMaisAlto;
@@ -175,68 +185,146 @@ int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa
     }
 }
 
-int vetor_inteiro_busca_maiorValor(const int vet[], int ini, int fim) {
-    int maior  = vet[ini];
-    int indice = ini;
-
-    for (int i = ini + 1; i <= fim; i++) {
-        if (vet[i] > maior) {
-            maior  = vet[i];
-            indice = i;
-        } else if (vet[i] == maior) {
-            indice = i;
-        }
+int combinacoes_ordenarMao(tp_carta cartas[],tp_listadecarta *maoOrdenada,int numcartas){
+    for(int i=0;i<numcartas;i++) {
+        listaDEcarta_inserir_ordenado(maoOrdenada,cartas[i]);
     }
-    return indice;
 }
 
+int combinacoes_criar_vetorDeSequencia(tp_listadecarta *maoOrdenada,int contSequencia[],int numcartas) {
+    tp_listadecarta_no *atual = maoOrdenada->ini;
+    int ultimovalor=-1;
 
-int vetor_inteiro_maiorValor(int vet[],int ini,int fim) {
-    int maior=0;
-
-    for(int i=ini;i<=fim;i++){
-        if (vet[i]>=maior) maior=vet[i];
+    for (int i=0;i<numcartas;i++) {
+        if (atual->info.valor_i==(ultimovalor+1)) contSequencia[i]=contSequencia[i-1]+1;
+        else if (atual->info.valor_i==ultimovalor) contSequencia[i]=contSequencia[i-1];
+        else contSequencia[i]=0;
+        ultimovalor=atual->info.valor_i;
+        atual=atual->prox;
     }
 
-    return maior;
+}
+
+int combinacoes_sequencias_retirar_fim(tp_listadecarta *maoOrdenada,int numcartas,int PosMaiorSequencia){
+    tp_listadecarta_no *atual = maoOrdenada->fim;
+        
+    int PosAVoltar = (numcartas-1) - PosMaiorSequencia;
+    for(int i=0;i<PosAVoltar;i++){
+        maoOrdenada->fim=atual->ant;
+        free(atual);
+        maoOrdenada->fim->prox=NULL;
+        atual = maoOrdenada->fim;
+    }
+}
+
+int combinacoes_sequencias_retirar_inicio(tp_listadecarta *maoOrdenada,int maiorSequencia){
+    tp_listadecarta_no *atual = maoOrdenada->fim;
+    int valorMax = atual->info.valor_i;
+    int valorMin = valorMax - maiorSequencia;
+
+    atual = maoOrdenada->ini;
+    while (atual->info.valor_i!=valorMin) {
+        maoOrdenada->ini=atual->prox;
+        free(atual);
+        maoOrdenada->ini->ant=NULL;
+        atual = maoOrdenada->ini;
+    }
+}
+
+int combinacoes_sequencias_verificar_straightFlush(tp_jogador *jogador, tp_listadecarta *maoOrdenada,int numcartas) {
+    
+    for(int i=0;i<4;i++){
+        jogador->comparadorNaipe[i].quant=0;
+    }
+
+    tp_listadecarta_no *atual = maoOrdenada->ini;
+    while(atual!=NULL) {
+        jogador->comparadorNaipe[atual->info.naipe].quant+=1;
+        atual=atual->prox;
+    }
+
+    for(int i=0;i<4;i++) {
+        if (jogador->comparadorNaipe[i].quant >= 5) {
+            atual = maoOrdenada->ini;
+            while(atual!=NULL) {
+                if (atual->info.naipe == i) {
+                    jogador->combinacoes.straightFlush.valorMaisAlto=atual->info.valor_i;
+                }
+                atual=atual->prox;
+            }
+            jogador->combinacoes.straightFlush.quant=1;
+            jogador->combinacoes.straightFlush.naipeMaisAlto=i;
+        }
+    }
 }
 
 int combinacoes_verificar_sequencias (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador) {
 
     tp_carta cartas[7];
-
-    int cartas_da_mesa = listaSEcarta_verificar_tamanho(mao_mesa);
-
-    int numcartas = (cartas_da_mesa + 2);
-
-    int cont = 0;
-    tp_listasecarta *atu = mao_jogador;
-
-    while (cont < 2) {
-        cartas[cont]=atu->info;
-
-        if (jogador->maiorInfo.valor < cartas[cont].valor_i) jogador->maiorInfo.valor=cartas[cont].valor_i;
-        if (jogador->maiorInfo.naipe < cartas[cont].naipe) jogador->maiorInfo.naipe=cartas[cont].naipe;
-
-        atu = atu->prox;
-        cont++;
-    }
-
-    atu = mao_mesa;
-    while (cont < numcartas) {
-        cartas[cont]=atu->info;
-        atu = atu->prox;
-        cont++;
-    }
-    
-    //Até aq foi pra guardar no vetor
+    int numcartas;
+    combinacoes_criar_vetorDeCartas(cartas,&numcartas,mao_jogador,jogador,mao_mesa);
 
     tp_listadecarta *maoOrdenada;
     maoOrdenada = listaDEcarta_inicializar();
+    combinacoes_ordenarMao(cartas,maoOrdenada,numcartas);
 
-    for(int i=0;i<numcartas;i++) {
-        listaDEcarta_inserir_ordenado(maoOrdenada,cartas[i]);
+    int contSequencia[8]={0,0,0,0,0,0,0,0};  
+    combinacoes_criar_vetorDeSequencia(maoOrdenada,contSequencia,numcartas);
+
+    int maiorSequencia = vetor_inteiro_maiorValor(contSequencia,0,6);
+    int PosMaiorSequencia = vetor_inteiro_busca_maiorValor(contSequencia,0,6);
+
+    combinacoes_sequencias_retirar_fim(maoOrdenada,numcartas,PosMaiorSequencia);
+    combinacoes_sequencias_retirar_inicio(maoOrdenada,maiorSequencia);
+
+    if (maiorSequencia>=4) {
+        jogador->combinacoes.straight.quant=1;
+        jogador->combinacoes.straight.valorMaisAlto = maoOrdenada->fim->info.valor_i;
     }
+
+    combinacoes_sequencias_verificar_straightFlush(jogador, maoOrdenada, numcartas);
+}
+
+int vec(tp_carta vet[],int tam, int ID){
+//vetor_verificar_existenciaCarta
+    for(int i=0;i<tam;i++){
+        if (vet[i].ID==ID) return 1;
+    }
+    return 0;
+}
+
+int combinacoes_verificar_royalFlush (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador) {
+    tp_carta cartas[7];
+    int numcartas;
+    combinacoes_criar_vetorDeCartas(cartas,&numcartas,mao_jogador,jogador,mao_mesa);
+   
+    if (vec(cartas,numcartas, 10) && vec(cartas,numcartas, 11) && vec(cartas,numcartas, 12) && vec(cartas,numcartas, 13) && vec(cartas,numcartas, 1)) {
+        jogador->combinacoes.royalFlush.quant=1;
+        jogador->combinacoes.royalFlush.naipeMaisAlto=0;
+    }
+    else if (vec(cartas,numcartas, 23) && vec(cartas,numcartas, 24) && vec(cartas,numcartas, 25) && vec(cartas,numcartas, 26) && vec(cartas,numcartas, 14)) {
+        jogador->combinacoes.royalFlush.quant=1;
+        jogador->combinacoes.royalFlush.naipeMaisAlto=1;
+    }
+    else if (vec(cartas,numcartas, 36) && vec(cartas,numcartas, 37) && vec(cartas,numcartas, 38) && vec(cartas,numcartas, 39) && vec(cartas,numcartas, 27)) {
+        jogador->combinacoes.royalFlush.quant=1;
+        jogador->combinacoes.royalFlush.naipeMaisAlto=2;
+    }
+    else if (vec(cartas,numcartas, 49) && vec(cartas,numcartas, 50) && vec(cartas,numcartas, 51) && vec(cartas,numcartas, 52) && vec(cartas,numcartas, 40)) {
+        jogador->combinacoes.royalFlush.quant=1;
+        jogador->combinacoes.royalFlush.naipeMaisAlto=3;
+    }
+}
+
+int combinacao_imprimir_maocombinada(tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador){
+    
+    tp_carta cartas[7];
+    int numcartas;
+    combinacoes_criar_vetorDeCartas(cartas,&numcartas,mao_jogador,jogador,mao_mesa);
+
+    tp_listadecarta *maoOrdenada;
+    maoOrdenada = listaDEcarta_inicializar();
+    combinacoes_ordenarMao(cartas,maoOrdenada,numcartas);
 
     tp_listadecarta_no *atual = maoOrdenada->ini;
     while (atual!= NULL) {
@@ -245,52 +333,6 @@ int combinacoes_verificar_sequencias (tp_jogador *jogador, tp_listasecarta *mao_
     }
 
     printf("\n\n\n\n");
-
-    int ultimovalor=-1;
-    int contSequencia[8]={0,0,0,0,0,0,0,0};
-  
-
-    atual = maoOrdenada->ini;
-
-    for (int i=0;i<numcartas;i++) {
-        if (atual->info.valor_i==(ultimovalor+1)) contSequencia[i]=contSequencia[i-1]+1;
-        else if (atual->info.valor_i==ultimovalor) contSequencia[i]=contSequencia[i-1];
-        else contSequencia[i]=0;
-        carta_printarP(&(atual->info));
-        ultimovalor=atual->info.valor_i;
-        atual=atual->prox;
-    }
-
-    atual = maoOrdenada->fim;
-
-    int maiorSequencia = vetor_inteiro_maiorValor(contSequencia,0,6);
-    int PosMaiorSequencia = vetor_inteiro_busca_maiorValor(contSequencia,0,6);
-    printf("Maior Sequencia: %d Posição: %d ",maiorSequencia,PosMaiorSequencia);
-    if (maiorSequencia>0) {
-        int PosAVoltar = (numcartas-1) - PosMaiorSequencia;
-        printf("Pos a voltar: %d ",PosAVoltar);
-        for(int i=0;i<PosAVoltar;i++){
-            maoOrdenada->fim=atual->ant;
-            free(atual);
-            maoOrdenada->fim->prox=NULL;
-            atual = maoOrdenada->fim;
-        }
-
-        printf("\n\n\n\n");
-        for (int i=0;i<numcartas;i++) printf("[%d] ",contSequencia[i]);
-
-
-        printf("\n\n\n\n");
-        atual = maoOrdenada->ini;
-        while (atual!= NULL) {
-            carta_printarP(&(atual->info));
-            atual=atual->prox;
-        }
-        printf("\n\n\n\n");
-
-
-    }
-
 }
 
 #endif

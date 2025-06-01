@@ -22,15 +22,40 @@ int main()
     int quant;
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
-	tp_carta baralhoReferencia[52];
+	tp_carta baralhoReferencia[52],baralhoB[52];
     tp_listasecarta *mao_mesa;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
-    //Inicializa os baralhos
+    
+    //DEFINIR AS CARTAS DA MESA?
+    int definir=1;
+    //Poe aq as posições da carta no baralhoreferencia (usa o catalogo.exe pra ver), é o segundo numero q aparece
+    int IDS[]={0,12,11,9,10};
+    
 
-    srand(time(NULL));
+    //DEFINIR AS CARTAS DO JOGADOR?
+    int definirJ=1;
+
+    //Poe aq as posições da carta no baralhoreferencia (usa o catalogo.exe pra ver), é o segundo numero q aparece
+    int IJS[]={27,33};
+
+
+
+
+
+
+
+
+
+
+    FILE *arq = fopen("seed.txt","r");
+    int num;
+    fscanf(arq,"%d",&num);
+    if (num!=0) srand(num);
+    else srand(time(NULL));
 
 	baralhoReferencia_inicializar(baralhoReferencia);
+    baralhoReferencia_inicializar(baralhoB);
     baralhoJogo=pilhaSEcarta_inicializar();
 
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
@@ -60,10 +85,27 @@ int main()
     baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
     baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
     baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
+    
+    if (definir) {
+        mao_mesa->info=baralhoB[IDS[0]];
+        mao_mesa->prox->info=baralhoB[IDS[1]];
+        mao_mesa->prox->prox->info=baralhoB[IDS[2]];
+        mao_mesa->prox->prox->prox->info=baralhoB[IDS[3]];
+        mao_mesa->prox->prox->prox->prox->info=baralhoB[IDS[4]];
+    }
+    
+    if (definirJ) {
+        jogador[0].mao->info=baralhoB[IJS[0]];
+        jogador[0].mao->prox->info=baralhoB[IJS[1]];
+    }
+    
+    combinacoes_verificar_valores(&jogador[0],mao_mesa,jogador[0].mao,jogador[0].comparadorValor);
+    combinacoes_verificar_naipes(&jogador[0],mao_mesa,jogador[0].mao,jogador[0].comparadorValor);
 
-    combinacoes_verificar_valores(jogador,mao_mesa,jogador[0].mao,jogador[0].comparadorValor);
-    combinacoes_verificar_naipes(jogador,mao_mesa,jogador[0].mao,jogador[0].comparadorValor);
+    combinacoes_verificar_sequencias(&jogador[0],mao_mesa,jogador[0].mao);
+    combinacoes_verificar_royalFlush (&jogador[0],mao_mesa, jogador[0].mao); 
 
+    combinacao_imprimir_maocombinada(&jogador[0],mao_mesa, jogador[0].mao);
 
     if (jogador[0].combinacoes.par.quant>0) printf("O jogador[0] tem %d par(es) de",jogador[0].combinacoes.par.quant);
     if (jogador[0].combinacoes.par.quant==1) printf(" %d\n",jogador[0].combinacoes.par.valorMaisAlto);
@@ -79,13 +121,21 @@ int main()
 
     if (jogador[0].combinacoes.fullHouse.quant>0) printf("O jogador[0] tem um fulHouse\n");
 
-    if (jogador[0].combinacoes.flush.quant>0) printf("O jogador[0] tem um flush\n");
+    if (jogador[0].combinacoes.flush.quant>0) printf("O jogador[0] tem um flush de naipe %d\n",jogador[0].combinacoes.flush.naipeMaisAlto);
+
+    if (jogador[0].combinacoes.straight.quant>0) printf("O jogador[0] tem %d straight de",jogador[0].combinacoes.straight.quant);
+    if (jogador[0].combinacoes.straight.quant==1) printf(" %d\n",jogador[0].combinacoes.straight.valorMaisAlto);
+
+    if (jogador[0].combinacoes.straightFlush.quant>0) printf("O jogador[0] tem %d straightFlush de",jogador[0].combinacoes.straightFlush.quant);
+    if (jogador[0].combinacoes.straightFlush.quant==1) printf(" %d",jogador[0].combinacoes.straightFlush.valorMaisAlto);
+    if (jogador[0].combinacoes.straightFlush.quant==1) printf(" naipe %d\n",jogador[0].combinacoes.straightFlush.naipeMaisAlto);
+
+    if (jogador[0].combinacoes.royalFlush.quant>0) printf("O jogador[0] tem %d royalFlush de",jogador[0].combinacoes.royalFlush.quant);
+    if (jogador[0].combinacoes.royalFlush.quant==1) printf(" %d\n",jogador[0].combinacoes.royalFlush.naipeMaisAlto);
 
     printf("O maior valor de carta do jogador[0] é %d\n",jogador[0].maiorInfo.valor);
     printf("O maior valor de naipe do jogador[0] é %d\n",jogador[0].maiorInfo.naipe);
-
-    combinacoes_verificar_sequencias(jogador,mao_mesa,jogador[0].mao);
-
+ 
     programa_pausar();
     programa_finalizar();
 
