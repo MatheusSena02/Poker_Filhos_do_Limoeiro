@@ -40,6 +40,9 @@ int main()
     int IJS[]={27,33};
 
 
+    //Para mudar a seed, abra seed.txt
+    //Aleatório = 0
+    //Pra definir alguma, escreve qualquer numero ou palavra sla, isso vai ser a seed
 
 
 
