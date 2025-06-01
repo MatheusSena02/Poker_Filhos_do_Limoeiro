@@ -763,6 +763,20 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
     desenhar_seletor(cursor,pote->maiorAposta,jogador->aposta);
     //^
 
+    switch(cursor->navegador) {
+        case 0:
+            desenhar_cabecalho_jogador_dinheiro(jogador->ID);
+        break;
+
+        case 1:
+            desenhar_cabecalho_jogador_triste(jogador->ID);
+        break;
+
+        case 2:
+            desenhar_cabecalho_jogador_neutro(jogador->ID);
+        break;
+    }
+    
     int input;
     do {
         input=-1;
@@ -993,6 +1007,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
 
 
     if (jogador->dinheiro==0) {
+        desenhar_cabecalho_jogador_triste(jogador->ID);
         menu_jogo_jogador_desqualificado(jogador,cursor);
         jogador->desistir=1;
         return 1;
