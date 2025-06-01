@@ -28,13 +28,13 @@ int main()
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     
     //DEFINIR AS CARTAS DA MESA?
-    int definir=1;
+    int definir=0;
     //Poe aq as posições da carta no baralhoreferencia (usa o catalogo.exe pra ver), é o segundo numero q aparece
     int IDS[]={0,12,11,9,10};
     
 
     //DEFINIR AS CARTAS DO JOGADOR?
-    int definirJ=1;
+    int definirJ=0;
 
     //Poe aq as posições da carta no baralhoreferencia (usa o catalogo.exe pra ver), é o segundo numero q aparece
     int IJS[]={27,33};
