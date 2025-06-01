@@ -20,7 +20,7 @@
 #include "jogador.h"
 #include "extradebug.h"
 #include "combinacoes.h"
-#include "audio.h"
+//#include "audio.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,6 @@ int main()
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
     console_cursor_invisivel(); //deixa cursor invisível
-
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
