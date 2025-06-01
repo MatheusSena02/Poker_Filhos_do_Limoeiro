@@ -152,7 +152,6 @@ int arq_criarOpcoes () {
         fprintf(arq,"NumeroDePlayersDebug = 6\n\n");
 
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
-        fprintf(arq,"// Recomendação:  Windows ou OnlineGDB = 1 / Replit = 0\n");
 
         #ifdef _WIN32
         fprintf(arq,"ModoDeSalvamento = 1\n\n");
@@ -161,7 +160,6 @@ int arq_criarOpcoes () {
         #endif
 
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows, mas tem compatibilidade quase completa para LINUX\n");
-        fprintf(arq,"//-->Em sites que rodam LINUX, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora\n");
         fclose(arq);
         return 1;
     }

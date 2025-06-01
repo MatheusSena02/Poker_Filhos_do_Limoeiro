@@ -20,6 +20,7 @@
 #include "jogador.h"
 #include "extradebug.h"
 #include "combinacoes.h"
+#include "audio.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,11 +30,8 @@
 int main()
 {
 	//Configura o console para windows (liga cores e outros caracteres)
-    #ifdef _WIN32
 	windowsconfig();
-	#else
-	linuxconfig();
-    #endif
+
 
     //////////////////////////// INICIALIZAÇÃO - ARQUIVOS - CONFIGURAÇÕES ////////////////////////////////
     
@@ -45,6 +43,7 @@ int main()
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
     console_cursor_invisivel(); //deixa cursor invisível
+
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
@@ -206,7 +205,6 @@ int main()
     }
 
     programa_finalizar();
-
     return 1;
 }
 

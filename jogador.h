@@ -954,6 +954,8 @@ int jogo_jogador_rodada_mostrar_possibilidades(tp_jogador *jogador) {
 
 int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]);
 int combinacoes_verificar_naipes (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador,tp_combinacaoInfo comparadorValor[]);
+int combinacoes_verificar_sequencias (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador);
+int combinacoes_verificar_royalFlush (tp_jogador *jogador, tp_listasecarta *mao_mesa, tp_listasecarta *mao_jogador);
 
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa) {
 
@@ -980,6 +982,8 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     jogador_inicializacao(jogador);
     combinacoes_verificar_valores(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
     combinacoes_verificar_naipes(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
+    combinacoes_verificar_sequencias(jogador,mao_mesa,jogador->mao);
+    combinacoes_verificar_royalFlush(jogador,mao_mesa,jogador->mao); 
     
     jogo_jogador_rodada_mostrar_possibilidades(jogador);
     
