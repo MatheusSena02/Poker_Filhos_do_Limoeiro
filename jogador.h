@@ -922,25 +922,282 @@ void redesenhar_tela_completa(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
     desenhar_limpar_seletorEaumentar();
     
     desenhar_pote(pote->pote);
-    desenhar_menu_jogador(*jogador);
     desenhar_marcadormaojogador();
-    desenhar_porcoaposta();
-    desenhar_maiorAposta(pote->maiorAposta);
     jogo_jogador_rodada_mostrar_maoMesa(mao_mesa);
-
-    desenhar_areacombinacoes();
 
     desenhar_mao_jogador(*jogador);
     
     desenhar_limpar_seletorEaumentar();
     desenhar_bordaseletor();
-
-    jogo_jogador_rodada_mostrar_possibilidades(jogador);
     
     desenhar_tutorial("0;77;64");
 }
 
-int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
+void baralhoReferencia_inicializar(tp_carta *baralhoReferencia);
+void carta_printarP(tp_carta *carta);
+void carta_printarP_verso();
+
+int menu_popupguia(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa){
+    desenhar_popupbase();
+    desenhar_popguia();
+
+    tp_carta baralho[52];
+    baralhoReferencia_inicializar(baralho);
+
+    printf("\e[H\e[0m");
+    printf("\e[48;2;44;37;28m");
+    printf("\e[13E\e[44C");
+
+    carta_printarP(&baralho[0]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[12]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[11]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[10]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[9]);
+
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[44C");
+
+    carta_printarP(&baralho[36]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[35]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[34]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[33]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[32]);
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[44C");
+
+    carta_printarP(&baralho[8]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[21]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[34]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[47]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[44C");
+
+    carta_printarP(&baralho[0]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[13]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[26]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[2]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[28]);
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[44C");
+
+    carta_printarP(&baralho[40]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[42]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[44]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[45]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[50]);
+
+    printf("\e[H\e[0m");
+    
+
+
+
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[13E\e[88C");
+
+    carta_printarP(&baralho[9]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[47]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[20]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[32]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[5]);
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[88C");
+
+    carta_printarP(&baralho[6]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[19]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[32]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[88C");
+
+    carta_printarP(&baralho[10]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[49]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[17]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[30]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[88C");
+
+    carta_printarP(&baralho[0]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP(&baralho[39]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+
+    printf("\e[48;2;44;37;28m");
+    printf("\e[5E\e[88C");
+
+    carta_printarP(&baralho[51]);
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+    printf("\e[48;2;44;37;28m");
+    carta_printarP_verso();
+
+    printf("\e[H\e[0m");
+    
+    printf("\e[H\e[0m");
+    
+    printf("\e[13E\e[26C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Royal Flush",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[38C");
+    printf("01");
+
+    printf("\e[3E\e[26C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Straight Flush",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[38C");
+    printf("02");
+
+    printf("\e[3E\e[26C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Quadra",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[38C");
+    printf("03");
+
+    printf("\e[3E\e[26C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Full House",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[38C");
+    printf("04");
+
+    printf("\e[3E\e[26C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Flush",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[38C");
+    printf("05");
+
+    printf("\e[H\e[0m");
+
+    printf("\e[13E\e[70C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Straight",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[82C");
+    printf("06");
+
+    printf("\e[3E\e[70C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Trinca",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[82C");
+    printf("07");
+
+    printf("\e[3E\e[70C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Dois Pares",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[82C");
+    printf("08");
+
+    printf("\e[3E\e[70C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Par",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[82C");
+    printf("09");
+
+    printf("\e[3E\e[70C");
+    printf("\e[48;2;44;37;28m\e[38;2;255;255;255m");
+    imprimir__centralizado_string_max100("Carta Alta",26);
+    printf("\e[48;2;218;159;38m\e[38;2;0;0;0m");
+    printf("\e[2E\e[82C");
+    printf("10");
+
+    printf("\e[H\e[0m");
+
+    printf("\e[38;2;255;255;255m");
+    printf("\e[39E\e[48;2;44;37;28m");
+    imprimir__centralizado_string_max200("Combinações possíveis em ordem decrescente (Royal Flush > Par)",155);
+    printf("\e[H\e[0m");
+
+    printf("\e[38;2;0;0;0m");
+    desenhar_tutorial("143;120;89");
+    printf("\e[0m");
+
+    int input;
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102 && input!=120);
+
+    desenhar_popupbaselimpar();
+    desenhar_mesaapoiodamesa();
+    redesenhar_tela_completa(jogador,cursor,pote,mao_mesa);
+}
+
+int menu_popupjogadores(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa){
+    desenhar_popupbase();
+    printf("\e[38;2;0;0;0m");
+    desenhar_tutorial("143;120;89");
+    printf("\e[0m");
+
+    int input;
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102 && input!=120);
+
+    desenhar_popupbaselimpar();
+    desenhar_mesaapoiodamesa();
+    redesenhar_tela_completa(jogador,cursor,pote,mao_mesa);
+}
+
+int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa) {
     //Função para permitir a navegação no menu de jogoo usando A,D e F
     // D = 100
     // A = 97
@@ -995,6 +1252,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
         case 102:
             switch (cursor->navegador) {
                 case 0:
+                    menu_popupjogadores(jogador,cursor,pote,mao_mesa);
                     return -1;
                 break;
     
@@ -1011,6 +1269,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote) {
                 break;
 
                 case 4:
+                    menu_popupguia(jogador,cursor,pote,mao_mesa);
                     return -1;
                 break;
             }
@@ -1065,7 +1324,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     
     while(escolha == -1) {
         sel=-1;
-        escolha=menu_jogo_navegar(jogador,cursor,pote);
+        escolha=menu_jogo_navegar(jogador,cursor,pote,mao_mesa);
 
         if (escolha==0) {
             cursor_zerarCursor(cursor);
