@@ -7,7 +7,7 @@ debug = 2
 
 //Número de Players do Modo Debug ( 6 = [Padrão])
 // Só é utilizado no modo debug 2
-NumeroDePlayersDebug = 2
+NumeroDePlayersDebug = 3
 
 // Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )
 // Recomendação:  Windows / OnlineGDB = 1 / Replit = 0
