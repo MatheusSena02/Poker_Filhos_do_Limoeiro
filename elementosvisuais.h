@@ -1153,6 +1153,10 @@ void desenhar_guia() {
     printf("\e[104C██████\e[38;2;147;172;183m████\e[38;2;72;125;178m██\e[38;2;147;172;183m████\e[38;2;72;125;178m████\e[E");
     printf("\e[106C████\e[38;2;147;172;183m██\e[38;2;98;124;136m██\e[38;2;72;125;178m██\e[38;2;147;172;183m██\e[38;2;98;124;136m██\e[38;2;72;125;178m██\e[E");
     printf("\e[108C████████████\e[E");
+
+    printf("\e[1E\e[108C\e[38;2;255;255;255m\e[48;2;0;77;64m");
+    imprimir__centralizado_string_max20("Guia",12);
+
     printf("\e[0m");
     printf("\e[H");
 }
@@ -1166,6 +1170,10 @@ void desenhar_guiadesligado() {
     printf("\e[104C██████\e[38;2;61;69;70m████\e[38;2;34;44;49m██\e[38;2;61;69;70m████\e[38;2;34;44;49m████\e[E");
     printf("\e[106C████\e[38;2;61;69;70m██\e[38;2;42;46;47m██\e[38;2;34;44;49m██\e[38;2;61;69;70m██\e[38;2;42;46;47m██\e[38;2;34;44;49m██\e[E");
     printf("\e[108C████████████\e[E");
+
+    printf("\e[1E\e[108C\e[38;2;34;44;49m\e[48;2;0;77;64m");
+    imprimir__centralizado_string_max20("Guia",12);
+
     printf("\e[0m");
     printf("\e[H");
 }
@@ -1178,6 +1186,10 @@ void desenhar_guialimpar() {
     printf("\e[104C                    \e[E");
     printf("\e[106C                \e[E");
     printf("\e[108C            \e[E");
+
+    printf("\e[1E\e[108C\e[38;2;34;44;49m\e[48;2;0;77;64m");
+    imprimir__centralizado_string_max20("    ",12);
+
     printf("\e[0m");
     printf("\e[H");
 }
@@ -1191,6 +1203,10 @@ void desenhar_jogadores() {
     printf("\e[30C██\e[38;2;3;15;21m████\e[38;2;15;41;79m████████\e[38;2;7;22;37m████\e[38;2;72;125;178m██\e[E");
     printf("\e[32C████\e[38;2;15;41;79m████████\e[38;2;72;125;178m████\e[E");
     printf("\e[34C████████████\e[E");
+    
+    printf("\e[1E\e[34C\e[38;2;255;255;255m\e[48;2;0;77;64m");
+    imprimir__centralizado_string_max20("Jogadores",12);
+
     printf("\e[0m");
     printf("\e[H");
 }
@@ -1204,6 +1220,10 @@ void desenhar_jogadoresdesligado() {
     printf("\e[30C██\e[38;2;28;28;28m████\e[38;2;81;82;83m████████\e[38;2;40;40;40m████\e[38;2;34;44;49m██\e[E");
     printf("\e[32C████\e[38;2;81;82;83m████████\e[38;2;34;44;49m████\e[E");
     printf("\e[34C████████████\e[E");
+
+    printf("\e[1E\e[34C\e[38;2;34;44;49m\e[48;2;0;77;64m");
+    imprimir__centralizado_string_max20("Jogadores",12);
+
     printf("\e[0m");
     printf("\e[H");
 }
@@ -1217,6 +1237,10 @@ void desenhar_jogadoreslimpar() {
     printf("\e[30C                    \e[E");
     printf("\e[32C                \e[E");
     printf("\e[34C            \e[E");
+
+    printf("\e[1E\e[34C");
+    imprimir__centralizado_string_max20("         ",12);
+    
     printf("\e[0m");
     printf("\e[H");
 }
