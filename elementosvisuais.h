@@ -185,6 +185,102 @@ void imprimir__centralizado_string_max200(char texto[], int largura) {
     }
 }
 
+void desenhar_fundopreto() {
+    int tempo=100;
+    printf("\e[48;2;0;0;0m                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+    printf("                                                                                                                                                            \e[E");
+    Sleep(tempo);
+
+    printf("\e[0m");
+    printf("\e[H");
+    fflush(stdout);
+}
+
 void desenhar_fundoinicial() {
     printf("\e[48;2;17;52;66m                                                                                                                                                            \e[E");
     printf("                                                                                                                                                            \e[E");
@@ -348,10 +444,14 @@ int menuinicial_navegar (tp_cursor *cursor) {
 
     switch(input) {
         case 119:
+        audio_stop("selecao");
+        audio_play("selecao",0);
         cursor->navegador=1;
         break;
 
         case 115:
+        audio_stop("selecao");
+        audio_play("selecao",0);
         cursor->navegador=2;
         break;
 

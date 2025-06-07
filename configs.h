@@ -2,7 +2,7 @@
 #define CONFIGS_H
 
 typedef struct {
-	int debug, modoDeSalvamento, nplayersdebug;
+	int debug, modoDeSalvamento, nplayersdebug, VolumeFundo, VolumeEfeito;
 }opc;
 
 void arq_atualizarOpcoes (opc *opcoes) {
@@ -11,6 +11,10 @@ void arq_atualizarOpcoes (opc *opcoes) {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
+        fprintf(arq,"//Volume da música de fundo ( 70 [Padrão])\n");
+        fprintf(arq,"VolumeFundo = %d\n\n",opcoes->VolumeFundo);
+        fprintf(arq,"//Volume dos efeitos sonoros ( 100 [Padrão])\n");
+        fprintf(arq,"VolumeEfeito = %d\n\n",opcoes->VolumeEfeito);
         fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
@@ -54,12 +58,15 @@ void config_inicializacao(opc *opcoes) {
 
     if (!arq_lerOpcoes(&opcoes->nplayersdebug,"NumeroDePlayersDebug = ","NumeroDePlayersDebug = %d")) opcoes->nplayersdebug = 6;
 
+    if (!arq_lerOpcoes(&opcoes->VolumeFundo,"VolumeFundo = ","VolumeFundo = %d")) opcoes->VolumeFundo = 70;
+
+    if (!arq_lerOpcoes(&opcoes->VolumeEfeito,"VolumeEfeito = ","VolumeEfeito = %d")) opcoes->VolumeEfeito = 100;
 }
 
 void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	//Imprime o menu de configuração
 	limparTela();
-	int cor[4]={39,39,39,39};
+	int cor[6]={39,39,39,39,39,39};
 	cor[pos] = 31;
 
 	printf("===================================================================\n");
@@ -69,21 +76,29 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("===================================================================\n");
 	printf("=           Use WASD para navegar e F para selecionar             =\n");
 	printf("===================================================================\n\n");
-	printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[0],opcoes->debug);
+	printf("\e[%dm => \e[1mVolume da música de fundo = <- %d ->\e[39m\e[22m\n",cor[0],opcoes->VolumeFundo);
+	printf("\e[33m// Varia de 0-100 \e[3m( \e[93m70 [Padrão]\e[33m )\e[39m\e[23m\n");
+    printf("\e[33m// Use A e D para aumentar/diminuir o valor\e[39m\n\n");
+	printf("===================================================================\n\n");
+	printf("\e[%dm => \e[1mVolume dos efeitos sonoros = <- %d ->\e[39m\e[22m\n",cor[1],opcoes->VolumeEfeito);
+	printf("\e[33m// Varia de 0-100 \e[3m( \e[93m100 [Padrão]\e[33m )\e[39m\e[23m\n");
+    printf("\e[33m// Use A e D para aumentar/diminuir o valor\e[39m\n\n");
+	printf("===================================================================\n\n");
+    printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[2],opcoes->debug);
 	printf("\e[33m// Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples / 2 = Facilita Testes)\e[39m\e[23m\n");
 	printf("\e[33m// Simples -> prinfs de avisos e monitoramento\e[39m\n");
     printf("\e[33m// Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\e[39m\n\n");
 	printf("===================================================================\n\n");
-	printf("\e[%dm => \e[1mNúmero de Players do Modo Debug = %d\e[39m\e[22m\n",cor[1],opcoes->nplayersdebug);
+	printf("\e[%dm => \e[1mNúmero de Players do Modo Debug = %d\e[39m\e[22m\n",cor[3],opcoes->nplayersdebug);
 	printf("\e[33m// Só é utilizado no modo debug 2 \e[3m( \e[93m6 = 6 Players [Padrão] \e[33m)\e[39m\e[23m\n\n");
 	printf("===================================================================\n\n");
-    printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[2],opcoes->modoDeSalvamento);
+    printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[4],opcoes->modoDeSalvamento);
 	printf("\e[33m// Seleciona a formatação do .txt que salva o histórico\e[39m\n");
 	printf("\e[33m//\e[3m ( \e[93m1 = Data e Hora [Padrão]\e[33m / 0 = partida.txt)\e[39m\n\e[23m");
 
 	printf("===================================================================\n\n");
 
-	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[3]);
+	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[5]);
 }
 
 int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
@@ -91,19 +106,52 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 	// W = 119
 	// S = 115
 	// F = 102
+    // A = 97
+    // D = 100
 	// Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
 	// O F serve pra confirmar a seleção
 	// A posição 0 é a mais alta
-	int numeroDeOpcoes=4;
+	int numeroDeOpcoes=6;
 	config_impressao(opcoes,cursor->navegador,baralho);
 
+    audio_setar_volume_efeito(opcoes->VolumeEfeito);
+    audio_setar_volume_fundo(opcoes->VolumeFundo);
+
+    
     int input;
     do {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 119 && input != 115 && input != 102 && input != 120);
+    } while (input != 119 && input != 115 && input != 102 && input != 120 && input != 97 && input != 100);
+
+    audio_stop("selecao");
+    audio_play("selecao",0);
 
     switch(input) {
+        case 97:
+            switch(cursor->navegador){
+                case 0:
+                if ((opcoes->VolumeFundo-5)>=0) opcoes->VolumeFundo-=5;
+                break;
+
+                case 1:
+                if ((opcoes->VolumeEfeito-5)>=0) opcoes->VolumeEfeito-=5;
+                break;
+            }
+        break;
+
+        case 100:
+            switch(cursor->navegador){
+                case 0:
+                if ((opcoes->VolumeFundo+5)<=100) opcoes->VolumeFundo+=5;
+                break;
+
+                case 1:
+                if ((opcoes->VolumeEfeito+5)<=100) opcoes->VolumeEfeito+=5;
+                break;
+            }
+        break;
+        
         case 119:
         	if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
 			else cursor->navegador=(numeroDeOpcoes-1);
@@ -116,19 +164,20 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 
         case 102:
 			switch (cursor->navegador) {
-				case 0:
+
+                case 2:
 					config_alternar(&opcoes->debug,3);
 				break;
 
-                case 1:
+                case 3:
 					config_alternar_semZero(&opcoes->nplayersdebug,6);
 				break;
 
-				case 2:
+				case 4:
 					config_inverter(&opcoes->modoDeSalvamento);
 				break;
 
-				case 3:
+				case 5:
 					arq_atualizarOpcoes(opcoes);
 					return 1;
 				break;

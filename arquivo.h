@@ -135,6 +135,10 @@ int arq_criarOpcoes () {
     arq=fopen("opcoes.txt","w");
     if (arq) {
         fprintf(arq,"--- Opções ---\n\n");
+        fprintf(arq,"//Volume da música de fundo ( 70 [Padrão])\n");
+        fprintf(arq,"VolumeFundo = 70\n\n");
+        fprintf(arq,"//Volume dos efeitos sonoros ( 100 [Padrão])\n");
+        fprintf(arq,"VolumeEfeito = 100\n\n");
         fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
@@ -146,11 +150,7 @@ int arq_criarOpcoes () {
 
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
 
-        #ifdef _WIN32
         fprintf(arq,"ModoDeSalvamento = 1\n\n");
-        #else
-        fprintf(arq,"ModoDeSalvamento = 0\n\n");
-        #endif
 
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows, mas tem compatibilidade quase completa para LINUX\n");
         fclose(arq);
@@ -189,12 +189,7 @@ int arq_verificarOpcoes () {
 
         printf(" - Gerando arquivos necessários - \n");
         if (arq_criarOpcoes()) {
-            #ifdef _WIN32
-            printf("Ambiente Windows detectado, configurações padrão foram aplicadas\n");
-            #else
-            printf("\n=> Ambiente LINUX detectado, configurações recomendadas foram aplicadas\n");
-            printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
-            #endif
+            printf("Configurações padrão foram aplicadas\n");
             printf("\n Geração concluida\n");
             
             printf("\nAperte qualquer tecla para iniciar o programa\n");
@@ -208,12 +203,7 @@ int arq_verificarOpcoes () {
             printf("->Falha na geração de arquivo\n");
             printf("O programa ainda poderá ser rodado, mas nenhuma informação poderá ser salva em arquivo.\n\n");
 
-            #ifdef _WIN32
-            printf("Ambiente Windows detectado, configurações padrão foram aplicadas\n");
-            #else
-            printf("\n=> Ambiente LINUX detectado, configurações recomendadas foram aplicadas\n");
-            printf("==> Alterações: ModoDeSalvamento = 1 -> ModoDeSalvamento = 0\n");
-            #endif
+            printf("Configurações padrão foram aplicadas\n");
 
             printf("\nAperte qualquer tecla para iniciar o programa\n");
             //Função de detectar se algo for apertado [Função não autoral]

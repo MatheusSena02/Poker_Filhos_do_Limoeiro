@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 //Bibliotecas próprias
+#include "audio.h"
 #include "miscelanea.h"
 #include "elementosvisuais.h"
 #include "arquivo.h"
@@ -32,6 +33,8 @@ int main()
 	//Configura o console para windows (liga cores e outros caracteres)
 	windowsconfig();
 
+    //Configuração de audio
+    audio_init();
 
     //////////////////////////// INICIALIZAÇÃO - ARQUIVOS - CONFIGURAÇÕES ////////////////////////////////
     
@@ -43,6 +46,11 @@ int main()
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
     console_cursor_invisivel(); //deixa cursor invisível
+
+    //Audio
+    audio_setar_audios();
+    audio_setar_volume_efeito(opcoes.VolumeEfeito);
+    audio_setar_volume_fundo(opcoes.VolumeFundo);
 
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
@@ -74,7 +82,20 @@ int main()
         desenhar_fundoinicial();
         desenhar_fichainicial();
 
+        audio_setar_volume_efeito(opcoes.VolumeEfeito);
+        audio_setar_volume_fundo(opcoes.VolumeFundo);
+
         while(1) if (menuinicial_navegar(&cursor) > 0) break;
+
+        audio_play("botao",0);
+        
+        if (cursor.navegador==1){
+            audio_setar_volume_efeito(opcoes.VolumeEfeito);
+            audio_setar_volume_fundo(opcoes.VolumeFundo);
+            audio_play("introsom",0);
+            if (opcoes.debug!=2) Sleep(1000);
+            if (opcoes.debug!=2) desenhar_fundopreto();
+        }
 
         limparTela();
 

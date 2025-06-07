@@ -80,7 +80,6 @@ void programa_iniciar () {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 102);
-
 }
 
 #endif
