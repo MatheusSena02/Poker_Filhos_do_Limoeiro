@@ -1,45 +1,24 @@
-#include <stdio.h>
-#include <windows.h>
+/* main.c */
+#include "audio.h"
 
-void windowsconfig() {
-    // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
-    // Configuração de Console pro Windows (Cores, ANSI Escape Code e Tamanho) -------------
+int main(void) {
+    audio_init();
 
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    DWORD dwMode = 0;
+    audio_load("fundo",   "wow.mp3");
+    audio_load("efeito",  "swoosh.wav");
 
-    // Habilita processamento de ANSI Escape Sequences
-    if (GetConsoleMode(hOut, &dwMode)) {
-        dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-        SetConsoleMode(hOut, dwMode);
-    }
+    audio_play("fundo",  true);   // loop infinito
+    audio_play("efeito", false);  // toca só uma vez
 
-    // Define código de página UTF‑8
-    SetConsoleOutputCP(CP_UTF8);
+    audio_set_volume("fundo", 30);
 
-    // Redimensiona buffer e janela para 100 colunas × 40 linhas
-    COORD newSize = { 156, 44 };
-    // Ajusta o tamanho do buffer de tela
-    SetConsoleScreenBufferSize(hOut, newSize);
+    // Exemplo de uso da nova função:
+    // Desativa o loop, mas deixa o trecho atual tocar até o fim.
+    // audio_disable_loop("fundo");
 
-    // Define a área visível da janela igual ao tamanho do buffer
-    SMALL_RECT displayArea = {
-        0,               // Left
-        0,               // Top
-        newSize.X - 1,   // Right
-        newSize.Y - 1    // Bottom
-    };
-    SetConsoleWindowInfo(hOut, TRUE, &displayArea);
-}
+    printf("Pressione Enter para sair...\n");
+    getchar();
 
-int main(){
-    windowsconfig();
-    printf("teste\n");
-    printf("\e[H");
-    printf("\e[?47h");
-    system("pause");
-    printf("\e[2J");
-    system("pause");
-    printf("\e[?47j");
-    system("pause");
+    audio_shutdown();
+    return 0;
 }
