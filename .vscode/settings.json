@@ -1,9 +1,0 @@
-{
-    "C_Cpp.errorSquiggles": "disabled",
-    "files.associations": {
-        "extradebug.h": "c",
-        "combinacoes.h": "c",
-        "jogador.h": "c",
-        "listasecarta.h": "c"
-    }
-}
