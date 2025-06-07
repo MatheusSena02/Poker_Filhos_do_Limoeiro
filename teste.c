@@ -10,7 +10,7 @@ int main(void) {
     audio_play("fundo",  true);   // loop infinito
     audio_play("efeito", false);  // toca só uma vez
 
-    audio_set_volume("fundo", 30);
+    audio_set_volume("fundo", 10);
 
     // Exemplo de uso da nova função:
     // Desativa o loop, mas deixa o trecho atual tocar até o fim.
