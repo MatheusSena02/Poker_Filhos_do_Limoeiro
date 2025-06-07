@@ -80,6 +80,35 @@ int listaSEcarta_inserir_fim(tp_listasecarta **l, tp_listasecarta_item e) {
     return 1;
 }
 
+int listaSEcarta_inserir_numericamenteOrdenado_crescente(tp_listasecarta **l, tp_listasecarta_item e) {
+    // Insere um item respeitando a ordem numérica crescente
+    // IMPORTANTE -> caso decida por utilizar esse metodo de inserção, não utilize nenhum outro, isso pode quebrar a ordem crescente.
+    // Parâmetros a serem passados na main: endereço de memória do ponteiro que aponta para o início da lista e o item a ser inserido
+    // Exemplo: listaSE_inserir_numericamenteOrdenado(&lista, 10);
+    tp_listasecarta *novo_no = listaSEcarta_alocar();
+    if (novo_no == NULL) return 0;
+
+    novo_no->info = e;
+    novo_no->prox = NULL;
+
+    // 1) Lista vazia ou deve ficar na cabeça
+    if (listaSEcarta_verificar_vazia(*l) || (e.valor_i) < ((*l)->info).valor_i) {
+        novo_no->prox = *l;
+        *l = novo_no;
+        return 1;
+    }
+
+    // 2) Procura o ponto de inserção, olhando para o próximo
+    tp_listasecarta *atu = *l;
+    while (atu->prox != NULL && (atu->prox->info).valor_i < e.valor_i) {
+        atu = atu->prox;
+    }
+
+    // 3) Agora 'atu' é o nó **antes** do ponto de inserção
+    novo_no->prox = atu->prox;
+    atu->prox = novo_no;
+    return 1;
+}
 
 /*int listaSEcarta_remover(tp_listasecarta **lista, tp_listasecarta_item e) {
     // Remove a primeira ocorrência de um item na lista

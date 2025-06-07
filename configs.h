@@ -22,7 +22,6 @@ void arq_atualizarOpcoes (opc *opcoes) {
         fprintf(arq,"// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\n");
         fprintf(arq,"ModoDeSalvamento = %d\n\n",opcoes->modoDeSalvamento);
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows e é onde funciona normalmente\n");
-        fprintf(arq,"//-->Em sites que rodam Linux, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora\n");
         fclose(arq);
     }
 }
@@ -51,11 +50,7 @@ void config_inicializacao(opc *opcoes) {
     //Obter variáveis guardadas em opcoes.txt
     if (!arq_lerOpcoes(&opcoes->debug,"debug = ","debug = %d")) opcoes->debug = 0;
 
-	#ifdef _WIN32
     if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 1;
-	#else
-	if (!arq_lerOpcoes(&opcoes->modoDeSalvamento,"ModoDeSalvamento = ","ModoDeSalvamento = %d")) opcoes->modoDeSalvamento = 0;
-	#endif
 
     if (!arq_lerOpcoes(&opcoes->nplayersdebug,"NumeroDePlayersDebug = ","NumeroDePlayersDebug = %d")) opcoes->nplayersdebug = 6;
 
@@ -85,7 +80,7 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
     printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[2],opcoes->modoDeSalvamento);
 	printf("\e[33m// Seleciona a formatação do .txt que salva o histórico\e[39m\n");
 	printf("\e[33m//\e[3m ( \e[93m1 = Data e Hora [Padrão]\e[33m / 0 = partida.txt)\e[39m\n\e[23m");
-	printf("\e[33m// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\e[39m\n\n");
+
 	printf("===================================================================\n\n");
 
 	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[3]);
@@ -149,9 +144,8 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 }
 
 
+//CONFIGURAÇÕES TERMINAL--------------------------------------------------------------------------------------
 
-// Só pra windows -----------------------------------------------------------------------------------------------------
-#ifdef _WIN32
 #include <windows.h>
 
 void windowsconfig() {
@@ -185,15 +179,5 @@ void windowsconfig() {
     SetConsoleWindowInfo(hOut, TRUE, &displayArea);
 }
 
-//Só pra linux --------------------------------------------------------------------------------------------------------
-#else
-#include <locale.h>
-
-    void linuxconfig() {
-			// Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
-        setlocale(LC_ALL, "pt_BR.UTF-8");
-    }
-
-#endif
 
 #endif

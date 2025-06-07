@@ -13,7 +13,7 @@ int str_iniciaCom(char stringA[],char stringB[]) {
 
 int arq_gerar(char principal[], char arqmontado[],int modo) {
 // A partir de um nome, arq_gerar gera o nome de arquivo em "arquivo.txt"
-// arq_gerar (string contendo o nome, string que receberá o nome de arquivo, modo de operação, modo de debug)
+// arq_gerar (string contendo o nome, string que receberá o nome de arquivo, modo de operação)
 // Modos de operação:
 // 1 -> gera o nome do arquivo sem nenhuma mudança
 // 2 -> gera o nome do arquivo considerando se o arquivo já existe. Se já existir o arquivo "exemplo.txt" será criado "exemplo1.txt"
@@ -71,18 +71,11 @@ void arq_obterData(char arq_nome[]) {
     struct tm infoTempo;
     char buffer[20];  // Espaço para "DD-MM-YYYY-HH-MM-SS" + '\0'
 
-    #ifdef _WIN32
-        // No windows, usa gmtime_s e ajusta para GMT-3.
-        gmtime_s(&infoTempo, &agora);
-        infoTempo.tm_hour -= 3;
-        // Normaliza se necessário (mktime ajusta os campos)
-        mktime(&infoTempo);
-    #else
-        // No linux (gdb e replit), configura o fuso p "America/Sao_Paulo"
-        setenv("TZ", "America/Sao_Paulo", 1);
-        tzset();
-        localtime_r(&agora, &infoTempo);
-    #endif
+    // No windows, usa gmtime_s e ajusta para GMT-3.
+    gmtime_s(&infoTempo, &agora);
+    infoTempo.tm_hour -= 3;
+    // Normaliza se necessário (mktime ajusta os campos)
+    mktime(&infoTempo);
 
     strftime(buffer, sizeof(buffer), "%d-%m-%Y-%H-%M-%S", &infoTempo);
     strcpy(arq_nome, buffer);
@@ -152,7 +145,6 @@ int arq_criarOpcoes () {
         fprintf(arq,"NumeroDePlayersDebug = 6\n\n");
 
         fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
-        fprintf(arq,"// Recomendação:  Windows ou OnlineGDB = 1 / Replit = 0\n");
 
         #ifdef _WIN32
         fprintf(arq,"ModoDeSalvamento = 1\n\n");
@@ -161,7 +153,6 @@ int arq_criarOpcoes () {
         #endif
 
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows, mas tem compatibilidade quase completa para LINUX\n");
-        fprintf(arq,"//-->Em sites que rodam LINUX, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora\n");
         fclose(arq);
         return 1;
     }

@@ -20,4 +20,3 @@ ModoDeSalvamento = 1
 
 
 //-->Esse código foi feito para rodar em sistemas Windows e é onde funciona normalmente
-//-->Em sites que rodam Linux, algumas funções são diferentes, o que causa erro na função de obtenção de Data e Hora

@@ -20,6 +20,7 @@
 #include "jogador.h"
 #include "extradebug.h"
 #include "combinacoes.h"
+//#include "audio.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,11 +30,8 @@
 int main()
 {
 	//Configura o console para windows (liga cores e outros caracteres)
-    #ifdef _WIN32
 	windowsconfig();
-	#else
-	linuxconfig();
-    #endif
+
 
     //////////////////////////// INICIALIZAÇÃO - ARQUIVOS - CONFIGURAÇÕES ////////////////////////////////
     
@@ -57,7 +55,7 @@ int main()
     tp_cursor cursor;
 
     tp_pote pote;
-    pote.maiorAposta=1;
+    pote.maiorAposta=10;
     pote.pote=0;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
@@ -127,11 +125,11 @@ int main()
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
 
-                for(int i=0;i<quant;i++) {
-                    //teste
-                    //baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
-                }
+                do {
+                    for(int i=0;i<quant;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    }
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
 
                 etapa = PRIMEIRO_ROUND;
 
@@ -145,10 +143,13 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
-
-                for(int i=0;i<quant;i++) {
-                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
-                }
+                jogo_zerar_apostas(jogador, &pote, quant);
+                
+                do {
+                    for(int i=0;i<quant;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    }
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
             
                 etapa = SEGUNDO_ROUND;
             
@@ -160,10 +161,13 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
+                jogo_zerar_apostas(jogador, &pote, quant);
                 
-                for(int i=0;i<quant;i++) {
-                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
-                }
+                do {
+                    for(int i=0;i<quant;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    }
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
 
                 etapa = TERCEIRO_ROUND;
 
@@ -175,10 +179,13 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
+                jogo_zerar_apostas(jogador, &pote, quant);
 
-                for(int i=0;i<quant;i++) {
-                    if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
-                }
+                do {
+                    for(int i=0;i<quant;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    }
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
 
                 etapa = MOSTRAR_CARTAS;
             
@@ -197,7 +204,6 @@ int main()
     }
 
     programa_finalizar();
-
     return 1;
 }
 
