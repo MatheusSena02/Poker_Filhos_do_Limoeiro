@@ -48,22 +48,108 @@ typedef struct{
     float pote;
 }tp_pote;
 
+void desenhar_setas() {
+    desenhar_setasdentro();
+    Sleep(200);
+    desenhar_setasfora();
+    Sleep(200);
+}
 
-int jogador_escolherQuantidade(){
-    console_cursor_visivel();
-    int quant=0, check=0;
-    
-    printf("Digite a quantidade de jogadores(2-6): \n");
-    scanf("%d", &quant);
-    
-    while(quant<2 || quant>6){
-        printf("Quantidade de jogadores inválida!\n");
-        printf("Digite um novo Valor: ");
+
+int jogador_escolherQuantidade_navegar(tp_cursor *cursor){
+    //Função para permitir a navegação no menu de jogoo usando A,D e F
+    // D = 100
+    // A = 97
+    // F = 102
+    // Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+    // O F serve pra confirmar a seleção
+    // A posição 0 é a mais a esquerda
+     int numeroDeOpcoes=5;
+
+    switch(cursor->navegador) {
+        case 0:
+            desenhar_doisjog();
+        break;
+
+        case 1:
+            desenhar_tresjog();
+        break;
+
+        case 2:
+            desenhar_quatrojog();
+        break;
+
+        case 3:
+            desenhar_cincojog();
+        break;
         
-        scanf("%d", &quant);
-        if(quant>=2 && quant<=6) break;
+        case 4:
+            desenhar_seisjog();
+        break;
     }
-    console_cursor_invisivel();
+    
+    int input;
+    getch();
+    do {
+        input=-1;
+        while (input == -1) {
+            desenhar_setas();
+            input = getch();  // Verifica se uma tecla foi pressionada
+        }
+    } while (input != 100 && input != 97 && input != 102);
+
+    switch(input) {
+        case 97:
+            if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
+            else cursor->navegador=(numeroDeOpcoes-1);
+        break;
+   
+        case 100:
+            if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
+            else cursor->navegador=0;
+        break;
+    
+        case 102:
+            switch (cursor->navegador) {
+                case 0: //confirma 2
+                    return 2;
+                break;
+    
+                case 1: //confirma 3
+                    return 3;
+                break;
+    
+                case 2: //confirma 4
+                    return 4;
+                break;
+
+                case 3: //confirma 5
+                    return 5;
+                break;
+
+                case 4: //confirma 6
+                    return 5;
+                break;
+            }
+        break;
+    }
+
+    return -1;
+}
+
+int jogador_escolherQuantidade(tp_cursor *cursor){
+
+    int quant;
+
+    desenhar_fundojogadores();
+    desenhar_tutorial("0;64;50");
+    desenhar_njogadores();
+    cursor_zerarCursor(cursor);
+
+    do {
+        quant=jogador_escolherQuantidade_navegar(cursor);
+    } while (quant==-1);
+
     return quant;
 }
 
@@ -554,6 +640,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
     //^
 
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -641,6 +728,7 @@ int menu_jogo_navegar_aposta_absoluta (tp_jogador *jogador,tp_cursor *cursor,tp_
 
 
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -682,6 +770,7 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
     printf("\e[0m");
 
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -749,6 +838,7 @@ int menu_jogo_jogador_desqualificado (tp_jogador *jogador,tp_cursor *cursor) {
     desenhar_seletorficoupobre();
 
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -789,6 +879,7 @@ void desenhar_mao_jogador_iniciar(tp_jogador jogador) {
     printf("\e[H");
     
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -1170,6 +1261,7 @@ int menu_popupguia(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listas
     printf("\e[0m");
 
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -1187,6 +1279,7 @@ int menu_popupjogadores(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     printf("\e[0m");
 
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
@@ -1233,6 +1326,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
     }
     
     int input;
+    getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada

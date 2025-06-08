@@ -152,6 +152,18 @@ static void *fade_thread(void *arg) {
     return NULL;
 }
 
+static int audio_is_playing(const char *alias) {
+    for (int i = 0; i < track_count; i++) {
+        if (strcmp(tracks[i].alias, alias) == 0) {
+            // ma_sound_is_playing retorna MA_TRUE (1) ou MA_FALSE (0).
+            // Retornamos diretamente o resultado.
+            return ma_sound_is_playing(&tracks[i].sound);
+        }
+    }
+    // Se o loop terminar, o alias não foi encontrado, então não está tocando.
+    return 0;
+}
+
 /**
  * @brief Aplica fade in em uma faixa, variando o volume entre dois níveis.
  *
@@ -208,10 +220,18 @@ void audio_setar_audios(){
     audio_load("botao","button.mp3");
     audio_load("cancelar","cancel.mp3");
     audio_load("introsom","introsom.mp3");
+    audio_load("temainicial","temainicial.mp3");
+    audio_load("selecaojogadores","selecaojogadores.mp3");
+    audio_load("musicadejogo1pt1","musicadejogo1pt1.mp3");
+    audio_load("musicadejogo1pt2","musicadejogo1pt2.mp3");
 }
 
 void audio_setar_volume_fundo(float volume){
     audio_set_volume("introsom",volume);
+    audio_set_volume("temainicial",volume);
+    audio_set_volume("selecaojogadores",volume);
+    audio_set_volume("musicadejogo1pt1",volume);
+    audio_set_volume("musicadejogo1pt2",volume);
 }
 
 void audio_setar_volume_efeito(float volume){

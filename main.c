@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 //Bibliotecas próprias
+#include "async.h"
 #include "audio.h"
 #include "miscelanea.h"
 #include "elementosvisuais.h"
@@ -21,6 +22,7 @@
 #include "jogador.h"
 #include "extradebug.h"
 #include "combinacoes.h"
+#include "funcoes_async.h"
 //#include "audio.h"
 
 
@@ -74,8 +76,10 @@ int main()
     mao_mesa=listaSEcarta_inicializar();
 
     //Menu inicial e configurações
+
     do {
         programa_iniciar();
+        if (!audio_is_playing("temainicial")) audio_play("temainicial",1);
         limparTela();
 
         cursor_zerarCursor(&cursor);
@@ -92,14 +96,13 @@ int main()
         if (cursor.navegador==1){
             audio_setar_volume_efeito(opcoes.VolumeEfeito);
             audio_setar_volume_fundo(opcoes.VolumeFundo);
-            audio_play("introsom",0);
+            async_thread_t comecarintro = async_run(som_comecar_intro,&opcoes.VolumeFundo);
             if (opcoes.debug!=2) Sleep(1000);
-            if (opcoes.debug!=2) desenhar_fundopreto();
+            if (opcoes.debug!=2) desenhar_fundo_espiral_com_cor("0;0;0");
         }
 
-        limparTela();
-
         if(cursor.navegador==2) {
+            limparTela();
             cursor_zerarCursor(&cursor);
             while(1) if (config_navegar(&cursor,&opcoes,baralhoReferencia)) break;
             limparTela();
@@ -113,16 +116,22 @@ int main()
     
     //Se debug estiver desligado, escolhe quantidade de players
     if (opcoes.debug>1) quant=opcoes.nplayersdebug;
-    else quant=jogador_escolherQuantidade();
+    else quant=jogador_escolherQuantidade(&cursor);
 
     tp_jogador jogador[quant];
     jogador_inicializar_mao(jogador, quant);
 
     //Se debug for diferente de 2, escolhe os nomes dos players
     if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, quant);
-    else jogador_escolherNomes(jogador, quant);
+    else {
+        desenhar_fundopreto();
+        jogador_escolherNomes(jogador, quant);
+    }
 
     programa_pausar();
+
+    async_thread_t musicadejogo1 = async_run(som_comecar_musicadejogo_1,&opcoes.VolumeFundo);
+    
     limparTela();
 
     //Distribuição de cartas para os jogadores

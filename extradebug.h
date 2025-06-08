@@ -2,6 +2,7 @@
 #define EXTRADEBUG_H
 
 void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilhaSEcarta *baralhoJogo) {
+    limparTela();
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[5EBaralho Embaralhado P:\n");
     baralho_printarP(baralhoJogo);
