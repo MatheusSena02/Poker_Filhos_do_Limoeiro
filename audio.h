@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <pthread.h>
 
-#define MAX_TRACKS 32
+#define MAX_TRACKS 64
 
 /**
  * @brief Estrutura que representa uma faixa de áudio.

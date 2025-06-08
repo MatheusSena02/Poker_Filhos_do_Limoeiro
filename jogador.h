@@ -148,7 +148,10 @@ int jogador_escolherQuantidade(tp_cursor *cursor){
 
     do {
         quant=jogador_escolherQuantidade_navegar(cursor);
+        audio_play("selecao",0);
     } while (quant==-1);
+
+    audio_play("botao",0);
 
     return quant;
 }

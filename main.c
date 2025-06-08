@@ -53,7 +53,7 @@ int main()
     audio_setar_audios();
     audio_setar_volume_efeito(opcoes.VolumeEfeito);
     audio_setar_volume_fundo(opcoes.VolumeFundo);
-
+    
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
     int quant,iniciarJogo,iniciarConfig,etapa=PRE_ROUND;;
@@ -78,6 +78,7 @@ int main()
     //Menu inicial e configurações
 
     do {
+        
         programa_iniciar();
         if (!audio_is_playing("temainicial")) audio_play("temainicial",1);
         limparTela();
