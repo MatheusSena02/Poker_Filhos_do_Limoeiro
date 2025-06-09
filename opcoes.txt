@@ -1,7 +1,7 @@
 --- Opções ---
 
 //Volume da música de fundo ( 70 [Padrão])
-VolumeFundo = 40
+VolumeFundo = 80
 
 //Volume dos efeitos sonoros ( 100 [Padrão])
 VolumeEfeito = 100
