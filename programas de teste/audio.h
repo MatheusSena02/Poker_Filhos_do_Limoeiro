@@ -216,16 +216,9 @@ static void audio_shutdown(void) {
 }
 
 void audio_setar_audios(){
-    audio_load("selecao","sele.mp3");
-    audio_load("botao","button.mp3");
     audio_load("selecao","audios/efeitos/sele.mp3");
     audio_load("botao","audios/efeitos/button.mp3");
     audio_load("cancelar","audios/efeitos/cancel.mp3");
-    audio_load("som2carta","audios/efeitos/som2carta.mp3");
-    audio_load("som3carta","audios/efeitos/som3carta.mp3");
-    audio_load("som4carta","audios/efeitos/som4carta.mp3");
-    audio_load("som5carta","audios/efeitos/som5carta.mp3");
-    audio_load("cancel","audios/efeitos/cancel.mp3");
 
     audio_load("introsom","audios/musica/introsom.mp3");
     audio_load("temainicial","audios/musica/temainicial.mp3");
@@ -246,11 +239,6 @@ void audio_setar_volume_efeito(float volume){
     audio_set_volume("selecao",volume);
     audio_set_volume("botao",volume);
     audio_set_volume("cancelar",volume);
-    audio_set_volume("som2carta",volume);
-    audio_set_volume("som3carta",volume);
-    audio_set_volume("som4carta",volume);
-    audio_set_volume("som5carta",volume);
-    audio_set_volume("cancel",volume);
     
 }
 

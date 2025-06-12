@@ -648,7 +648,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 100 && input != 97 && input != 102 && input!=120);
-    audio_play("selecao",0);
+
     switch(input) {
         case 97:
             if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
@@ -665,7 +665,6 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
         case 102:
                 switch (cursor->navegador) {
                     case 0:// confirma 0
-                        audio_play("botao",0);
                         if ((1.25*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(1.25*(pote->maiorAposta));
                             return 0;
@@ -675,7 +674,6 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
                     break;
         
                     case 1: //confirma 1
-                        audio_play("botao",0);
                         if ((1.5*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(1.5*(pote->maiorAposta));
                             return 1;
@@ -683,7 +681,6 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
                     break;
 
                     case 2: //confirma 2
-                        audio_play("botao",0);
                         if ((1.75*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(1.75*(pote->maiorAposta));
                             return 2;
@@ -691,7 +688,6 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
                     break;
 
                     case 3: //confirma 3
-                        audio_play("botao",0);
                         if ((2*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(2*(pote->maiorAposta));
                             return 3;
@@ -782,7 +778,6 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 100 && input != 97 && input != 102 && input != 120);
-    audio_play("selecao",0);
 
     switch(input) {
         case 97:
@@ -802,7 +797,6 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
         case 102:
             switch (cursor->navegador) {
                 case 0:// confirma 0
-                    audio_play("botao",0);
                     if(pote->maiorAposta>0) {
                         cursor_zerarCursor(cursor);
                         desenhar_aumentar_aposta_fundo();
@@ -816,12 +810,10 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
                         };
                         return 0;
                     } else
-                        audio_play("cancel",0);
                         desenhar_popupaviso("Não é possível","aumentar % R$0","");
                 break;
     
                 case 1: //confirma 1
-                    audio_play("botao",0);
                     desenhar_aumentar_aposta_absoluto();
                     while (sel==-1) {
                         sel=menu_jogo_navegar_aposta_absoluta(jogador,cursor,pote);
@@ -896,7 +888,6 @@ void desenhar_mao_jogador_iniciar(tp_jogador jogador) {
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 119);
 
-    audio_play("som2carta",0);
     printf("\e[25E\e[58C");
     printf("\e[48;2;29;78;99m");
     printf("                                   ");
@@ -940,24 +931,11 @@ void jogo_jogador_rodada_mostrar_maoMesa(tp_listasecarta *maomesa) {
     printf("\e[11E\e[53C\e[48;2;163;114;49m");
     
         tp_listasecarta *atu = maomesa;
-        int cont=0;
         while (atu != NULL) {
             printf("\e[48;2;163;114;49m");
             carta_printarG(&atu->info);
             atu = atu->prox;
-            cont++;
-        }
-        switch(cont){
-            case 3:
-            audio_play("som3carta",0);
-            break;
-            case 4:
-            audio_play("som4carta",0);
-            break;
-            case 5:
-            audio_play("som5carta",0);
-            break;
-        }
+    }
     printf("\e[0m\e[H");
 }
 
@@ -1356,7 +1334,6 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 100 && input != 97 && input != 102);
-    audio_play("selecao",0);
 
     switch(input) {
         case 97:
@@ -1372,28 +1349,23 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
         case 102:
             switch (cursor->navegador) {
                 case 0:
-                    audio_play("botao",0);
                     menu_popupjogadores(jogador,cursor,pote,mao_mesa);
                     return -1;
                 break;
     
                 case 1: //confirma 0
-                    audio_play("botao",0);
                     return 0;
                 break;
     
                 case 2: //confirma 1
-                    audio_play("botao",0);
                     return 1;
                 break;
 
                 case 3: //confirma 2
-                    audio_play("botao",0);
                     return 2;
                 break;
 
                 case 4:
-                    audio_play("botao",0);
                     menu_popupguia(jogador,cursor,pote,mao_mesa);
                     return -1;
                 break;
@@ -1527,7 +1499,7 @@ void jogo_zerar_apostas(tp_jogador jogador[], tp_pote *pote, int quant){
 int jogo_rodada_verificar_continuarRodada(tp_jogador jogador[],tp_pote *pote,int quant) {
     int veri=0;
     for(int i=0;i<quant;i++){
-        if (jogador[i].aposta!=pote->maiorAposta && jogador[i].desistir==0) veri=1;
+        if (jogador[i].aposta!=pote->maiorAposta) veri=1;
         break;
     }
     return veri;
