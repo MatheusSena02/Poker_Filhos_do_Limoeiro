@@ -216,8 +216,6 @@ static void audio_shutdown(void) {
 }
 
 void audio_setar_audios(){
-    audio_load("selecao","sele.mp3");
-    audio_load("botao","button.mp3");
     audio_load("selecao","audios/efeitos/sele.mp3");
     audio_load("botao","audios/efeitos/button.mp3");
     audio_load("cancelar","audios/efeitos/cancel.mp3");
