@@ -55,8 +55,8 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int quant,iniciarJogo,iniciarConfig,etapa=PRE_ROUND;;
-    //tp_jogador jogador[quant] <- declarado mais pra baixo pq depende de quant
+    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND;;
+    //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
 	tp_carta baralhoReferencia[52];
@@ -66,6 +66,8 @@ int main()
     tp_pote pote;
     pote.maiorAposta=10;
     pote.pote=0;
+    pote.maiorApostaJogadorID=-1;
+    pote.quantidadeJogadores=0;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     //Inicializa os baralhos
@@ -115,17 +117,17 @@ int main()
     if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
     //Se debug estiver desligado, escolhe quantidade de players
-    if (opcoes.debug>1) quant=opcoes.nplayersdebug;
-    else quant=jogador_escolherQuantidade(&cursor);
+    if (opcoes.debug>1) pote.quantidadeJogadores=opcoes.nplayersdebug;
+    else pote.quantidadeJogadores=jogador_escolherQuantidade(&cursor);
 
-    tp_jogador jogador[quant];
-    jogador_inicializar_mao(jogador, quant);
+    tp_jogador jogador[pote.quantidadeJogadores];
+    jogador_inicializar_mao(jogador, pote.quantidadeJogadores);
 
     //Se debug for diferente de 2, escolhe os nomes dos players
-    if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, quant);
+    if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, pote.quantidadeJogadores);
     else {
         desenhar_fundopreto();
-        jogador_escolherNomes(jogador, quant);
+        jogador_escolherNomes(jogador, pote.quantidadeJogadores);
     }
 
     programa_pausar();
@@ -135,7 +137,7 @@ int main()
     limparTela();
 
     //Distribuição de cartas para os jogadores
-    if(!baralho_distribuirCartas_jogadores(baralhoJogo, jogador, quant)) {
+    if(!baralho_distribuirCartas_jogadores(baralhoJogo, jogador, pote.quantidadeJogadores)) {
         printf("Erro na distribuição de cartas.\n");
         printf("O programa será encerrado.\n");
 
@@ -143,7 +145,7 @@ int main()
         return 22;
     }
 
-    if (opcoes.debug==1) debug_mostrarMaos (baralhoJogo, jogador, quant);
+    if (opcoes.debug==1) debug_mostrarMaos (baralhoJogo, jogador, pote.quantidadeJogadores);
 
     while(1) {
         switch(etapa){
@@ -156,10 +158,10 @@ int main()
                 desenhar_mesaapoiodamesa();
 
                 do {
-                    for(int i=0;i<quant;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    for(int i=0;i<pote.quantidadeJogadores;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
                     }
-                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
                 etapa = PRIMEIRO_ROUND;
 
@@ -173,13 +175,13 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
-                jogo_zerar_apostas(jogador, &pote, quant);
+                jogo_zerar_apostas(jogador, &pote, pote.quantidadeJogadores);
                 
                 do {
-                    for(int i=0;i<quant;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    for(int i=0;i<pote.quantidadeJogadores;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
                     }
-                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
             
                 etapa = SEGUNDO_ROUND;
             
@@ -191,13 +193,13 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
-                jogo_zerar_apostas(jogador, &pote, quant);
+                jogo_zerar_apostas(jogador, &pote, pote.quantidadeJogadores);
                 
                 do {
-                    for(int i=0;i<quant;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    for(int i=0;i<pote.quantidadeJogadores;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
                     }
-                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
                 etapa = TERCEIRO_ROUND;
 
@@ -209,13 +211,13 @@ int main()
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
-                jogo_zerar_apostas(jogador, &pote, quant);
+                jogo_zerar_apostas(jogador, &pote, pote.quantidadeJogadores);
 
                 do {
-                    for(int i=0;i<quant;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa);
+                    for(int i=0;i<pote.quantidadeJogadores;i++) {
+                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
                     }
-                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,quant));
+                } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
                 etapa = MOSTRAR_CARTAS;
             
@@ -230,7 +232,7 @@ int main()
             break;
         }
 
-        if(!condicao_rodada(jogador,&mao_mesa,quant)) break;
+        if(!condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) break;
     }
 
     programa_finalizar();

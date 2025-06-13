@@ -224,6 +224,8 @@ void audio_setar_audios(){
     audio_load("som4carta","audios/efeitos/som4carta.mp3");
     audio_load("som5carta","audios/efeitos/som5carta.mp3");
     audio_load("cancel","audios/efeitos/cancel.mp3");
+    audio_load("dinheiro","audios/efeitos/dinheiro.mp3");
+    audio_load("perda","audios/efeitos/perda.mp3");
 
     audio_load("introsom","audios/musica/introsom.mp3");
     audio_load("temainicial","audios/musica/temainicial.mp3");
@@ -249,6 +251,8 @@ void audio_setar_volume_efeito(float volume){
     audio_set_volume("som4carta",volume);
     audio_set_volume("som5carta",volume);
     audio_set_volume("cancel",volume);
+    audio_set_volume("perda",volume);
+    audio_set_volume("dinheiro",volume);
     
 }
 
