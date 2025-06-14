@@ -939,7 +939,7 @@ void desenhar_dinheiro(float dinheiro) {
     printf("\e[0m");
 }
 
-void desenhar_dinheirocifra(float dinheiro) {
+void desenhar_dinheirocifra() {
     printf("\e[E");
     printf("\e[8C\e[38;2;164;119;32m██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
     printf("\e[4C██\e[38;2;102;58;9m██\e[38;2;59;35;6m██\e[38;2;166;98;12m██\e[38;2;59;35;6m██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
@@ -952,7 +952,9 @@ void desenhar_dinheirocifra(float dinheiro) {
     printf("\e[8C██\e[38;2;102;58;9m██\e[38;2;164;119;32m██\e[E");
     printf("\e[0m");
     printf("\e[H");
+}
 
+void desenhar_dinheirocifra_dinheiro(float dinheiro) {
     printf("\e[2C\e[11B");
     printf("\e[48;2;0;77;64m");
     printf("\e[1m");
@@ -962,6 +964,17 @@ void desenhar_dinheirocifra(float dinheiro) {
     printf("\e[H");
     printf("\e[0m");
 }
+
+void desenhar_dinheirocifra_dinheiro_limpar() {
+    printf("\e[2C\e[11B");
+    printf("\e[48;2;0;77;64m");
+    printf("\e[1m");
+    printf("                  ");
+    printf("\e[H");
+    printf("\e[0m");
+}
+
+
 
 void desenhar_bordaseletor() {
     printf("\e[s");

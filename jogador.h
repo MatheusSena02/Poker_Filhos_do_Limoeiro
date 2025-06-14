@@ -881,8 +881,9 @@ int menu_jogo_jogador_desistir (tp_jogador *jogador,tp_cursor *cursor) {
 }
 
 void desenhar_menu_jogador(tp_jogador jogador) {
+    desenhar_dinheirocifra();
+    desenhar_dinheirocifra_dinheiro_limpar();
     desenhar_cabecalho(jogador.cor,jogador.nome,jogador.ID);
-    desenhar_dinheirocifra(jogador.dinheiro);
     desenhar_jogadoraposta(jogador.aposta);
 }
 
@@ -1642,6 +1643,8 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     desenhar_areacombinacoes();
 
     desenhar_mao_jogador_iniciar(*jogador);
+
+    desenhar_dinheirocifra_dinheiro(jogador->dinheiro);
     
     desenhar_limpar_seletorEaumentar();
     desenhar_bordaseletor();
@@ -1718,7 +1721,8 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     }
 
     desenhar_pote(pote->pote);
-    desenhar_dinheirocifra(jogador->dinheiro);
+    desenhar_dinheirocifra_dinheiro_limpar();
+    desenhar_dinheirocifra_dinheiro(jogador->dinheiro);
     desenhar_maiorAposta(pote->maiorAposta);
     desenhar_jogadoraposta(jogador->aposta);
 

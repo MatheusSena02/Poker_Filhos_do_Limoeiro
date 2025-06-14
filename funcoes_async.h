@@ -26,4 +26,27 @@ void som_comecar_musicadejogo_1(void *infoVolumeMusica){
     audio_stop("musicadejogo1pt1");
 }
 
+void som_comecar_musicadejogo_2(void *infoVolumeMusica){
+    int VolumeFundo = *((int*) infoVolumeMusica);
+
+    audio_fade_out("musicadejogo1pt2",2000,VolumeFundo,0);
+    audio_play("musicadejogo2",1);
+    audio_set_volume("musicadejogo2",0);
+    audio_fade_in("musicadejogo2",2000,0,VolumeFundo);
+    Sleep(2000);
+    audio_stop("musicadejogo1pt2");
+}
+
+void som_comecar_musicadejogo_3(void *infoVolumeMusica){
+    int VolumeFundo = *((int*) infoVolumeMusica);
+
+    audio_fade_out("musicadejogo2",2000,VolumeFundo,0);
+    audio_fade_in("musicadejogo3pt1",2000,0,VolumeFundo);
+    Sleep(2000);
+    audio_stop("musicadejogo2");
+    Sleep(8155);
+    audio_play("musicadejogo3pt2",1);
+    audio_stop("musicadejogo3pt1");
+}
+
 #endif

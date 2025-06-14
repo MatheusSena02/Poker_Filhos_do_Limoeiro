@@ -188,6 +188,7 @@ int main()
             break;
 
             case SEGUNDO_ROUND:
+                async_thread_t musicadejogo2 = async_run(som_comecar_musicadejogo_2,&opcoes.VolumeFundo);
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o segundo roud adicionando mais uma carta a mesa
 
                 desenhar_fundo();
@@ -206,6 +207,7 @@ int main()
             break;
 
             case TERCEIRO_ROUND:
+                async_thread_t musicadejogo3 = async_run(som_comecar_musicadejogo_3,&opcoes.VolumeFundo);
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o terceiro round e o ultimo antes de mostrar as cartas, adicionando tmb mais uma carta a mesa
                 
                 desenhar_fundo();

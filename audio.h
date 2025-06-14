@@ -232,6 +232,9 @@ void audio_setar_audios(){
     audio_load("selecaojogadores","audios/musica/selecaojogadores.mp3");
     audio_load("musicadejogo1pt1","audios/musica/musicadejogo1pt1.mp3");
     audio_load("musicadejogo1pt2","audios/musica/musicadejogo1pt2.mp3");
+    audio_load("musicadejogo2","audios/musica/musicadejogo2.mp3");
+    audio_load("musicadejogo3pt1","audios/musica/musicadejogo3pt1.mp3");
+    audio_load("musicadejogo3pt2","audios/musica/musicadejogo3pt2.mp3");
 }
 
 void audio_setar_volume_fundo(float volume){
@@ -240,6 +243,9 @@ void audio_setar_volume_fundo(float volume){
     audio_set_volume("selecaojogadores",volume);
     audio_set_volume("musicadejogo1pt1",volume);
     audio_set_volume("musicadejogo1pt2",volume);
+    audio_set_volume("musicadejogo2",volume);
+    audio_set_volume("musicadejogo3pt1",volume);
+    audio_set_volume("musicadejogo3pt2",volume);
 }
 
 void audio_setar_volume_efeito(float volume){
