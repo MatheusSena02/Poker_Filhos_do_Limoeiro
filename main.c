@@ -22,8 +22,8 @@
 #include "jogador.h"
 #include "extradebug.h"
 #include "combinacoes.h"
-#include "funcoes_async.h"
 #include "vencedor.h"
+#include "funcoes_async.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
