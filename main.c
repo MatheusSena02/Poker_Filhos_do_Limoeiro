@@ -227,7 +227,7 @@ int main()
             break;
 
             case MOSTRAR_CARTAS:
-             if(opcoes.debug > 0) printf("E%d\n", etapa);
+            if (opcoes.debug > 0) printf("E%d\n", etapa);
 
             for (int i = 0; i < pote.quantidadeJogadores; i++) {
                 if (!jogador[i].desistir) {
@@ -237,8 +237,6 @@ int main()
                     combinacoes_verificar_royalFlush(&jogador[i], mao_mesa, jogador[i].mao);
                 }
             }
-
-            jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
             break;
             default:
             break;
@@ -246,6 +244,8 @@ int main()
 
         if(!condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) break;
     }
+    
+    jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
 
     programa_finalizar();
     return 1;
