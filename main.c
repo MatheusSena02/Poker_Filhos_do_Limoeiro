@@ -244,7 +244,7 @@ int main()
 
         if(!condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) break;
     }
-    
+    limparTela();
     jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
 
     programa_finalizar();
