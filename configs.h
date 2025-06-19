@@ -63,7 +63,7 @@ void config_inicializacao(opc *opcoes) {
     if (!arq_lerOpcoes(&opcoes->VolumeEfeito,"VolumeEfeito = ","VolumeEfeito = %d")) opcoes->VolumeEfeito = 100;
 }
 
-void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
+void config_impressao(opc *opcoes,int pos, tp_carta baralho[]) {
 	//Imprime o menu de configuração
 	limparTela();
 	int cor[6]={39,39,39,39,39,39};

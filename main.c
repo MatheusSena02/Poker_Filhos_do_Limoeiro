@@ -22,8 +22,9 @@
 #include "jogador.h"
 #include "extradebug.h"
 #include "combinacoes.h"
-#include "vencedor.h"
 #include "funcoes_async.h"
+#include "vencedor.h"
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
@@ -226,7 +227,8 @@ int main()
             break;
 
             case MOSTRAR_CARTAS:
-            if(opcoes.debug > 0) printf("E%d\n", etapa);
+             if(opcoes.debug > 0) printf("E%d\n", etapa);
+
             for (int i = 0; i < pote.quantidadeJogadores; i++) {
                 if (!jogador[i].desistir) {
                     combinacoes_verificar_valores(&jogador[i], mao_mesa, jogador[i].mao, jogador[i].comparadorValor);
@@ -235,6 +237,7 @@ int main()
                     combinacoes_verificar_royalFlush(&jogador[i], mao_mesa, jogador[i].mao);
                 }
             }
+
             jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
             break;
             default:

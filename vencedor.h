@@ -16,10 +16,12 @@ void jogo_verificar_vencedor(tp_jogador *jogadores, int quantJogadores) {
     }
 
     if (vencedor != -1) {
-        printf("\nO vencedor da rodada é o jogador [%d] - %s!\n", vencedor, jogadores[vencedor].nome);
-        printf("Comparador de valor da mão: %d\n", jogadores[vencedor].comparadorValor);
+        printf("\n=================================================\n");
+        printf("🎉 O VENCEDOR DA RODADA É: %s [ID %d]!\n", jogadores[vencedor].nome, vencedor);
+        printf("🏆 Valor da mão (comparador): %d\n", jogadores[vencedor].comparadorValor);
+        printf("=================================================\n\n");
     } else {
-        printf("\nNenhum jogador venceu. Todos desistiram.\n");
+        printf("\n⚠️  Todos os jogadores desistiram. Sem vencedor.\n");
     }
 }
 #endif
