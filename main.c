@@ -225,10 +225,11 @@ int main()
                 etapa = MOSTRAR_CARTAS;
             
             break;
-
-            case MOSTRAR_CARTAS:
+            case MOSTRAR_CARTAS: {
+            // Se quiser ainda ver o debug:
             if (opcoes.debug > 0) printf("E%d\n", etapa);
 
+            // 1) Calcular todas as combinações
             for (int i = 0; i < pote.quantidadeJogadores; i++) {
                 if (!jogador[i].desistir) {
                     combinacoes_verificar_valores(&jogador[i], mao_mesa, jogador[i].mao, jogador[i].comparadorValor);
@@ -237,17 +238,24 @@ int main()
                     combinacoes_verificar_royalFlush(&jogador[i], mao_mesa, jogador[i].mao);
                 }
             }
-            break;
-            default:
-            break;
+
+            // 2) Limpa a tela antes de imprimir
+            limparTela();
+
+            // 3) Imprime o vencedor
+            jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
+
+            // 4) Aguarda o F para encerrar
+            programa_finalizar();
+
+            // 5) Sai do main imediatamente
+            return 1;
+}
+
         }
 
-        if(!condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) break;
+        // if(!condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) break;
     }
-    limparTela();
-    jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
-
-    programa_finalizar();
     return 1;
 }
 
