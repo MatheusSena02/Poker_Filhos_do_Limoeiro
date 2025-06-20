@@ -37,20 +37,6 @@ int getch() {
     return -1; 
 }
 
-void programa_finalizar () {
-    
-    int input;
-    printf("\e[65;0H");
-    printf("Aperte F para encerrar o programa\n");
-    
-    do {
-        input=-1;
-		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 102);
-
-
-}
-
 void programa_pausar () {
     
     int input;

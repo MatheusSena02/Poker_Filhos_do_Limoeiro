@@ -142,7 +142,6 @@ int main()
         printf("Erro na distribuição de cartas.\n");
         printf("O programa será encerrado.\n");
 
-        programa_finalizar();
         return 22;
     }
 
