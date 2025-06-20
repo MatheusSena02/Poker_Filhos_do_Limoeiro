@@ -244,13 +244,7 @@ int main()
 
             // 3) Imprime o vencedor
             jogo_verificar_vencedor(jogador, pote.quantidadeJogadores);
-
-            // 4) Aguarda o F para encerrar
-            programa_finalizar();
-
-            // 5) Sai do main imediatamente
-            return 1;
-}
+        }
 
         }
 
