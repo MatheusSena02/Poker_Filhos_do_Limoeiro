@@ -55,7 +55,7 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND;;
+    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND;
     //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -68,6 +68,10 @@ int main()
     pote.pote=0;
     pote.maiorApostaJogadorID=-1;
     pote.quantidadeJogadores=0;
+
+    tp_combinacaoMaior aux_ID_maior_combinacao;
+    aux_ID_maior_combinacao.ID=-1;
+    aux_ID_maior_combinacao.valorMaisAlto=-1;
     
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     //Inicializa os baralhos
@@ -227,6 +231,19 @@ int main()
 
             case MOSTRAR_CARTAS:
                 if(opcoes.debug>0) printf("E%d\n", etapa);
+                combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
+                
+
+                for(int i=0;i<pote.quantidadeJogadores;i++){
+                    if(jogador[i].combinacoes.combinacaoMaior.ID > aux_ID_maior_combinacao.ID){
+                       aux_ID_maior_combinacao.ID = jogador[i].combinacoes.combinacaoMaior.ID;
+                    }
+                    else if(jogador[i].combinacoes.combinacaoMaior.ID == aux_ID_maior_combinacao.ID){
+                        aux_ID_maior_combinacao.ID = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
+                    }
+
+                }
+                
                 // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
             break;
 

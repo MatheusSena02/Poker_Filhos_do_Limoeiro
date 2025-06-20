@@ -14,6 +14,12 @@ typedef struct{
 } tp_combinacaoInfo;
 
 typedef struct{
+    int ID;
+    int valorMaisAlto;
+    int valorMaisAltoReserva;
+} tp_combinacaoMaior;
+
+typedef struct{
     tp_combinacaoInfo par;
     tp_combinacaoInfo trinca;
     tp_combinacaoInfo straight;
@@ -22,6 +28,7 @@ typedef struct{
     tp_combinacaoInfo quadra;
     tp_combinacaoInfo straightFlush;
     tp_combinacaoInfo royalFlush;
+    tp_combinacaoMaior combinacaoMaior;
 } tp_combinacoes;
 
 typedef struct{
@@ -36,6 +43,7 @@ typedef struct{
     float dinheiro;
     float aposta;
     int desistir;
+    int vitoria;
     tp_combinacaoInfo comparadorValor[15];
     tp_combinacaoInfo comparadorNaipe[4];
     tp_combinacaoInfo comparadorSequencia;
@@ -422,6 +430,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
 }
 
 void jogador_inicializacao(tp_jogador *jogador) {
+    jogador->vitoria=0;
     for(int i=0;i<15;i++){
         jogador->comparadorValor[i].quant=0;
         jogador->comparadorValor[i].naipeMaisAlto=-1;
@@ -1771,6 +1780,62 @@ int jogo_rodada_verificar_continuarRodada(tp_jogador jogador[],tp_pote *pote,int
     }
     return veri;
 }
+
+int combinacao_valor_mais_alto(tp_jogador jogador[], int quant){
+for(int i=0; i<quant; i++){
+    if(jogador[i].combinacoes.par.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=1;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.par.valorMaisAlto;
+    }
+    else if(jogador[i].combinacoes.par.quant=2){
+        jogador[i].combinacoes.combinacaoMaior.ID=2;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.par.valorMaisAlto;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.par.valorMaisAltoReserva;
+    }
+
+    if(jogador[i].combinacoes.trinca.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=3;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.trinca.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.straight.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=4;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.straight.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.flush.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=5;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.flush.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.fullHouse.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=6;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.fullHouse.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.quadra.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=7;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.quadra.valorMaisAlto;
+    }
+
+     if(jogador[i].combinacoes.straightFlush.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=8;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.straightFlush.valorMaisAlto;
+     }
+
+     if(jogador[i].combinacoes.royalFlush.quant=1){
+        jogador[i].combinacoes.combinacaoMaior.ID=9;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.royalFlush.valorMaisAlto;
+     }
+    }
+
+
+
+
+}
+
+
+
 
 
 #endif
