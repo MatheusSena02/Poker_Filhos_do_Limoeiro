@@ -156,6 +156,7 @@ int main()
                 // esse aq vai ser o pre round onde n tem nenhuma carta na mesa ainda
                 // porem tem as cartas dos jogadores
                 //aq vai ocorrer as primeiras apostas e dessistencias
+                historico_inicio_rodada(1);
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
@@ -185,6 +186,7 @@ int main()
             break;
 
             case PRIMEIRO_ROUND:
+                historico_inicio_rodada(2);
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq ja temos o primeiro round com tres cartas na mesa;
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
@@ -219,6 +221,7 @@ int main()
             break;
 
             case SEGUNDO_ROUND:
+                historico_inicio_rodada(3);
                 async_thread_t musicadejogo2 = async_run(som_comecar_musicadejogo_2,&opcoes.VolumeFundo);
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o segundo roud adicionando mais uma carta a mesa
 
@@ -252,6 +255,7 @@ int main()
             break;
 
             case TERCEIRO_ROUND:
+                historico_inicio_rodada(4);
                 async_thread_t musicadejogo3 = async_run(som_comecar_musicadejogo_3,&opcoes.VolumeFundo);
                 baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa); // aq temos o terceiro round e o ultimo antes de mostrar as cartas, adicionando tmb mais uma carta a mesa
                 

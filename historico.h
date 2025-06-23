@@ -3,31 +3,34 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "jogador.h"
 #include "configs.h"
-#include "arquivo.h"
+#include "jogador.h"
 
-char nomeArquivoHistorico[100];
+char nomeArquivoHistorico[100] = "jogadas.txt";
 
+// Inicia o histórico: cria ou limpa o arquivo
 int historico_iniciar(opc *opcoes) {
-    if (opcoes->modoDeSalvamento == 1) {
-        if (!arq_gerarcData(nomeArquivoHistorico)) {
-            strcpy(nomeArquivoHistorico, "partida.txt");
-        }
-    } else {
-        strcpy(nomeArquivoHistorico, "partida.txt");
-        FILE *arq = fopen(nomeArquivoHistorico, "w");
-        if (arq) fclose(arq);
-    }
+    FILE *arq = fopen(nomeArquivoHistorico, "w");
+    if (!arq) return 0;
+    fprintf(arq, "===== REGISTRO DE JOGADAS =====\n\n");
+    fclose(arq);
     return 1;
 }
 
-int historico_registrar(tp_jogador *jogador, char acao[]) {
+// Registra uma jogada no arquivo
+int historico_registrar(tp_jogador *jogador, const char *mensagem) {
     FILE *arq = fopen(nomeArquivoHistorico, "a");
     if (!arq) return 0;
+    fprintf(arq, "[%s] %s\n", jogador->nome, mensagem);
+    fclose(arq);
+    return 1;
+}
 
-    fprintf(arq, "%s: %s\n", jogador->nome, acao);
-
+// Escreve cabeçalho de rodada
+int historico_inicio_rodada(int numeroRodada) {
+    FILE *arq = fopen(nomeArquivoHistorico, "a");
+    if (!arq) return 0;
+    fprintf(arq, "\n--- INÍCIO DA RODADA %d ---\n", numeroRodada);
     fclose(arq);
     return 1;
 }
