@@ -12,7 +12,6 @@
 #include <stdlib.h>
 
 //Bibliotecas próprias
-#include "historico.h"
 #include "async.h"
 #include "audio.h"
 #include "miscelanea.h"
@@ -24,6 +23,8 @@
 #include "extradebug.h"
 #include "combinacoes.h"
 #include "funcoes_async.h"
+#include "historico.h"
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
