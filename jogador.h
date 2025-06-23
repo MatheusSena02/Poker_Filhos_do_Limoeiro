@@ -1838,7 +1838,7 @@ for(int i=0; i<quant; i++){
 
 }
 
-jogador_vencedor(tp_jogador jogador[], int quant, tp_combinacaoMaior maior){
+int jogador_vencedor(tp_jogador jogador[], int quant, tp_combinacaoMaior maior){
     for(int i=0;i<quant;i++){
         if(jogador[i].desistir){
             continue;
