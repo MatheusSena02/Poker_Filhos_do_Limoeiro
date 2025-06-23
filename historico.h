@@ -10,7 +10,7 @@ char nomeArquivoHistorico[100] = "jogadas.txt";
 
 // Inicia o histórico: cria ou limpa o arquivo
 int historico_iniciar(opc *opcoes) {
-    FILE *arq = fopen(nomeArquivoHistorico, "a");
+    FILE *arq = fopen(nomeArquivoHistorico, "w");
     if (!arq) return 0;
     fprintf(arq, "===== REGISTRO DE JOGADAS =====\n\n");
     fclose(arq);
