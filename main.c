@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 //Bibliotecas próprias
+#include "historico.h"
 #include "async.h"
 #include "audio.h"
 #include "miscelanea.h"
@@ -46,6 +47,7 @@ int main()
     limparTela();
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
+    historico_iniciar(&opcoes);
     console_cursor_invisivel(); //deixa cursor invisível
 
     //Audio
@@ -159,7 +161,21 @@ int main()
 
                 do {
                     for(int i=0;i<pote.quantidadeJogadores;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+                        if (!jogador[i].desistir) {
+                            float apostaAntes = jogador[i].aposta;
+
+                            jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+
+                            if (jogador[i].desistir) {
+                                historico_registrar(&jogador[i], "DESISTIU");
+                            } else if (jogador[i].aposta > pote.maiorAposta) {
+                                char texto[100];
+                                sprintf(texto, "AUMENTOU para R$ %.2f", jogador[i].aposta);
+                                historico_registrar(&jogador[i], texto);
+                            } else if (jogador[i].aposta > apostaAntes) {
+                                historico_registrar(&jogador[i], "PAGOU a aposta");
+                            }
+                        }
                     }
                 } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
@@ -179,7 +195,21 @@ int main()
                 
                 do {
                     for(int i=0;i<pote.quantidadeJogadores;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+                        if (!jogador[i].desistir) {
+                            float apostaAntes = jogador[i].aposta;
+
+                            jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+
+                            if (jogador[i].desistir) {
+                                historico_registrar(&jogador[i], "DESISTIU");
+                            } else if (jogador[i].aposta > pote.maiorAposta) {
+                                char texto[100];
+                                sprintf(texto, "AUMENTOU para R$ %.2f", jogador[i].aposta);
+                                historico_registrar(&jogador[i], texto);
+                            } else if (jogador[i].aposta > apostaAntes) {
+                                historico_registrar(&jogador[i], "PAGOU a aposta");
+                            }
+                        }
                     }
                 } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
             
@@ -198,7 +228,21 @@ int main()
                 
                 do {
                     for(int i=0;i<pote.quantidadeJogadores;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+                        if (!jogador[i].desistir) {
+                            float apostaAntes = jogador[i].aposta;
+
+                            jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+
+                            if (jogador[i].desistir) {
+                                historico_registrar(&jogador[i], "DESISTIU");
+                            } else if (jogador[i].aposta > pote.maiorAposta) {
+                                char texto[100];
+                                sprintf(texto, "AUMENTOU para R$ %.2f", jogador[i].aposta);
+                                historico_registrar(&jogador[i], texto);
+                            } else if (jogador[i].aposta > apostaAntes) {
+                                historico_registrar(&jogador[i], "PAGOU a aposta");
+                            }
+                        }
                     }
                 } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
@@ -217,7 +261,21 @@ int main()
 
                 do {
                     for(int i=0;i<pote.quantidadeJogadores;i++) {
-                        if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+                        if (!jogador[i].desistir) {
+                            float apostaAntes = jogador[i].aposta;
+
+                            jogo_jogador_rodada(&jogador[i],&cursor,&pote,mao_mesa,jogador);
+
+                            if (jogador[i].desistir) {
+                                historico_registrar(&jogador[i], "DESISTIU");
+                            } else if (jogador[i].aposta > pote.maiorAposta) {
+                                char texto[100];
+                                sprintf(texto, "AUMENTOU para R$ %.2f", jogador[i].aposta);
+                                historico_registrar(&jogador[i], texto);
+                            } else if (jogador[i].aposta > apostaAntes) {
+                                historico_registrar(&jogador[i], "PAGOU a aposta");
+                            }
+                        }
                     }
                 } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
