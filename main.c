@@ -239,9 +239,10 @@ int main()
                        aux_ID_maior_combinacao.ID = jogador[i].combinacoes.combinacaoMaior.ID;
                     }
                     else if(jogador[i].combinacoes.combinacaoMaior.ID == aux_ID_maior_combinacao.ID){
-                        aux_ID_maior_combinacao.ID = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
+                        aux_ID_maior_combinacao.valorMaisAlto = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
                     }
-
+                        printf("%d", jogador[i].combinacoes.combinacaoMaior.ID);
+                         printf("%d", aux_ID_maior_combinacao.valorMaisAlto);
                 }
                 
                 // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
