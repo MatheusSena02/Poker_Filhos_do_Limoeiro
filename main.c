@@ -55,7 +55,7 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND;
+    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, ID_vencedor, maior_valor, poker_vencedor;
     //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -235,15 +235,22 @@ int main()
                 
 
                 for(int i=0;i<pote.quantidadeJogadores;i++){
-                    if(jogador[i].combinacoes.combinacaoMaior.ID > aux_ID_maior_combinacao.ID){
-                       aux_ID_maior_combinacao.ID = jogador[i].combinacoes.combinacaoMaior.ID;
-                    }
-                    else if(jogador[i].combinacoes.combinacaoMaior.ID == aux_ID_maior_combinacao.ID){
-                        aux_ID_maior_combinacao.valorMaisAlto = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
-                    }
-                        printf("%d", jogador[i].combinacoes.combinacaoMaior.ID);
-                         printf("%d", aux_ID_maior_combinacao.valorMaisAlto);
+                   if(jogador[i].desistir){
+                    continue;
+                   }
+                   ID_vencedor = jogador[i].combinacoes.combinacaoMaior.ID;
+                   maior_valor = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
+
+                   if(ID_vencedor > aux_ID_maior_combinacao.ID){
+                    aux_ID_maior_combinacao.ID = ID_vencedor;
+                    aux_ID_maior_combinacao.valorMaisAlto = maior_valor;
+                   }
+
+                   else if(ID_vencedor == aux_ID_maior_combinacao.ID && maior_valor > aux_ID_maior_combinacao.valorMaisAlto){
+                    aux_ID_maior_combinacao.valorMaisAlto = maior_valor;
+                   }
                 }
+                poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
                 
                 // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
             break;
