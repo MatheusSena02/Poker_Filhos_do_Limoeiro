@@ -9,7 +9,7 @@ VolumeEfeito = 40
 //Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)
 // Simples -> prinfs de avisos e monitoramento
 //Facilita Testes -> Simples + pula partes do jogo para facilitar os testes
-debug = 0
+debug = 2
 
 //Número de Players do Modo Debug ( 6 = [Padrão])
 // Só é utilizado no modo debug 2

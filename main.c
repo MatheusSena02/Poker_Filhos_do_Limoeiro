@@ -226,6 +226,7 @@ int main()
                 } while(jogo_rodada_verificar_continuarRodada(jogador,&pote,pote.quantidadeJogadores));
 
                 etapa = MOSTRAR_CARTAS;
+                continue;
             
             break;
 
@@ -251,7 +252,6 @@ int main()
                    }
                 }
                 poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
-                
                 // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
             break;
 
