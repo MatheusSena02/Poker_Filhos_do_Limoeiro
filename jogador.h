@@ -1851,6 +1851,29 @@ int jogador_vencedor(tp_jogador jogador[], int quant, tp_combinacaoMaior maior){
     return -1;
 }
 
+int jogador_encontrar_maior_combinacao(tp_jogador jogador[], tp_combinacaoMaior *aux_ID_maior_combinacao, int quant){
+ 
+int ID_maior, maior_valor;
+
+ for(int i=0;i<quant;i++){
+    if(jogador[i].desistir){
+    continue;
+    }
+    ID_maior = jogador[i].combinacoes.combinacaoMaior.ID;
+    maior_valor = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
+
+    if(ID_maior > aux_ID_maior_combinacao->ID){
+    aux_ID_maior_combinacao->ID = ID_maior;
+    aux_ID_maior_combinacao->valorMaisAlto = maior_valor;
+    }
+
+    else if(ID_maior == aux_ID_maior_combinacao->ID && maior_valor > aux_ID_maior_combinacao->valorMaisAlto){
+    aux_ID_maior_combinacao->valorMaisAlto = maior_valor;
+    }
+}
+
+
+}
 
 
 

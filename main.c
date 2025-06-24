@@ -55,7 +55,7 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, ID_vencedor, maior_valor, poker_vencedor;
+    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor;
     //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -233,25 +233,16 @@ int main()
             case MOSTRAR_CARTAS:
                 if(opcoes.debug>0) printf("E%d\n", etapa);
                 combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
-                
-
-                for(int i=0;i<pote.quantidadeJogadores;i++){
-                   if(jogador[i].desistir){
-                    continue;
-                   }
-                   ID_vencedor = jogador[i].combinacoes.combinacaoMaior.ID;
-                   maior_valor = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
-
-                   if(ID_vencedor > aux_ID_maior_combinacao.ID){
-                    aux_ID_maior_combinacao.ID = ID_vencedor;
-                    aux_ID_maior_combinacao.valorMaisAlto = maior_valor;
-                   }
-
-                   else if(ID_vencedor == aux_ID_maior_combinacao.ID && maior_valor > aux_ID_maior_combinacao.valorMaisAlto){
-                    aux_ID_maior_combinacao.valorMaisAlto = maior_valor;
-                   }
-                }
+                jogador_encontrar_maior_combinacao(jogador, &aux_ID_maior_combinacao, pote.quantidadeJogadores);
                 poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
+
+                printf("MV: ID = %d, VM = %d\n", aux_ID_maior_combinacao.ID, aux_ID_maior_combinacao.valorMaisAlto);
+                int idxVencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
+                if (idxVencedor >= 0) {
+                    printf(">>> Vencedor: jogador[%d] = %s\n", idxVencedor, jogador[idxVencedor].nome);
+                    } else {
+                        printf(">>> Erro: nenhum vencedor encontrado!\n");
+                }
                 // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
             break;
 
