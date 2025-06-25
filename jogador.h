@@ -33,6 +33,7 @@ typedef struct{
 
 typedef struct{
     int valor;
+    int valorReserva;
     int naipe;
 } tp_maiorInfo;
 

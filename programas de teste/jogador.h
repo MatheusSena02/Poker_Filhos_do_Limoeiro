@@ -14,6 +14,12 @@ typedef struct{
 } tp_combinacaoInfo;
 
 typedef struct{
+    int ID;
+    int valorMaisAlto;
+    int valorMaisAltoReserva;
+} tp_combinacaoMaior;
+
+typedef struct{
     tp_combinacaoInfo par;
     tp_combinacaoInfo trinca;
     tp_combinacaoInfo straight;
@@ -22,10 +28,12 @@ typedef struct{
     tp_combinacaoInfo quadra;
     tp_combinacaoInfo straightFlush;
     tp_combinacaoInfo royalFlush;
+    tp_combinacaoMaior combinacaoMaior;
 } tp_combinacoes;
 
 typedef struct{
     int valor;
+    int valorReserva;
     int naipe;
 } tp_maiorInfo;
 
@@ -36,6 +44,7 @@ typedef struct{
     float dinheiro;
     float aposta;
     int desistir;
+    int vitoria;
     tp_combinacaoInfo comparadorValor[15];
     tp_combinacaoInfo comparadorNaipe[4];
     tp_combinacaoInfo comparadorSequencia;
@@ -46,6 +55,8 @@ typedef struct{
 typedef struct{
     float maiorAposta;
     float pote;
+    int maiorApostaJogadorID;
+    int quantidadeJogadores;
 }tp_pote;
 
 void desenhar_setas() {
@@ -128,7 +139,7 @@ int jogador_escolherQuantidade_navegar(tp_cursor *cursor){
                 break;
 
                 case 4: //confirma 6
-                    return 5;
+                    return 6;
                 break;
             }
         break;
@@ -420,6 +431,7 @@ void jogador_cadastroImpressao(tp_jogador jogador[],int player) {
 }
 
 void jogador_inicializacao(tp_jogador *jogador) {
+    jogador->vitoria=0;
     for(int i=0;i<15;i++){
         jogador->comparadorValor[i].quant=0;
         jogador->comparadorValor[i].naipeMaisAlto=-1;
@@ -648,7 +660,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 100 && input != 97 && input != 102 && input!=120);
-
+    audio_play("selecao",0);
     switch(input) {
         case 97:
             if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
@@ -665,6 +677,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
         case 102:
                 switch (cursor->navegador) {
                     case 0:// confirma 0
+                        audio_play("botao",0);
                         if ((1.25*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(1.25*(pote->maiorAposta));
                             return 0;
@@ -674,6 +687,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
                     break;
         
                     case 1: //confirma 1
+                        audio_play("botao",0);
                         if ((1.5*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(1.5*(pote->maiorAposta));
                             return 1;
@@ -681,6 +695,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
                     break;
 
                     case 2: //confirma 2
+                        audio_play("botao",0);
                         if ((1.75*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(1.75*(pote->maiorAposta));
                             return 2;
@@ -688,6 +703,7 @@ int menu_jogo_navegar_aposta_percentual (tp_jogador *jogador,tp_cursor *cursor,t
                     break;
 
                     case 3: //confirma 3
+                        audio_play("botao",0);
                         if ((2*(pote->maiorAposta)) < jogador->dinheiro && pote->maiorAposta>0) {
                             jogador->aposta=(2*(pote->maiorAposta));
                             return 3;
@@ -778,6 +794,7 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 100 && input != 97 && input != 102 && input != 120);
+    audio_play("selecao",0);
 
     switch(input) {
         case 97:
@@ -797,6 +814,7 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
         case 102:
             switch (cursor->navegador) {
                 case 0:// confirma 0
+                    audio_play("botao",0);
                     if(pote->maiorAposta>0) {
                         cursor_zerarCursor(cursor);
                         desenhar_aumentar_aposta_fundo();
@@ -810,10 +828,12 @@ int menu_jogo_navegar_aposta (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pot
                         };
                         return 0;
                     } else
+                        audio_play("cancel",0);
                         desenhar_popupaviso("Não é possível","aumentar % R$0","");
                 break;
     
                 case 1: //confirma 1
+                    audio_play("botao",0);
                     desenhar_aumentar_aposta_absoluto();
                     while (sel==-1) {
                         sel=menu_jogo_navegar_aposta_absoluta(jogador,cursor,pote);
@@ -839,18 +859,41 @@ int menu_jogo_jogador_desqualificado (tp_jogador *jogador,tp_cursor *cursor) {
 
 
     desenhar_seletorficoupobre();
-
+    audio_play("cancel",0);
     int input;
     getch();
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 102);
+    audio_play("perda",0);
+
+}
+
+int menu_jogo_jogador_desistir (tp_jogador *jogador,tp_cursor *cursor) {
+    //Função para permitir a navegação no menu de jogoo usando e F
+    // F = 102
+    // Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+    // O F serve pra confirmar a seleção
+    // A posição 0 é a mais a esquerda
+
+
+    desenhar_seletordesistir();
+    audio_play("cancel",0);
+    int input;
+    getch();
+    do {
+        input=-1;
+        while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 102 && input!=120);
+    if (input==102) return 1;
+    else return 0;
 }
 
 void desenhar_menu_jogador(tp_jogador jogador) {
+    desenhar_dinheirocifra();
+    desenhar_dinheirocifra_dinheiro_limpar();
     desenhar_cabecalho(jogador.cor,jogador.nome,jogador.ID);
-    desenhar_dinheirocifra(jogador.dinheiro);
     desenhar_jogadoraposta(jogador.aposta);
 }
 
@@ -888,6 +931,7 @@ void desenhar_mao_jogador_iniciar(tp_jogador jogador) {
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 119);
 
+    audio_play("som2carta",0);
     printf("\e[25E\e[58C");
     printf("\e[48;2;29;78;99m");
     printf("                                   ");
@@ -925,17 +969,32 @@ void jogo_jogador_rodada_finalizar(tp_jogador *jogador,tp_cursor *cursor,tp_pote
     printf("\e[H");
     printf("\e[0m");
     while((getch())!=102);
+    if (jogador->desistir==1) audio_play("perda",0);
+    else audio_play("dinheiro",0);
 }
 
 void jogo_jogador_rodada_mostrar_maoMesa(tp_listasecarta *maomesa) {
     printf("\e[11E\e[53C\e[48;2;163;114;49m");
     
         tp_listasecarta *atu = maomesa;
+        int cont=0;
         while (atu != NULL) {
             printf("\e[48;2;163;114;49m");
             carta_printarG(&atu->info);
             atu = atu->prox;
-    }
+            cont++;
+        }
+        switch(cont){
+            case 3:
+            audio_play("som3carta",0);
+            break;
+            case 4:
+            audio_play("som4carta",0);
+            break;
+            case 5:
+            audio_play("som5carta",0);
+            break;
+        }
     printf("\e[0m\e[H");
 }
 
@@ -1270,16 +1329,209 @@ int menu_popupguia(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listas
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 102 && input!=120);
 
+    audio_play("cancel",0);
+
     desenhar_popupbaselimpar();
     desenhar_mesaapoiodamesa();
     redesenhar_tela_completa(jogador,cursor,pote,mao_mesa);
 }
 
-int menu_popupjogadores(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa){
+
+
+int menu_popupjogadores(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa,tp_jogador jogadores[]){
     desenhar_popupbase();
     printf("\e[38;2;0;0;0m");
     desenhar_tutorial("143;120;89");
     printf("\e[0m");
+
+    for (int i=0;i<6;i++){
+        if (i < pote->quantidadeJogadores){
+            switch(i){
+                case 0:
+                    if (jogadores[i].desistir==0) {
+                        if (jogadores[i].ID==pote->maiorApostaJogadorID) desenhar_cartagatocoroa();
+                        else desenhar_cartagato();
+
+                        printf("\e[15E\e[36C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[NOME]",20);
+                        printf("\e[E\e[36C");
+                        printf("\e[48;2;239;208;174m");
+                        printf("\e[38;2;65;43;36m");
+                        imprimir__centralizado_string_max20(jogadores[i].nome,20);
+                        printf("\e[E\e[36C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[MAIOR APOSTA]",20);
+                        printf("\e[E\e[36C");
+                        printf("\e[48;2;255;187;73m");
+                        printf("\e[38;2;255;255;255m");
+                        imprimir_centralizado_float_dinheiro(jogadores[i].aposta,20);
+                        printf("\e[H\e[0m");
+
+                    } else desenhar_cartagatodesistido();
+                break;
+
+                case 1:
+                    if (jogadores[i].desistir==0) {
+                        if (jogadores[i].ID==pote->maiorApostaJogadorID) desenhar_cartacoelhocoroa();
+                        else desenhar_cartacoelho();
+
+                        printf("\e[15E\e[68C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[NOME]",20);
+                        printf("\e[E\e[68C");
+                        printf("\e[48;2;239;208;174m");
+                        printf("\e[38;2;65;43;36m");
+                        imprimir__centralizado_string_max20(jogadores[i].nome,20);
+                        printf("\e[E\e[68C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[MAIOR APOSTA]",20);
+                        printf("\e[E\e[68C");
+                        printf("\e[48;2;255;187;73m");
+                        printf("\e[38;2;255;255;255m");
+                        imprimir_centralizado_float_dinheiro(jogadores[i].aposta,20);
+                        printf("\e[H\e[0m");
+
+                    } else desenhar_cartacoelhodesistido();
+                break;
+
+                case 2:
+                    if (jogadores[i].desistir==0) {
+                        if (jogadores[i].ID==pote->maiorApostaJogadorID) desenhar_cartasapocoroa();
+                        else desenhar_cartasapo();
+
+                        printf("\e[15E\e[98C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[NOME]",20);
+                        printf("\e[E\e[98C");
+                        printf("\e[48;2;239;208;174m");
+                        printf("\e[38;2;65;43;36m");
+                        imprimir__centralizado_string_max20(jogadores[i].nome,20);
+                        printf("\e[E\e[98C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[MAIOR APOSTA]",20);
+                        printf("\e[E\e[98C");
+                        printf("\e[48;2;255;187;73m");
+                        printf("\e[38;2;255;255;255m");
+                        imprimir_centralizado_float_dinheiro(jogadores[i].aposta,20);
+                        printf("\e[H\e[0m");
+
+                    } else desenhar_cartasapodesistido();
+                break;
+
+                case 3:
+                    if (jogadores[i].desistir==0) {
+                        if (jogadores[i].ID==pote->maiorApostaJogadorID) desenhar_cartaesquilocoroa();
+                        else desenhar_cartaesquilo();
+
+                        printf("\e[33E\e[36C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[NOME]",20);
+                        printf("\e[E\e[36C");
+                        printf("\e[48;2;239;208;174m");
+                        printf("\e[38;2;65;43;36m");
+                        imprimir__centralizado_string_max20(jogadores[i].nome,20);
+                        printf("\e[E\e[36C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[MAIOR APOSTA]",20);
+                        printf("\e[E\e[36C");
+                        printf("\e[48;2;255;187;73m");
+                        printf("\e[38;2;255;255;255m");
+                        imprimir_centralizado_float_dinheiro(jogadores[i].aposta,20);
+                        printf("\e[H\e[0m");
+
+                    } else desenhar_cartaesquilodesistido();
+                break;
+
+                case 4:
+                    if (jogadores[i].desistir==0) {
+                        if (jogadores[i].ID==pote->maiorApostaJogadorID) desenhar_cartaratocoroa();
+                        else desenhar_cartarato();
+
+                        printf("\e[33E\e[68C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[NOME]",20);
+                        printf("\e[E\e[68C");
+                        printf("\e[48;2;239;208;174m");
+                        printf("\e[38;2;65;43;36m");
+                        imprimir__centralizado_string_max20(jogadores[i].nome,20);
+                        printf("\e[E\e[68C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[MAIOR APOSTA]",20);
+                        printf("\e[E\e[68C");
+                        printf("\e[48;2;255;187;73m");
+                        printf("\e[38;2;255;255;255m");
+                        imprimir_centralizado_float_dinheiro(jogadores[i].aposta,20);
+                        printf("\e[H\e[0m");
+
+                    } else desenhar_cartaratodesistido();
+                break;
+
+                case 5:
+                    if (jogadores[i].desistir==0) {
+                        if (jogadores[i].ID==pote->maiorApostaJogadorID) desenhar_cartaursocoroa();
+                        else desenhar_cartaurso();
+
+                        printf("\e[33E\e[98C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[NOME]",20);
+                        printf("\e[E\e[98C");
+                        printf("\e[48;2;239;208;174m");
+                        printf("\e[38;2;65;43;36m");
+                        imprimir__centralizado_string_max20(jogadores[i].nome,20);
+                        printf("\e[E\e[98C");
+                        printf("\e[48;2;204;164;120m");
+                        printf("\e[38;2;122;99;69m");
+                        imprimir__centralizado_string_max20("[MAIOR APOSTA]",20);
+                        printf("\e[E\e[98C");
+                        printf("\e[48;2;255;187;73m");
+                        printf("\e[38;2;255;255;255m");
+                        imprimir_centralizado_float_dinheiro(jogadores[i].aposta,20);
+                        printf("\e[H\e[0m");
+
+                    } else desenhar_cartaursodesistido();
+                break;
+            }
+        }
+        else {
+            switch(i){
+                case 0:
+                    desenhar_cartagatoausente();
+                break;
+
+                case 1:
+                    desenhar_cartacoelhoausente();
+                break;
+
+                case 2:
+                    desenhar_cartasapoausente();
+                break;
+
+                case 3:
+                    desenhar_cartaesquiloausente();
+                break;
+
+                case 4:
+                    desenhar_cartaratoausente();
+                break;
+
+                case 5:
+                    desenhar_cartaursoausente();
+                break;
+            }
+        }
+    }
 
     int input;
     getch();
@@ -1287,13 +1539,14 @@ int menu_popupjogadores(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 102 && input!=120);
+    audio_play("cancel",0);
 
     desenhar_popupbaselimpar();
     desenhar_mesaapoiodamesa();
     redesenhar_tela_completa(jogador,cursor,pote,mao_mesa);
 }
 
-int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa) {
+int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa, tp_jogador jogadores[]) {
     //Função para permitir a navegação no menu de jogoo usando A,D e F
     // D = 100
     // A = 97
@@ -1334,6 +1587,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 100 && input != 97 && input != 102);
+    audio_play("selecao",0);
 
     switch(input) {
         case 97:
@@ -1349,23 +1603,28 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
         case 102:
             switch (cursor->navegador) {
                 case 0:
-                    menu_popupjogadores(jogador,cursor,pote,mao_mesa);
+                    audio_play("botao",0);
+                    menu_popupjogadores(jogador,cursor,pote,mao_mesa,jogadores);
                     return -1;
                 break;
     
                 case 1: //confirma 0
+                    audio_play("botao",0);
                     return 0;
                 break;
     
                 case 2: //confirma 1
+                    audio_play("botao",0);
                     return 1;
                 break;
 
                 case 3: //confirma 2
+                    audio_play("botao",0);
                     return 2;
                 break;
 
                 case 4:
+                    audio_play("botao",0);
                     menu_popupguia(jogador,cursor,pote,mao_mesa);
                     return -1;
                 break;
@@ -1376,7 +1635,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
     return -1;
 }
 
-int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa) {
+int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa,tp_jogador jogadores[]) {
 
     int sel=-1;
     cursor_zerarCursor(cursor);
@@ -1394,6 +1653,8 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     desenhar_areacombinacoes();
 
     desenhar_mao_jogador_iniciar(*jogador);
+
+    desenhar_dinheirocifra_dinheiro(jogador->dinheiro);
     
     desenhar_limpar_seletorEaumentar();
     desenhar_bordaseletor();
@@ -1421,7 +1682,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     
     while(escolha == -1) {
         sel=-1;
-        escolha=menu_jogo_navegar(jogador,cursor,pote,mao_mesa);
+        escolha=menu_jogo_navegar(jogador,cursor,pote,mao_mesa,jogadores);
 
         if (escolha==0) {
             cursor_zerarCursor(cursor);
@@ -1438,7 +1699,16 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
         }
 
         else if (escolha==1) {
-            jogador->desistir=1;
+            if (menu_jogo_jogador_desistir(jogador,cursor)) {
+                jogador->desistir=1;
+                audio_play("perda",0);
+                return 1;
+            }
+            else {
+                desenhar_limpar_seletorEaumentar();
+                desenhar_bordaseletor();
+                escolha=-1;
+            }
         }
 
         else if (escolha==2) {
@@ -1455,10 +1725,14 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
 
     jogador->dinheiro-=jogador->aposta;
     pote->pote+=jogador->aposta;
-    if (jogador->aposta > pote->maiorAposta) pote->maiorAposta=jogador->aposta;
+    if (jogador->aposta > pote->maiorAposta) {
+        pote->maiorApostaJogadorID=jogador->ID;
+        pote->maiorAposta=jogador->aposta;
+    }
 
     desenhar_pote(pote->pote);
-    desenhar_dinheirocifra(jogador->dinheiro);
+    desenhar_dinheirocifra_dinheiro_limpar();
+    desenhar_dinheirocifra_dinheiro(jogador->dinheiro);
     desenhar_maiorAposta(pote->maiorAposta);
     desenhar_jogadoraposta(jogador->aposta);
 
@@ -1494,16 +1768,115 @@ void jogo_zerar_apostas(tp_jogador jogador[], tp_pote *pote, int quant){
         jogador[i].aposta=0;
     }
     pote->maiorAposta=0;
+    pote->maiorApostaJogadorID=-1;
 }
 
 int jogo_rodada_verificar_continuarRodada(tp_jogador jogador[],tp_pote *pote,int quant) {
     int veri=0;
     for(int i=0;i<quant;i++){
-        if (jogador[i].aposta!=pote->maiorAposta) veri=1;
-        break;
+        if (jogador[i].aposta!=pote->maiorAposta && jogador[i].desistir==0) {
+            veri=1;
+            break;
+        }
     }
     return veri;
 }
+
+int combinacao_valor_mais_alto(tp_jogador jogador[], int quant){
+    int primeiroPar, segundoPar;
+for(int i=0; i<quant; i++){
+    if(jogador[i].combinacoes.par.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=1;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.par.valorMaisAlto;
+    }
+    else if(jogador[i].combinacoes.par.quant==2){
+        jogador[i].combinacoes.combinacaoMaior.ID=2;
+        primeiroPar = jogador[i].combinacoes.par.valorMaisAlto;
+        segundoPar = jogador[i].combinacoes.par.valorMaisAltoReserva;
+        if(primeiroPar>segundoPar){
+            jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = primeiroPar;
+        }
+        else{
+            jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = segundoPar;
+        }
+    }
+
+    if(jogador[i].combinacoes.trinca.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=3;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.trinca.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.straight.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=4;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.straight.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.flush.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=5;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.flush.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.fullHouse.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=6;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.fullHouse.valorMaisAlto;
+    }
+
+    if(jogador[i].combinacoes.quadra.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=7;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.quadra.valorMaisAlto;
+    }
+
+     if(jogador[i].combinacoes.straightFlush.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=8;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.straightFlush.valorMaisAlto;
+     }
+
+     if(jogador[i].combinacoes.royalFlush.quant==1){
+        jogador[i].combinacoes.combinacaoMaior.ID=9;
+        jogador[i].combinacoes.combinacaoMaior.valorMaisAlto = jogador[i].combinacoes.royalFlush.valorMaisAlto;
+     }
+    }
+
+}
+
+int jogador_vencedor(tp_jogador jogador[], int quant, tp_combinacaoMaior maior){
+    for(int i=0;i<quant;i++){
+        if(jogador[i].desistir){
+            continue;
+        }
+
+        if(jogador[i].combinacoes.combinacaoMaior.ID == maior.ID && jogador[i].combinacoes.combinacaoMaior.valorMaisAlto == maior.valorMaisAlto){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int jogador_encontrar_maior_combinacao(tp_jogador jogador[], tp_combinacaoMaior *aux_ID_maior_combinacao, int quant){
+ 
+int ID_maior, maior_valor;
+
+ for(int i=0;i<quant;i++){
+    if(jogador[i].desistir){
+    continue;
+    }
+    ID_maior = jogador[i].combinacoes.combinacaoMaior.ID;
+    maior_valor = jogador[i].combinacoes.combinacaoMaior.valorMaisAlto;
+
+    if(ID_maior > aux_ID_maior_combinacao->ID){
+    aux_ID_maior_combinacao->ID = ID_maior;
+    aux_ID_maior_combinacao->valorMaisAlto = maior_valor;
+    }
+
+    else if(ID_maior == aux_ID_maior_combinacao->ID && maior_valor > aux_ID_maior_combinacao->valorMaisAlto){
+    aux_ID_maior_combinacao->valorMaisAlto = maior_valor;
+    }
+}
+
+
+}
+
+
 
 
 #endif

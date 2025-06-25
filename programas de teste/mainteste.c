@@ -1,24 +1,33 @@
-//Bibliotecas do C
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
 
 //Bibliotecas próprias
-#include "bibliotecas/funcionalidade/miscelanea.h"
-#include "bibliotecas/UX-UI/elementosvisuais.h"
-#include "bibliotecas/funcionalidade/arquivo.h"
-#include "bibliotecas/funcionalidade/cartas.h"
-#include "bibliotecas/funcionalidade/configs.h"
-#include "bibliotecas/funcionalidade/jogador.h"
-#include "bibliotecas/funcionalidade/extradebug.h"
-#include "combinacoesteste.h"
+#include "async.h"
+#include "audio.h"
+#include "miscelanea.h"
+#include "elementosvisuais.h"
+#include "arquivo.h"
+#include "cartas.h"
+#include "configs.h"
+#include "jogador.h"
+#include "extradebug.h"
+#include "combinacoes.h"
+#include "funcoes_async.h"
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
+	//Configura o console para windows (liga cores e outros caracteres)
+	windowsconfig();
 
-    windowsconfig();
-
+    //Configuração de audio
+    audio_init();
     int quant;
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -28,13 +37,13 @@ int main()
     //////////////////////////// --------- INICIO DO PROGRAMA --------- ////////////////////////////////
     
     //DEFINIR AS CARTAS DA MESA?
-    int definir=1;
+    int definir=0;
     //Poe aq as posições da carta no baralhoreferencia (usa o catalogo.exe pra ver), é o segundo numero q aparece
     int IDS[]={0,12,11,9,10};
     
 
     //DEFINIR AS CARTAS DO JOGADOR?
-    int definirJ=1;
+    int definirJ=0;
 
     //Poe aq as posições da carta no baralhoreferencia (usa o catalogo.exe pra ver), é o segundo numero q aparece
     int IJS[]={27,33};
@@ -137,6 +146,7 @@ int main()
     if (jogador[0].combinacoes.royalFlush.quant==1) printf(" %d\n",jogador[0].combinacoes.royalFlush.naipeMaisAlto);
 
     printf("O maior valor de carta do jogador[0] é %d\n",jogador[0].maiorInfo.valor);
+    printf("O segundo maior valor de carta do jogador[0] é %d\n",jogador[0].maiorInfo.valorReserva);
     printf("O maior valor de naipe do jogador[0] é %d\n",jogador[0].maiorInfo.naipe);
  
     programa_pausar();
