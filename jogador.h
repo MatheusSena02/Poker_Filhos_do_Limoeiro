@@ -942,7 +942,7 @@ void desenhar_mao_jogador_iniciar(tp_jogador jogador) {
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 119);
+    } while (input != 119 && input != 107);
 
     audio_play("som2carta",0);
     printf("\e[25E\e[58C");
@@ -981,7 +981,9 @@ void jogo_jogador_rodada_finalizar(tp_jogador *jogador,tp_cursor *cursor,tp_pote
     imprimir__centralizado_string_max100("Aperte F para finalizar a jogada",70);
     printf("\e[H");
     printf("\e[0m");
-    while((getch())!=102);
+    getch();
+    int input = -1;
+    while (input!=102 && input != 107) input=getch();
     if (jogador->desistir==1) audio_play("perda",0);
     else audio_play("dinheiro",0);
 }
@@ -1599,7 +1601,7 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
     do {
         input=-1;
         while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
-    } while (input != 100 && input != 97 && input != 102);
+    } while (input != 100 && input != 97 && input != 102 && input != 107);
     audio_play("selecao",0);
 
     switch(input) {
@@ -1612,7 +1614,11 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
             if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
             else cursor->navegador=0;
         break;
-    
+        
+        case 107:
+        return 2;
+        break;
+
         case 102:
             switch (cursor->navegador) {
                 case 0:
@@ -1646,6 +1652,20 @@ int menu_jogo_navegar (tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_li
     }
     
     return -1;
+}
+
+void combinacoes_verificar_jogador(tp_jogador *jogador,tp_listasecarta *mao_mesa){
+    combinacoes_verificar_valores(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
+    combinacoes_verificar_naipes(jogador,mao_mesa,jogador->mao,jogador->comparadorValor);
+    combinacoes_verificar_sequencias(jogador,mao_mesa,jogador->mao);
+    combinacoes_verificar_royalFlush(jogador,mao_mesa,jogador->mao); 
+}
+
+void combinacoes_verificar_jogadores(tp_jogador jogador[],tp_listasecarta *mao_mesa,tp_pote *pote){
+    for (int i=0;i<pote->quantidadeJogadores;i++) {
+        jogador_inicializacao(&jogador[i]);
+        combinacoes_verificar_jogador(&jogador[i],mao_mesa);
+    }
 }
 
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa,tp_jogador jogadores[]) {
@@ -1767,12 +1787,25 @@ for(int i=0;i<quant;i++){
        veri++; 
     }
 }
- if(veri>= quant - 1){
+ if(veri >= quant - 1){
        return 0;
     }
 if(listaSEcarta_verificar_tamanho(*mao_mesa)>=5){
    return 0;
 }
+return 1;
+}
+
+int condicao_rodada_desistencia(tp_jogador jogador[], tp_listasecarta **mao_mesa, int quant){
+int veri=0;
+for(int i=0;i<quant;i++){
+    if(jogador[i].desistir == 1){
+       veri++; 
+    }
+}
+ if(veri >= quant - 1){
+       return 0;
+    }
 return 1;
 }
 
@@ -2079,16 +2112,18 @@ int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote
     return -1;
 }
 
-void jogo_telaFinal_principal(tp_jogador jogador[],tp_pote *pote,tp_listasecarta *mao_mesa,tp_cursor *cursor,int poker_vencedor){
+void jogo_telaFinal_principal(tp_jogador jogador[],tp_pote *pote,tp_listasecarta *mao_mesa,tp_cursor *cursor,int poker_vencedor,int debug){
     desenhar_fimbase();
     desenhar_tutorial("143;120;89");
-    printf(">>> Vencedor: jogador[%d] = %s\n", poker_vencedor, jogador[poker_vencedor].nome);
-    printf(">>> ID: %d \n", jogador[poker_vencedor].ID);
-    printf(">>> MCID: %d \n", jogador[poker_vencedor].combinacoes.combinacaoMaior.ID);
-    printf(">>> Maior Valor: %d \n", jogador[poker_vencedor].maiorInfo.valor);
-    printf(">>> Maior ValorS: %d \n", jogador[poker_vencedor].maiorInfo.valorReserva);
+    if(debug==1) {
+        printf(">>> Vencedor: jogador[%d] = %s\n", poker_vencedor, jogador[poker_vencedor].nome);
+        printf(">>> ID: %d \n", jogador[poker_vencedor].ID);
+        printf(">>> MCID: %d \n", jogador[poker_vencedor].combinacoes.combinacaoMaior.ID);
+        printf(">>> Maior Valor: %d \n", jogador[poker_vencedor].maiorInfo.valor);
+        printf(">>> Maior ValorS: %d \n", jogador[poker_vencedor].maiorInfo.valorReserva);
 
-    printf("\e[H");
+        printf("\e[H");
+    }
     jogo_telaFinal_desenhar_cartas_mesa(mao_mesa);
 
     cursor_zerarCursor(cursor);
@@ -2099,7 +2134,27 @@ void jogo_telaFinal_principal(tp_jogador jogador[],tp_pote *pote,tp_listasecarta
     }
 }
 
+void jogo_rodada_round_completo (tp_jogador jogador[],tp_pote *pote,tp_listasecarta **mao_mesa,tp_cursor *cursor) {
+    do {
+        for(int i=0;i<pote->quantidadeJogadores;i++) {
+            if(!condicao_rodada(jogador,mao_mesa,pote->quantidadeJogadores)) break;
+            if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],cursor,pote,*mao_mesa,jogador);
+            if(!condicao_rodada(jogador,mao_mesa,pote->quantidadeJogadores)) break;
+        }
+        if(!condicao_rodada(jogador,mao_mesa,pote->quantidadeJogadores)) break;
+    } while(jogo_rodada_verificar_continuarRodada(jogador,pote,pote->quantidadeJogadores));
+}
 
+void jogo_rodada_round_desistencia (tp_jogador jogador[],tp_pote *pote,tp_listasecarta **mao_mesa,tp_cursor *cursor) {
+    do {
+        for(int i=0;i<pote->quantidadeJogadores;i++) {
+            if (!condicao_rodada_desistencia(jogador,mao_mesa,pote->quantidadeJogadores)) break;
+            if (!jogador[i].desistir) jogo_jogador_rodada(&jogador[i],cursor,pote,*mao_mesa,jogador);
+            if (!condicao_rodada_desistencia(jogador,mao_mesa,pote->quantidadeJogadores)) break;
+        }
+        if(!condicao_rodada_desistencia(jogador,mao_mesa,pote->quantidadeJogadores)) break;
+    } while(jogo_rodada_verificar_continuarRodada(jogador,pote,pote->quantidadeJogadores));
+}
 
 
 #endif

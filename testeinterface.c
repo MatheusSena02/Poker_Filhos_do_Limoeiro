@@ -112,19 +112,13 @@ int main()
 
     //debug_mostrarMaos (baralhoJogo, jogador, pote.quantidadeJogadores);
 
-    for (int i=0;i<pote.quantidadeJogadores;i++){
-        jogador_inicializacao(&jogador[i]);
-        combinacoes_verificar_valores(&jogador[i],mao_mesa,jogador[i].mao,jogador[i].comparadorValor);
-        combinacoes_verificar_naipes(&jogador[i],mao_mesa,jogador[i].mao,jogador[i].comparadorValor);
-        combinacoes_verificar_sequencias(&jogador[i],mao_mesa,jogador->mao);
-        combinacoes_verificar_royalFlush(&jogador[i],mao_mesa,jogador->mao); 
-    }
+    combinacoes_verificar_jogadores(jogador,mao_mesa,&pote);
 
     combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
     jogador_encontrar_maior_combinacao(jogador, &aux_ID_maior_combinacao, pote.quantidadeJogadores);
     poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
     
-    jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor);
+    jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor,1);
 
     programa_pausar();
     programa_finalizar();
