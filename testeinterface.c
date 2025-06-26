@@ -87,7 +87,7 @@ int main()
     baralho_embaralhar(baralhoReferencia,baralhoJogo);
     mao_mesa=listaSEcarta_inicializar();
 
-    pote.quantidadeJogadores=6;
+    pote.quantidadeJogadores=3;
     
     tp_jogador jogador[pote.quantidadeJogadores];
     jogador_inicializar_mao(jogador, pote.quantidadeJogadores);
@@ -102,33 +102,29 @@ int main()
         return 22;
     }
 
+    jogador[0].desistir=1;
+
+    baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
+    baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
+    baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
+    //baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
+    //baralho_distribuirCartas_mesa(baralhoJogo,&mao_mesa);
+
     //debug_mostrarMaos (baralhoJogo, jogador, pote.quantidadeJogadores);
-    desenhar_fimbase();
-    printf("\e[30E\e[56C");
-    printf("\e[48;2;113;64;1m");
-    carta_printarG_verso();
-    printf("\e[1C");
-    printf("\e[48;2;113;64;1m");
-    carta_printarG_verso();
-    printf("\e[H");
 
-    printf("\e[34E\e[82C");
-    printf("\e[48;2;134;93;48m");
-    carta_printarP_verso();
-    printf("\e[1C");
-    printf("\e[48;2;134;93;48m");
-    carta_printarP_verso();
-    printf("\e[1C");
-    printf("\e[48;2;134;93;48m");
-    carta_printarP_verso();
-    printf("\e[1C");
-    printf("\e[48;2;134;93;48m");
-    carta_printarP_verso();
-    printf("\e[1C");
-    printf("\e[48;2;134;93;48m");
-    carta_printarP_verso();
-    printf("\e[H");
+    for (int i=0;i<pote.quantidadeJogadores;i++){
+        jogador_inicializacao(&jogador[i]);
+        combinacoes_verificar_valores(&jogador[i],mao_mesa,jogador[i].mao,jogador[i].comparadorValor);
+        combinacoes_verificar_naipes(&jogador[i],mao_mesa,jogador[i].mao,jogador[i].comparadorValor);
+        combinacoes_verificar_sequencias(&jogador[i],mao_mesa,jogador->mao);
+        combinacoes_verificar_royalFlush(&jogador[i],mao_mesa,jogador->mao); 
+    }
 
+    combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
+    jogador_encontrar_maior_combinacao(jogador, &aux_ID_maior_combinacao, pote.quantidadeJogadores);
+    poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
+    
+    jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor);
 
     programa_pausar();
     programa_finalizar();

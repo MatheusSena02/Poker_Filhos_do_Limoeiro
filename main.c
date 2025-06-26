@@ -236,12 +236,13 @@ int main()
                 jogador_encontrar_maior_combinacao(jogador, &aux_ID_maior_combinacao, pote.quantidadeJogadores);
                 poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
 
-                printf("MV: ID = %d, VM = %d\n", aux_ID_maior_combinacao.ID, aux_ID_maior_combinacao.valorMaisAlto);
-                int idxVencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
-                if (idxVencedor >= 0) {
-                    printf(">>> Vencedor: jogador[%d] = %s\n", idxVencedor, jogador[idxVencedor].nome);
-                    } else {
-                        printf(">>> Erro: nenhum vencedor encontrado!\n");
+                if (opcoes.debug==1) {
+                    printf("MV: ID = %d, VM = %d\n", aux_ID_maior_combinacao.ID, aux_ID_maior_combinacao.valorMaisAlto);
+                    if (poker_vencedor >= 0) {
+                        printf(">>> Vencedor: jogador[%d] = %s\n", poker_vencedor, jogador[poker_vencedor].nome);
+                        } else {
+                            printf(">>> Erro: nenhum vencedor encontrado!\n");
+                    }
                 }
                 // aq vai ter as comparações de quem tem a maior mão e vai decidir quem será o vencedor
             break;

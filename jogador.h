@@ -59,13 +59,26 @@ typedef struct{
     int quantidadeJogadores;
 }tp_pote;
 
-void desenhar_setas() {
-    desenhar_setasdentro();
-    Sleep(200);
-    desenhar_setasfora();
-    Sleep(200);
-}
+int desenhar_setas() {
+    int t=20;
+    int input=-1;
 
+    desenhar_setasdentro();
+    
+    for(int i=0;i<t;i++) {
+        input = getch();
+        if (input!=-1) return input;
+        Sleep(50);
+    }
+    
+    desenhar_setasfora();
+
+    for(int i=0;i<t;i++) {
+        input = getch();
+        if (input!=-1) return input;
+        Sleep(50);
+    }
+}
 
 int jogador_escolherQuantidade_navegar(tp_cursor *cursor){
     //Função para permitir a navegação no menu de jogoo usando A,D e F
@@ -104,8 +117,7 @@ int jogador_escolherQuantidade_navegar(tp_cursor *cursor){
     do {
         input=-1;
         while (input == -1) {
-            desenhar_setas();
-            input = getch();  // Verifica se uma tecla foi pressionada
+            input = desenhar_setas();
         }
     } while (input != 100 && input != 97 && input != 102);
 
@@ -1874,6 +1886,185 @@ int ID_maior, maior_valor;
 }
 
 
+}
+
+void jogo_telaFinal_desenhar_cartas_jogador(tp_jogador jogador){
+    printf("\e[30E\e[56C");
+    printf("\e[48;2;113;64;1m");
+    carta_printarG(&(jogador.mao->info));
+    printf("\e[1C");
+    printf("\e[48;2;113;64;1m");
+     carta_printarG(&(jogador.mao->prox->info));
+    printf("\e[H\e[0m");
+}
+
+void jogo_telaFinal_desenhar_cartas_mesa(tp_listasecarta *mao_mesa){
+    tp_listasecarta *atu = mao_mesa;
+    
+    printf("\e[34E\e[82C");
+    for(int i=0;i<5;i++) {
+        printf("\e[48;2;134;93;48m");
+        if (atu!=NULL) carta_printarP(&(atu->info));
+        else carta_printarP_verso();
+        printf("\e[1C");
+        if (atu!=NULL) atu=atu->prox;
+    }
+    printf("\e[H");
+}
+
+int jogo_telaFinal_desenhar_possibilidades(tp_jogador *jogador) {
+    printf("\e[26E\e[128C");
+    printf("\e[48;2;134;93;48m");
+    char corletra[9][18]={"38;2;75;55;32","38;2;75;55;32","38;2;75;55;32","38;2;75;55;32","38;2;75;55;32","38;2;75;55;32","38;2;75;55;32","38;2;75;55;32","38;2;75;55;32"};
+    
+    if (jogador->combinacoes.par.quant==1) strcpy(corletra[0],"38;2;255;189;0");
+    if (jogador->combinacoes.par.quant==2) strcpy(corletra[1],"38;2;255;189;0");
+    if (jogador->combinacoes.trinca.quant>0) strcpy(corletra[2],"38;2;255;189;0");
+    if (jogador->combinacoes.quadra.quant>0) strcpy(corletra[3],"38;2;255;189;0");
+    if (jogador->combinacoes.fullHouse.quant>0) strcpy(corletra[4],"38;2;255;189;0");
+    if (jogador->combinacoes.flush.quant>0) strcpy(corletra[5],"38;2;255;189;0");
+    if (jogador->combinacoes.straight.quant>0) strcpy(corletra[6],"38;2;255;189;0");
+    if (jogador->combinacoes.straightFlush.quant>0) strcpy(corletra[7],"38;2;255;189;0");
+    if (jogador->combinacoes.royalFlush.quant>0) strcpy(corletra[8],"38;2;255;189;0");
+
+    printf("\e[38;2;255;189;0m");
+    imprimir__centralizado_string_max20("Combinações",20);
+    printf("\e[1E\e[128C");
+    imprimir__centralizado_string_max20("Possíveis",18);
+    
+    printf("\e[2E\e[128C");
+    printf("\e[%sm",corletra[0]);
+
+    imprimir__centralizado_string_max20("Par",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[1]);
+
+    imprimir__centralizado_string_max20("2 Pares",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[2]);
+
+    imprimir__centralizado_string_max20("Trinca",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[3]);
+
+    imprimir__centralizado_string_max20("Quadra",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[4]);
+
+    imprimir__centralizado_string_max20("Full House",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[5]);
+
+    imprimir__centralizado_string_max20("Flush",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[6]);
+
+    imprimir__centralizado_string_max20("Straight",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[7]);
+
+    imprimir__centralizado_string_max20("Straight Flush",18);
+
+    printf("\e[1E\e[128C");
+    printf("\e[%sm",corletra[8]);
+
+    imprimir__centralizado_string_max20("Royal Flush",18);
+    
+    printf("\e[0m\e[H");
+}
+
+int jogo_telaFinal_desenhar_seta() {
+    int t=20;
+    int input=-1;
+
+    desenhar_fimsetadentro();
+    
+    for(int i=0;i<t;i++) {
+        input = getch();
+        if (input!=-1) return input;
+        Sleep(50);
+    }
+    
+    desenhar_fimsetafora();
+
+    for(int i=0;i<t;i++) {
+        input = getch();
+        if (input!=-1) return input;
+        Sleep(50);
+    }
+}
+
+int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote,int poker_vencedor, tp_listasecarta *mao_mesa) {
+    //Função para permitir a navegação no menu de jogoo usando A,D e F
+    // D = 100
+    // A = 97
+    // F = 102
+    // Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
+    // O F serve pra confirmar a seleção
+    // A posição 0 é a mais a esquerda
+     int numeroDeOpcoes=pote->quantidadeJogadores;
+    //impressao
+    jogo_telaFinal_desenhar_cartas_jogador(jogador[cursor->navegador]);
+    if (cursor->navegador==poker_vencedor) desenhar_fimvitoria();
+    else if (jogador[cursor->navegador].desistir==1) desenhar_fimdesistencia();
+    else desenhar_fimperda();
+
+    desenhar_fimcombinacoes();
+    jogo_telaFinal_desenhar_possibilidades(&(jogador[cursor->navegador]));
+    //^
+
+    int input;
+    getch();
+    do {
+        input=-1;
+        while (input == -1) {
+            input = jogo_telaFinal_desenhar_seta();
+        }
+    } while (input != 100 && input != 97 && input != 102 && input != 120);
+    audio_play("selecao",0);
+
+    switch(input) {
+        case 97:
+            if ((cursor->navegador - 1)>=0) cursor->navegador-=1;
+            else cursor->navegador=(numeroDeOpcoes-1);
+        break;
+   
+        case 100:
+            if ((cursor->navegador + 1) < numeroDeOpcoes) cursor->navegador+=1;
+            else cursor->navegador=0;
+        break;
+    
+        case 120:
+            //return -2;
+            return -2;
+        break;
+
+        case 102:
+            return -2;
+        break;
+    }
+    
+    return -1;
+}
+
+void jogo_telaFinal_principal(tp_jogador jogador[],tp_pote *pote,tp_listasecarta *mao_mesa,tp_cursor *cursor,int poker_vencedor){
+    desenhar_fimbase();
+    desenhar_tutorial("143;120;89");
+    jogo_telaFinal_desenhar_cartas_mesa(mao_mesa);
+
+    cursor_zerarCursor(cursor);
+    cursor->navegador=poker_vencedor;
+    int sel=-1;
+    while(sel==-1) {
+        sel=jogo_telaFinal_jogador(jogador,cursor,pote,poker_vencedor,mao_mesa);
+    }
 }
 
 
