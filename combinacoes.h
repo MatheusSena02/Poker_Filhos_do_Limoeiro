@@ -45,21 +45,6 @@ int combinacoes_criar_vetorDeCartas(tp_carta cartas[],int *ncartas, tp_listaseca
 
     while (cont < 2) {
         cartas[cont]=atu->info;
-        
-        if (cont==0) {
-            jogador->maiorInfo.valor = cartas[cont].valor_i;
-            jogador->maiorInfo.valorReserva = cartas[cont].valor_i;
-        }
-        else if (cont==1) {
-            if (cartas[cont].valor_i > jogador->maiorInfo.valor) {
-                jogador->maiorInfo.valorReserva = jogador->maiorInfo.valor;
-                jogador->maiorInfo.valor = cartas[cont].valor_i;
-            }
-            else {
-                jogador->maiorInfo.valorReserva = cartas[cont].valor_i;
-            }
-        }
-
         if (jogador->maiorInfo.naipe < cartas[cont].naipe) jogador->maiorInfo.naipe=cartas[cont].naipe;
 
         atu = atu->prox;

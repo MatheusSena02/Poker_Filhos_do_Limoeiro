@@ -548,6 +548,7 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
 
         jogador[i].maiorInfo.naipe=-1;
         jogador[i].maiorInfo.valor=-1;
+         jogador[i].maiorInfo.valorReserva=-1;
 
         jogador_inicializacao(&jogador[i]);
         
@@ -2011,7 +2012,7 @@ void jogo_telaFinal_jogador_animal(){
 
 void jogo_telaFinal_jogador_nome(char corFundo[],char corLetra[],tp_jogador jogador){
     printf("\e[%sm",corFundo);
-    printf("\e[%sm]",corLetra);
+    printf("\e[%sm",corLetra);
     printf("\e[34E\e[20C");
     imprimir__centralizado_string_max20(jogador.nome,20);
     printf("\e[H");
@@ -2081,6 +2082,13 @@ int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote
 void jogo_telaFinal_principal(tp_jogador jogador[],tp_pote *pote,tp_listasecarta *mao_mesa,tp_cursor *cursor,int poker_vencedor){
     desenhar_fimbase();
     desenhar_tutorial("143;120;89");
+    printf(">>> Vencedor: jogador[%d] = %s\n", poker_vencedor, jogador[poker_vencedor].nome);
+    printf(">>> ID: %d \n", jogador[poker_vencedor].ID);
+    printf(">>> MCID: %d \n", jogador[poker_vencedor].combinacoes.combinacaoMaior.ID);
+    printf(">>> Maior Valor: %d \n", jogador[poker_vencedor].maiorInfo.valor);
+    printf(">>> Maior ValorS: %d \n", jogador[poker_vencedor].maiorInfo.valorReserva);
+
+    printf("\e[H");
     jogo_telaFinal_desenhar_cartas_mesa(mao_mesa);
 
     cursor_zerarCursor(cursor);
