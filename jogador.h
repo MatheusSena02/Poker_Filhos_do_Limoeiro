@@ -2001,6 +2001,23 @@ int jogo_telaFinal_desenhar_seta() {
     }
 }
 
+void jogo_telaFinal_jogador_animal(){
+
+}
+
+void jogo_telaFinal_jogador_nome(char corFundo[],char corLetra[],tp_jogador jogador){
+    printf("\e[%sm",corFundo);
+    printf("\e[%sm]",corLetra);
+    printf("\e[34E\e[20C");
+    imprimir__centralizado_string_max20(jogador.nome,20);
+    printf("\e[H");
+
+    printf("\e[36E\e[24C");
+    imprimir_centralizado_float_dinheiro(jogador.dinheiro,12);
+    printf("\e[H");
+    printf("\e[0m");
+}
+
 int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote,int poker_vencedor, tp_listasecarta *mao_mesa) {
     //Função para permitir a navegação no menu de jogoo usando A,D e F
     // D = 100
@@ -2015,6 +2032,9 @@ int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote
     if (cursor->navegador==poker_vencedor) desenhar_fimvitoria();
     else if (jogador[cursor->navegador].desistir==1) desenhar_fimdesistencia();
     else desenhar_fimperda();
+
+    if (cursor->navegador==poker_vencedor) jogo_telaFinal_jogador_nome("48;2;126;73;15","38;2;255;255;255",jogador[cursor->navegador]);
+    else jogo_telaFinal_jogador_nome("48;2;105;78;46","38;2;187;183;177",jogador[cursor->navegador]);
 
     desenhar_fimcombinacoes();
     jogo_telaFinal_desenhar_possibilidades(&(jogador[cursor->navegador]));
