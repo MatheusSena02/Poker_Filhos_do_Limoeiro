@@ -14,13 +14,13 @@
 int main()
 {
     //Carregamento
-    const char *sheetPath = "anim/um.png";
+    const char *sheetPath = "anim/quatro.png";
     SpriteSheet *sheet = sprite_sheet_load(sheetPath, 15, 15);
     if (!sheet) { fprintf(stderr, "Falha ao carregar %s\n", sheetPath); return 1; }
 
 
     //Uso
-    sprite_animate(sheet, 2, 80000, "255;0;0", 2, 2);
+    sprite_animate(sheet, 2, 80000, "255;255;0", 50, 2);
     sprite_sheet_free(sheet);
     return 0;
 }

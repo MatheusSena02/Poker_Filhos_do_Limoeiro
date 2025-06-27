@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef CONFIGS_H
 #define CONFIGS_H
 

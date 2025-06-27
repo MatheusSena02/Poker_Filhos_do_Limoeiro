@@ -79,11 +79,6 @@ struct SpriteSheet {
     unsigned char *pixels; /* RGBA */
 };
 
-static void _cursor_show(int on){
-    printf("\033[%s25%c", on?"?":"?", on?'h':'l');
-    fflush(stdout);
-}
-
 SpriteSheet *sprite_sheet_load(const char *filename,
                                int frame_w,
                                int frame_h){
@@ -146,7 +141,6 @@ void sprite_animate(const SpriteSheet *s,
                     int off_x,
                     int off_y){
     if(!s) return;
-    _cursor_show(0);
     if(delay_us<0) delay_us=0;
     int loop=0;
     while(iterations<=0 || loop<iterations){
@@ -156,7 +150,9 @@ void sprite_animate(const SpriteSheet *s,
         }
         ++loop;
     }
-    _cursor_show(1);
+
+    sprite_draw_frame(s, 0, bg_rgb, off_x, off_y);
+
     printf("\033[0m\n");
 }
 

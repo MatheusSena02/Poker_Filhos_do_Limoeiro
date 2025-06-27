@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef JOGADOR_H 
 #define JOGADOR_H
 #include <stdio.h>

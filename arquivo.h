@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef ARQUIVO_H
 #define ARQUIVO_H
 #include <stdio.h>

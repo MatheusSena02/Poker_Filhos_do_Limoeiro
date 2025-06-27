@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef EXTRADEBUG_H
 #define EXTRADEBUG_H
 

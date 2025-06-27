@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef FUNCOES_ASYNC_H
 #define FUNCOES_ASYNC_H
 

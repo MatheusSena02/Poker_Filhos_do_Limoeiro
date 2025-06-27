@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef COMBINACOES_H
 #define COMBINACOES_H
 

@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef MISCELANEA_H
 #define MISCELANEA_H
 #include <stdio.h>

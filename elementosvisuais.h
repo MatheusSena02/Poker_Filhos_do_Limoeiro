@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef ELEMENTOSVISUAIS_H
 #define ELEMENTOSVISUAIS_H
 
