@@ -233,6 +233,9 @@ int main()
                 combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
                 jogador_encontrar_maior_combinacao(jogador, &aux_ID_maior_combinacao, pote.quantidadeJogadores);
                 poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
+                poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
+
+                atualizar_estatisticas(&estat, &jogador[poker_vencedor].combinacoes);
                 int total = 0;
                 if (jogador[poker_vencedor].combinacoes.par.quant > 0) total++;
                 if (jogador[poker_vencedor].combinacoes.trinca.quant > 0) total++;
