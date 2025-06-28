@@ -58,6 +58,7 @@ void som_comecar_musicadejogo_4(void *opcoes){
     audio_fade_out("musicadejogo3pt2",2000,VolumeFundo,0);
     audio_fade_in("musicafinalpt1",2000,0,VolumeFundo);
     audio_set_volume("musicafinalpt2",VolumeFundo);
+    
     while(1) {
         if (!audio_is_playing("musicafinalpt1")) {
             if (!*Ploop) break;
