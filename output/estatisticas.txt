@@ -1,8 +1,8 @@
 Par: 1
-Trinca: 0
+Trinca: 2
 Straight: 0
 Flush: 1
-FullHouse: 0
-Quadra: 0
+FullHouse: 1
+Quadra: 1
 StraightFlush: 0
 RoyalFlush: 0
