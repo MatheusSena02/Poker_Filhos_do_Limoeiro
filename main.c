@@ -21,7 +21,7 @@
 #include "extradebug.h"
 #include "combinacoes.h"
 #include "funcoes_async.h"
-
+#include "arvore.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
@@ -55,6 +55,10 @@ int main()
 
     int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor,loopMusicaFinal=1,continua=1;
     //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
+
+    ArvoreComb arvore = arv_comb_inicializar();
+    EstatisticasComb estat;
+    iniciar_estatisticas(&estat);
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
 	tp_carta baralhoReferencia[52];
@@ -239,6 +243,24 @@ int main()
                 combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
                 jogador_encontrar_maior_combinacao(jogador, &aux_ID_maior_combinacao, pote.quantidadeJogadores);
                 poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
+                int total = 0;
+
+                for (int i = 0; i < pote.quantidadeJogadores; i++) {
+                    if (jogador[i].desistir) continue; // Ignora quem desistiu
+
+                    atualizar_estatisticas(&estat, &jogador[i].combinacoes);
+
+                    if (jogador[i].combinacoes.par.quant > 0) total++;
+                    if (jogador[i].combinacoes.trinca.quant > 0) total++;
+                    if (jogador[i].combinacoes.straight.quant > 0) total++;
+                    if (jogador[i].combinacoes.flush.quant > 0) total++;
+                    if (jogador[i].combinacoes.fullHouse.quant > 0) total++;
+                    if (jogador[i].combinacoes.quadra.quant > 0) total++;
+                    if (jogador[i].combinacoes.straightFlush.quant > 0) total++;
+                    if (jogador[i].combinacoes.royalFlush.quant > 0) total++;
+                }
+
+                arvore = arv_comb_inserir(arvore, etapa, total);
 
                 jogador[poker_vencedor].dinheiro += pote.pote;
                 jogo_telaFinal_misterio();
@@ -246,13 +268,19 @@ int main()
                 audio_play("finalselect",0);
                 while(audio_is_playing("musicafinalpt1"));
                 jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor,opcoes.debug);
+
+                salvar_estatisticas(&estat, "estatisticas.txt");
+            
                 continua=0;
+
             break;
 
             default:
             break;
         }
     }
+    arv_comb_salvar_em_arquivo(arvore, "combinacoes.txt");
+    arv_comb_destruir(arvore);
 
     programa_finalizar();
     return 1;
