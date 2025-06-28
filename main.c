@@ -5,13 +5,11 @@
 #define TERCEIRO_ROUND 3
 #define MOSTRAR_CARTAS 4
 
-//Bibliotecas do C
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
 
-//Bibliotecas próprias
 #include "async.h"
 #include "audio.h"
 #include "miscelanea.h"
@@ -55,7 +53,7 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor;
+    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor,loopMusicaFinal=1;
     //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -154,6 +152,7 @@ int main()
     while(1) {
         switch(etapa){
             case PRE_ROUND:
+                animacao_animar_round1();
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
                 desenhar_mesaapoiodamesa();
@@ -165,6 +164,7 @@ int main()
             break;
 
             case PRIMEIRO_ROUND:
+                animacao_animar_round2();
                 if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
@@ -184,6 +184,8 @@ int main()
 
             case SEGUNDO_ROUND:
                 async_thread_t musicadejogo2 = async_run(som_comecar_musicadejogo_2,&opcoes.VolumeFundo);
+                animacao_animar_round3();
+                
                 if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                 }
@@ -200,6 +202,8 @@ int main()
 
             case TERCEIRO_ROUND:
                 async_thread_t musicadejogo3 = async_run(som_comecar_musicadejogo_3,&opcoes.VolumeFundo);
+                animacao_animar_round4();
+
                 if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                 }
@@ -217,6 +221,7 @@ int main()
             break;
 
             case MOSTRAR_CARTAS:
+                async_thread_t musicadejogo4 = async_run(som_comecar_musicadejogo_4,&opcoes);
                 combinacoes_verificar_jogadores(jogador,mao_mesa,&pote);
                 
                 combinacao_valor_mais_alto(jogador,pote.quantidadeJogadores);
@@ -224,7 +229,10 @@ int main()
                 poker_vencedor = jogador_vencedor(jogador, pote.quantidadeJogadores, aux_ID_maior_combinacao);
 
                 jogador[poker_vencedor].dinheiro += pote.pote;
-
+                jogo_telaFinal_misterio();
+                opcoes.loopMusica=0;
+                audio_play("finalselect",0);
+                while(audio_is_playing("musicafinalpt1"));
                 jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor,opcoes.debug);
                 return 2;
             break;

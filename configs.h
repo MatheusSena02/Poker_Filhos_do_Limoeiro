@@ -3,7 +3,7 @@
 #define CONFIGS_H
 
 typedef struct {
-	int debug, modoDeSalvamento, nplayersdebug, VolumeFundo, VolumeEfeito;
+	int debug, modoDeSalvamento, nplayersdebug, VolumeFundo, VolumeEfeito, loopMusica;
 }opc;
 
 void arq_atualizarOpcoes (opc *opcoes) {

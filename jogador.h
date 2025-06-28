@@ -744,6 +744,7 @@ void menu_jogo_navegar_aposta_absoluto(tp_jogador *jogador,tp_pote *pote){
         printf("Valor: ");
         scanf("%f",&input);
 
+        if ((jogador->dinheiro < pote->maiorAposta) && (input==jogador->dinheiro)) break;
         if (input<(pote->maiorAposta)  || input <= 0 || input > jogador ->dinheiro) printf("\e[H\e[41E\e[46C\e[38;2;244;67;54mValor inválido!\e[38;2;255;255;255m");
 
     }
@@ -2072,6 +2073,8 @@ int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote
     else if (jogador[cursor->navegador].desistir==1) desenhar_fimdesistencia();
     else desenhar_fimperda();
 
+    desenhar_animaisgrande(cursor->navegador);
+
     if (cursor->navegador==poker_vencedor) jogo_telaFinal_jogador_nome("48;2;126;73;15","38;2;255;255;255",jogador[cursor->navegador]);
     else jogo_telaFinal_jogador_nome("48;2;105;78;46","38;2;187;183;177",jogador[cursor->navegador]);
 
@@ -2111,6 +2114,21 @@ int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote
     }
     
     return -1;
+}
+
+int jogo_telaFinal_misterio() {
+
+    desenhar_misterio();
+    desenhar_misteriobotao();
+
+    int input=-1;
+    getch();
+    do {
+        input = getch();
+    } while (input != 102);
+    desenhar_misteriobotaoapertado();
+    audio_play("selecao",0);
+
 }
 
 void jogo_telaFinal_principal(tp_jogador jogador[],tp_pote *pote,tp_listasecarta *mao_mesa,tp_cursor *cursor,int poker_vencedor,int debug){
@@ -2156,6 +2174,5 @@ void jogo_rodada_round_desistencia (tp_jogador jogador[],tp_pote *pote,tp_listas
         if(!condicao_rodada_desistencia(jogador,mao_mesa,pote->quantidadeJogadores)) break;
     } while(jogo_rodada_verificar_continuarRodada(jogador,pote,pote->quantidadeJogadores));
 }
-
 
 #endif

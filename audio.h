@@ -226,6 +226,7 @@ void audio_setar_audios(){
     audio_load("cancel","audios/efeitos/cancel.mp3");
     audio_load("dinheiro","audios/efeitos/dinheiro.mp3");
     audio_load("perda","audios/efeitos/perda.mp3");
+    audio_load("finalselect","audios/efeitos/finalselect.wav");
 
     audio_load("introsom","audios/musica/introsom.mp3");
     audio_load("temainicial","audios/musica/temainicial.mp3");
@@ -235,6 +236,8 @@ void audio_setar_audios(){
     audio_load("musicadejogo2","audios/musica/musicadejogo2.mp3");
     audio_load("musicadejogo3pt1","audios/musica/musicadejogo3pt1.mp3");
     audio_load("musicadejogo3pt2","audios/musica/musicadejogo3pt2.mp3");
+    audio_load("musicafinalpt1","audios/musica/musicafinalpt1.mp3");
+    audio_load("musicafinalpt2","audios/musica/musicafinalpt2.mp3");
 }
 
 void audio_setar_volume_fundo(float volume){
@@ -246,6 +249,8 @@ void audio_setar_volume_fundo(float volume){
     audio_set_volume("musicadejogo2",volume);
     audio_set_volume("musicadejogo3pt1",volume);
     audio_set_volume("musicadejogo3pt2",volume);
+    audio_set_volume("musicafinalpt1",volume);
+    audio_set_volume("musicafinalpt2",volume);
 }
 
 void audio_setar_volume_efeito(float volume){
@@ -259,6 +264,7 @@ void audio_setar_volume_efeito(float volume){
     audio_set_volume("cancel",volume);
     audio_set_volume("perda",volume);
     audio_set_volume("dinheiro",volume);
+    audio_set_volume("finalselect",volume);
     
 }
 

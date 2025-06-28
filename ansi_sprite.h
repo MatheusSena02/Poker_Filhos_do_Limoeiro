@@ -58,7 +58,7 @@ void sprite_animate(const SpriteSheet *sheet,
 
 /* -------------------------------------------------------------------- */
 
-#ifdef ANSI_SPRITE_IMPLEMENTATION
+
 #define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
@@ -153,9 +153,7 @@ void sprite_animate(const SpriteSheet *s,
 
     sprite_draw_frame(s, 0, bg_rgb, off_x, off_y);
 
-    printf("\033[0m\n");
+    printf("\033[0m\e[H");
 }
-
-#endif /* ANSI_SPRITE_IMPLEMENTATION */
 
 #endif /* ANSI_SPRITE_H */

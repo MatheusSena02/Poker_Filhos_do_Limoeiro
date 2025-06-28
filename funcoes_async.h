@@ -50,4 +50,21 @@ void som_comecar_musicadejogo_3(void *infoVolumeMusica){
     audio_stop("musicadejogo3pt1");
 }
 
+void som_comecar_musicadejogo_4(void *opcoes){
+    int VolumeFundo = ((opc*) opcoes)->VolumeFundo;
+    int *Ploop = &(((opc*)opcoes)->loopMusica);
+    *Ploop=1;
+
+    audio_fade_out("musicadejogo3pt2",2000,VolumeFundo,0);
+    audio_fade_in("musicafinalpt1",2000,0,VolumeFundo);
+    audio_set_volume("musicafinalpt2",VolumeFundo);
+    while(1) {
+        if (!audio_is_playing("musicafinalpt1")) {
+            if (!*Ploop) break;
+            else audio_play("musicafinalpt1",0);
+        }
+    }
+    audio_play("musicafinalpt2",1);
+}
+
 #endif
