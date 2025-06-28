@@ -1,7 +1,9 @@
+//Biblioteca Própria //
 #ifndef EXTRADEBUG_H
 #define EXTRADEBUG_H
 
 void debug_mostrarBaralhos(tp_carta *baralhoReferencia, opc opcoes, tp_pilhaSEcarta *baralhoJogo) {
+    limparTela();
     printf("-> Opção de Debug ligada, mostrando Baralhos:\n");
     printf("\e[5EBaralho Embaralhado P:\n");
     baralho_printarP(baralhoJogo);
@@ -116,7 +118,6 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
 
 
         jogador[i].ID=i;
-        jogador[i].dinheiro=1000;
         jogador[i].aposta=0;
         jogador[i].desistir=0;
 
@@ -138,6 +139,53 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
         printf("\e[39m");
     }
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+}
+
+void debug_jogador_escolherNomes_discreto(tp_jogador jogador[],int quant){
+    int cont=0;
+    char nomes[6][20]={"Felix","Marzia","Cinna","Ludwig","Jaiden","Pedro"};
+
+    for(int i=0;i<quant;i++){
+        switch(cont){
+            case 0:
+            strcpy(jogador[i].cor,"38;2;38;198;218");
+            break;
+
+            case 1:
+            strcpy(jogador[i].cor,"38;2;255;23;68");
+            break;
+
+            case 2:
+            strcpy(jogador[i].cor,"38;2;205;220;57");
+            break;
+
+            case 3:
+            strcpy(jogador[i].cor,"38;2;255;152;0");
+            break;
+
+            case 4:
+            strcpy(jogador[i].cor,"38;2;213;0;249");
+            break;
+
+            case 5:
+            strcpy(jogador[i].cor,"38;2;255;209;128");
+            break;
+        }
+
+
+        jogador[i].ID=i;
+        jogador[i].dinheiro=1000;
+        jogador[i].aposta=0;
+        jogador[i].desistir=0;
+
+        jogador[i].maiorInfo.naipe=-1;
+        jogador[i].maiorInfo.valor=-1;
+        
+        debug_jogador_inicializacao(&jogador[i]);
+
+        strcpy(jogador[i].nome,nomes[i]);
+        cont++;
+    }
 }
 
 void debug_mostrarMaos (tp_pilhaSEcarta *baralhoJogo,tp_jogador jogador[],int quant) {

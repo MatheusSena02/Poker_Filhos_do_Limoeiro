@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef CARTAS_H
 #define CARTAS_H
 #include <stdio.h>
@@ -227,8 +228,17 @@ int baralho_distribuirCartas_jogadores(tp_pilhaSEcarta *baralhoJogo, tp_jogador 
     for(int i = 0; i < quant; i++){
         if (!pilhaSEcarta_pop(baralhoJogo, &e)) return 0;
         listaSEcarta_inserir_inicio(&jogador[i].mao, e);
+
+        jogador[i].maiorInfo.valor=e.valor_i;
+        jogador[i].maiorInfo.valorReserva=e.valor_i;
+
         if (!pilhaSEcarta_pop(baralhoJogo, &e)) return 0;
+
+        if (e.valor_i>jogador[i].maiorInfo.valor) jogador[i].maiorInfo.valor=e.valor_i;
+        else jogador[i].maiorInfo.valorReserva=e.valor_i;
+
         listaSEcarta_inserir_inicio(&jogador[i].mao, e);
+
     }
     return 1;
 }

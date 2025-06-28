@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef COMBINACOES_H
 #define COMBINACOES_H
 
@@ -45,8 +46,6 @@ int combinacoes_criar_vetorDeCartas(tp_carta cartas[],int *ncartas, tp_listaseca
 
     while (cont < 2) {
         cartas[cont]=atu->info;
-
-        if (jogador->maiorInfo.valor < cartas[cont].valor_i) jogador->maiorInfo.valor=cartas[cont].valor_i;
         if (jogador->maiorInfo.naipe < cartas[cont].naipe) jogador->maiorInfo.naipe=cartas[cont].naipe;
 
         atu = atu->prox;

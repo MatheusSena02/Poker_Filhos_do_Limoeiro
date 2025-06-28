@@ -1,3 +1,4 @@
+//Biblioteca Própria //
 #ifndef MISCELANEA_H
 #define MISCELANEA_H
 #include <stdio.h>
@@ -67,7 +68,7 @@ void programa_pausar () {
 void programa_iniciar () {
 
     FILE *arq;
-    arq=fopen("teste.txt","w");
+    arq=fopen("TESTEescreverEmArquivo.txt","w");
 
     if(arq==NULL) printf("-> Erro - Não é possível alterar arquivos\n--> O jogo poderá ser jogado, mas nada será salvo em disco.\n");
 	
@@ -80,7 +81,6 @@ void programa_iniciar () {
         input=-1;
 		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
     } while (input != 102);
-
 }
 
 #endif
