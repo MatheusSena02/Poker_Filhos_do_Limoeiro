@@ -118,7 +118,6 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
 
 
         jogador[i].ID=i;
-        jogador[i].dinheiro=1000;
         jogador[i].aposta=0;
         jogador[i].desistir=0;
 

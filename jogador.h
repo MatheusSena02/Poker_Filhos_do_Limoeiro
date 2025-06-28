@@ -543,7 +543,6 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
         }
 
         jogador[i].ID=i;
-        jogador[i].dinheiro=1000;
         jogador[i].aposta=0;
         jogador[i].desistir=0;
 
@@ -2173,6 +2172,10 @@ void jogo_rodada_round_desistencia (tp_jogador jogador[],tp_pote *pote,tp_listas
         }
         if(!condicao_rodada_desistencia(jogador,mao_mesa,pote->quantidadeJogadores)) break;
     } while(jogo_rodada_verificar_continuarRodada(jogador,pote,pote->quantidadeJogadores));
+}
+
+void jogadores_setar_dinheiroInicial(tp_jogador jogador[], int quant, float dinheiro){
+    for(int i=0;i<quant;i++) jogador[i].dinheiro=dinheiro;
 }
 
 #endif

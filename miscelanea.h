@@ -68,7 +68,7 @@ void programa_pausar () {
 void programa_iniciar () {
 
     FILE *arq;
-    arq=fopen("teste.txt","w");
+    arq=fopen("TESTEescreverEmArquivo.txt","w");
 
     if(arq==NULL) printf("-> Erro - Não é possível alterar arquivos\n--> O jogo poderá ser jogado, mas nada será salvo em disco.\n");
 	

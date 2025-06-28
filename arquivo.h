@@ -140,6 +140,10 @@ int arq_criarOpcoes () {
         fprintf(arq,"VolumeFundo = 70\n\n");
         fprintf(arq,"//Volume dos efeitos sonoros ( 100 [Padrão])\n");
         fprintf(arq,"VolumeEfeito = 100\n\n");
+        fprintf(arq,"//Com quanto dinheiro cada player começa? ( 1000 [Padrão])\n");
+        fprintf(arq,"DinheiroInicial = 1000\n\n");
+        fprintf(arq,"//Qual o valor mínimo da primeira aposta do jogo? ( 10 [Padrão])\n");
+        fprintf(arq,"ApostaMinimaInicial = 10\n\n");
         fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");

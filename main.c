@@ -53,7 +53,7 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor,loopMusicaFinal=1;
+    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor,loopMusicaFinal=1,continua=1;
     //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
 
     tp_pilhaSEcarta *baralhoJogo;       //BARALHO PARA OS JOGADORES
@@ -62,7 +62,6 @@ int main()
     tp_cursor cursor;
 
     tp_pote pote;
-    pote.maiorAposta=10;
     pote.pote=0;
     pote.maiorApostaJogadorID=-1;
     pote.quantidadeJogadores=0;
@@ -125,6 +124,9 @@ int main()
     tp_jogador jogador[pote.quantidadeJogadores];
     jogador_inicializar_mao(jogador, pote.quantidadeJogadores);
 
+    pote.maiorAposta=opcoes.apostaMinimaInicial;
+    jogadores_setar_dinheiroInicial(jogador,pote.quantidadeJogadores,opcoes.dinheiroInicial);
+
     //Se debug for diferente de 2, escolhe os nomes dos players
     if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, pote.quantidadeJogadores);
     else {
@@ -149,7 +151,7 @@ int main()
 
     if (opcoes.debug==1) debug_mostrarMaos (baralhoJogo, jogador, pote.quantidadeJogadores);
 
-    while(1) {
+    while(continua) {
         switch(etapa){
             case PRE_ROUND:
                 animacao_animar_round1();
@@ -234,7 +236,7 @@ int main()
                 audio_play("finalselect",0);
                 while(audio_is_playing("musicafinalpt1"));
                 jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor,opcoes.debug);
-                return 2;
+                
             break;
 
             default:
