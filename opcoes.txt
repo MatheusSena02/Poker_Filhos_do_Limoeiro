@@ -7,10 +7,10 @@ VolumeFundo = 70
 VolumeEfeito = 100
 
 //Com quanto dinheiro cada player começa? ( 1000 [Padrão])
-DinheiroInicial = 1100
+DinheiroInicial = 1000
 
 //Qual o valor mínimo da primeira aposta do jogo? ( 10 [Padrão])
-ApostaMinimaInicial = 25
+ApostaMinimaInicial = 10
 
 //Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)
 // Simples -> prinfs de avisos e monitoramento

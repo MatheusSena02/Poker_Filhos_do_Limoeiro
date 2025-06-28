@@ -171,11 +171,14 @@ int main()
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+
+                    desenhar_fundo();
+                    
+                    desenhar_mesaapoiodamesa();
                 }
                 
-                desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
-                desenhar_mesaapoiodamesa();
+                
                 jogo_zerar_apostas(jogador, &pote, pote.quantidadeJogadores);
                 
                 jogo_rodada_round_completo (jogador,&pote,&mao_mesa,&cursor);
@@ -190,10 +193,14 @@ int main()
                 
                 if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+
+                    desenhar_fundo();
+                    
+                    desenhar_mesaapoiodamesa();
                 }
-                desenhar_fundo();
+
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
-                desenhar_mesaapoiodamesa();
+                
                 jogo_zerar_apostas(jogador, &pote, pote.quantidadeJogadores);
                 
                 jogo_rodada_round_completo (jogador,&pote,&mao_mesa,&cursor);
@@ -208,11 +215,14 @@ int main()
 
                 if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+
+                    desenhar_fundo();
+                    
+                    desenhar_mesaapoiodamesa();
                 }
                 
-                desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);
-                desenhar_mesaapoiodamesa();
+                
                 jogo_zerar_apostas(jogador, &pote, pote.quantidadeJogadores);
 
                 jogo_rodada_round_desistencia (jogador,&pote,&mao_mesa,&cursor);
@@ -236,7 +246,7 @@ int main()
                 audio_play("finalselect",0);
                 while(audio_is_playing("musicafinalpt1"));
                 jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor,opcoes.debug);
-                
+                continua=0;
             break;
 
             default:
