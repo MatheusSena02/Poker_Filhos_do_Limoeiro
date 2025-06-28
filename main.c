@@ -22,19 +22,14 @@
 #include "combinacoes.h"
 #include "funcoes_async.h"
 #include "arvore.h"
+#include "saves.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int main()
+int main_filho()
 {
-	//Configura o console para windows (liga cores e outros caracteres)
-	windowsconfig();
-
-    //Configuração de audio
-    audio_init();
-
     //////////////////////////// INICIALIZAÇÃO - ARQUIVOS - CONFIGURAÇÕES ////////////////////////////////
     
 	//Variáveis das configurações -> opcoes.txt
@@ -53,8 +48,8 @@ int main()
     
     //////////////////////////// ------- DECLARAÇÃO DE VARIÁVEIS ------- ////////////////////////////////
 
-    int iniciarJogo,iniciarConfig,etapa=PRE_ROUND, poker_vencedor,loopMusicaFinal=1,continua=1;
-    //tp_jogador jogador[] <- declarado mais pra baixo pq depende de quant
+    int iniciarJogo,fechar=0,continuarUltimo=-1,iniciarConfig,etapa=PRE_ROUND, poker_vencedor=-1,loopMusicaFinal=1,continua=1;
+    tp_jogador jogador[6];
 
     ArvoreComb arvore = arv_comb_inicializar();
     EstatisticasComb estat;
@@ -84,9 +79,9 @@ int main()
     //Menu inicial e configurações
 
     do {
-        
         programa_iniciar();
         if (!audio_is_playing("temainicial")) audio_play("temainicial",1);
+        
         limparTela();
 
         cursor_zerarCursor(&cursor);
@@ -96,7 +91,13 @@ int main()
         audio_setar_volume_efeito(opcoes.VolumeEfeito);
         audio_setar_volume_fundo(opcoes.VolumeFundo);
 
-        while(1) if (menuinicial_navegar(&cursor) > 0) break;
+        while(1) {
+            fechar = menuinicial_navegar(&cursor);
+            if (fechar > 0) {
+                if (fechar==3) return 2;
+                break;
+            }
+        }
 
         audio_play("botao",0);
         
@@ -121,24 +122,37 @@ int main()
     //Mostrar baralhos se debug for 1
     if (opcoes.debug == 1) debug_mostrarBaralhos(baralhoReferencia, opcoes, baralhoJogo);
     
-    //Se debug estiver desligado, escolhe quantidade de players
-    if (opcoes.debug>1) pote.quantidadeJogadores=opcoes.nplayersdebug;
-    else pote.quantidadeJogadores=jogador_escolherQuantidade(&cursor);
+    desenhar_fundotipojogo();
+    desenhar_tutorial("43;43;43");
+    cursor_setarCursor(&cursor,-1);
 
-    tp_jogador jogador[pote.quantidadeJogadores];
-    jogador_inicializar_mao(jogador, pote.quantidadeJogadores);
+    while (continuarUltimo == -1) continuarUltimo = menuinicial_tipoJogo_navegar(&cursor);
 
-    pote.maiorAposta=opcoes.apostaMinimaInicial;
-    jogadores_setar_dinheiroInicial(jogador,pote.quantidadeJogadores,opcoes.dinheiroInicial);
+    if (continuarUltimo==0) {
+        //Se debug estiver desligado, escolhe quantidade de players
+        if (opcoes.debug>1) pote.quantidadeJogadores=opcoes.nplayersdebug;
+        else pote.quantidadeJogadores=jogador_escolherQuantidade(&cursor);
 
-    //Se debug for diferente de 2, escolhe os nomes dos players
-    if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, pote.quantidadeJogadores);
+        jogadores_setar_dinheiroInicial(jogador,pote.quantidadeJogadores,opcoes.dinheiroInicial);
+
+        //Se debug for diferente de 2, escolhe os nomes dos players
+        if (opcoes.debug==2) debug_jogador_escolherNomes(jogador, pote.quantidadeJogadores);
+        else {
+            desenhar_fundopreto();
+            jogador_escolherNomes(jogador, pote.quantidadeJogadores);
+        }
+
+        programa_pausar();
+    }
     else {
-        desenhar_fundopreto();
-        jogador_escolherNomes(jogador, pote.quantidadeJogadores);
+        if (!saves_carregar_partida(jogador,&pote)) return 10;
+        saves_imprimir(jogador,&pote);
+        programa_pausar();
     }
 
-    programa_pausar();
+    pote.maiorAposta=opcoes.apostaMinimaInicial;
+
+    jogador_inicializar_mao(jogador, pote.quantidadeJogadores);
 
     async_thread_t musicadejogo1 = async_run(som_comecar_musicadejogo_1,&opcoes.VolumeFundo);
     
@@ -269,8 +283,10 @@ int main()
                 while(audio_is_playing("musicafinalpt1"));
                 jogo_telaFinal_principal(jogador,&pote,mao_mesa,&cursor,poker_vencedor,opcoes.debug);
 
-                salvar_estatisticas(&estat, "estatisticas.txt");
+                salvar_estatisticas(&estat, "saves/ultimaPartida_estatisticas.txt");
             
+                audio_stop_total();
+
                 continua=0;
 
             break;
@@ -279,13 +295,49 @@ int main()
             break;
         }
     }
-    arv_comb_salvar_em_arquivo(arvore, "combinacoes.txt");
+    arv_comb_salvar_em_arquivo(arvore, "saves/ultimaPartida_combinacoes.txt");
     arv_comb_destruir(arvore);
 
-    programa_finalizar();
+    char arqnome[100];
+
+    if (opcoes.modoDeSalvamento==1) arq_gerarcData(arqnome);
+    else arq_gerar("partida",arqnome,2);
+
+    saves_salvar_partida(jogador,&pote,arqnome,poker_vencedor);
+
+    saves_salvar_partida(jogador,&pote,"saves/ultimaPartida_save.txt",poker_vencedor);
     return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //FIM DA MAIN -- FIM DA MAIN -- FIM DA MAIN -- FIM DA MAIN -- FIM DA MAIN -- FIM DA MAIN -- FIM DA MAIN -- //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int main(){
+    //Configura o console para windows (liga cores e outros caracteres)
+	windowsconfig();
+
+    //Configuração de audio
+
+    int info=-1;
+    int conti=1;
+    while (conti){
+        audio_init();
+        info = main_filho();
+        audio_shutdown();
+        limparTela();
+        switch (info){
+            case 2:
+                printf("Obrigado por jogar!\n- Filhos do Limoeiro\e[H");
+                programa_finalizar();
+                return 1;
+            break;
+
+            case 10:
+            printf("Erro no carregamento de save\n->Save Corrompido");
+            break;
+
+        }
+        programa_pausar();
+    }
+}

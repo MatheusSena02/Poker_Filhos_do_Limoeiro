@@ -41,7 +41,7 @@ int getch() {
 void programa_finalizar () {
     
     int input;
-    printf("\e[65;0H");
+    printf("\n\n\n");
     printf("Aperte F para encerrar o programa\n");
     
     do {
@@ -68,10 +68,10 @@ void programa_pausar () {
 void programa_iniciar () {
 
     FILE *arq;
-    arq=fopen("TESTEescreverEmArquivo.txt","w");
+    arq=fopen("ignore.txt","w");
 
     if(arq==NULL) printf("-> Erro - Não é possível alterar arquivos\n--> O jogo poderá ser jogado, mas nada será salvo em disco.\n");
-	
+	else fprintf(arq,"Esse é um arquivo de teste, ignore");
     int input;
     printf("Se possível, use a resolução 1280 x 720p\n");
     printf("Por favor coloque o programa em tela cheia\n");

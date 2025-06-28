@@ -141,6 +141,8 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
 
+
+
 void debug_jogador_escolherNomes_discreto(tp_jogador jogador[],int quant){
     int cont=0;
     char nomes[6][20]={"Felix","Marzia","Cinna","Ludwig","Jaiden","Pedro"};

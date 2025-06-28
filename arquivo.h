@@ -21,7 +21,7 @@ int arq_gerar(char principal[], char arqmontado[],int modo) {
 
     // Modo 1
     if (modo==1) {
-        sprintf(arqmontado,"%s.txt",principal);
+        sprintf(arqmontado,"saves/%s.txt",principal);
         return 1;
     }
 
@@ -30,11 +30,7 @@ int arq_gerar(char principal[], char arqmontado[],int modo) {
         int cont=0; char scont[20];
 
         do {
-            strcpy(arqmontado,principal);
-
-            if (cont>0) strcat(arqmontado,scont);
-
-            strcat(arqmontado,".txt");
+            sprintf(arqmontado,"saves/%s%d.txt",principal,cont);
 
             cont++;
             sprintf(scont,"%d",cont);
@@ -87,13 +83,7 @@ int arq_gerarcData(char arq_nome[]) {
 //Função que coloca na string "arq_nome" uma string no formato DD-MM-YYYY-HH-MM-SS.txt e gera esse arquivo
 
     arq_obterData(arq_nome);
-    arq_gerar(arq_nome,arq_nome,1);
-
-    FILE *arquivo;
-    arquivo=fopen(arq_nome,"a");
-    if (arquivo) fclose(arquivo);
-    else return 0;
-    if (strcmp(arq_nome,".txt") == 0) {
+    if (strcmp(arq_nome,"") == 0) {
         printf("\x1b[1;91m// ERRO // ERRO // ERRO // ERRO //\n");
         printf("-> Erro na geração de arquivo para salvamento de histórico.\n");
         printf("-> O programa ainda funcionará.\n");
@@ -101,6 +91,16 @@ int arq_gerarcData(char arq_nome[]) {
         printf("-> Troque 'ModoDeSalvamento' para '0' em 'opcoes.txt'\x1b[22;39m\n");
         return 0;
     }
+    
+    char arq_sub[strlen(arq_nome)+10];
+    strcpy(arq_sub,arq_nome);
+    arq_gerar(arq_sub,arq_nome,1);
+
+    FILE *arquivo;
+    arquivo=fopen(arq_nome,"a");
+    if (arquivo) fclose(arquivo);
+    else return 0;
+
     return 1;
 }
 

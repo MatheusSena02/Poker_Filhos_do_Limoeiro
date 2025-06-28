@@ -40,7 +40,7 @@ typedef struct{
 
 typedef struct{
     int ID;
-    char nome[30], cor[16];
+    char nome[100], cor[16];
     tp_listasecarta *mao;
     float dinheiro;
     float aposta;
@@ -2177,6 +2177,62 @@ void jogo_rodada_round_desistencia (tp_jogador jogador[],tp_pote *pote,tp_listas
 
 void jogadores_setar_dinheiroInicial(tp_jogador jogador[], int quant, float dinheiro){
     for(int i=0;i<quant;i++) jogador[i].dinheiro=dinheiro;
+}
+
+int menuinicial_tipoJogo_navegar (tp_cursor *cursor) {
+
+    switch(cursor->navegador){
+        case -1:
+        desenhar_novojogoapagado();
+        desenhar_continuarapagado();
+        break;
+
+        case 0:
+        desenhar_novojogoaceso();
+        desenhar_continuarapagado();
+        break;
+
+        case 1:
+        desenhar_novojogoapagado();
+        desenhar_continuaraceso();
+        break;
+    }
+    
+
+    int input;
+    do {
+        input=-1;
+		while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+    } while (input != 119 && input != 115 && input != 102); //119 = W / 115 = S / 192 - F
+
+    switch(input) {
+        case 119:
+        audio_stop("selecao");
+        audio_play("selecao",0);
+        cursor->navegador=0;
+        break;
+
+        case 115:
+        FILE *arq = fopen("saves/ultimaPartida_save.txt","r");
+        if (!arq) {
+            audio_play("cancelar",0);
+            break;
+        }
+
+        else {
+            audio_stop("selecao");
+            audio_play("selecao",0);
+            cursor->navegador=1;
+        }
+        break;
+
+        case 102:
+        if (cursor->navegador>= 0) audio_play("botao",0);
+        if(cursor->navegador >= 0) return cursor->navegador; 
+        break;
+    }
+
+    return -1;
 }
 
 #endif

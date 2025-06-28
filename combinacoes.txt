@@ -1,0 +1,3 @@
+--- CONTADOR DE COMBINAÇÕES ---
+
+Rodada 4: 6 combinação(ões)

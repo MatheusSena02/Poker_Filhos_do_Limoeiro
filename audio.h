@@ -268,4 +268,17 @@ void audio_setar_volume_efeito(float volume){
     
 }
 
+void audio_stop_total(){
+    audio_stop("introsom");
+    audio_stop("temainicial");
+    audio_stop("selecaojogadores");
+    audio_stop("musicadejogo1pt1");
+    audio_stop("musicadejogo1pt2");
+    audio_stop("musicadejogo2");
+    audio_stop("musicadejogo3pt1");
+    audio_stop("musicadejogo3pt2");
+    audio_stop("musicafinalpt1");
+    audio_stop("musicafinalpt2");
+}
+
 #endif // AUDIO_H
