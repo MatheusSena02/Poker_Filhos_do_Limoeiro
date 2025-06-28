@@ -2072,7 +2072,8 @@ int jogo_telaFinal_jogador (tp_jogador jogador[],tp_cursor *cursor,tp_pote *pote
     else if (jogador[cursor->navegador].desistir==1) desenhar_fimdesistencia();
     else desenhar_fimperda();
 
-    desenhar_animaisgrande(cursor->navegador);
+    if(cursor->navegador==poker_vencedor) desenhar_animaisgrandeganha(cursor->navegador);
+    else desenhar_animaisgrandeperde(cursor->navegador);
 
     if (cursor->navegador==poker_vencedor) jogo_telaFinal_jogador_nome("48;2;126;73;15","38;2;255;255;255",jogador[cursor->navegador]);
     else jogo_telaFinal_jogador_nome("48;2;105;78;46","38;2;187;183;177",jogador[cursor->navegador]);
