@@ -1,7 +1,7 @@
-Par: 0
+Par: 1
 Trinca: 0
 Straight: 0
-Flush: 0
+Flush: 1
 FullHouse: 0
 Quadra: 0
 StraightFlush: 0
