@@ -215,7 +215,7 @@ static void audio_shutdown(void) {
     track_count = 0;
 }
 
-void audio_setar_audios(){
+void audio_setar_audios(int alt){
     audio_load("selecao","audios/efeitos/sele.mp3");
     audio_load("botao","audios/efeitos/button.mp3");
     audio_load("cancelar","audios/efeitos/cancel.mp3");
@@ -229,15 +229,18 @@ void audio_setar_audios(){
     audio_load("finalselect","audios/efeitos/finalselect.wav");
 
     audio_load("introsom","audios/musica/introsom.mp3");
-    audio_load("temainicial","audios/musica/temainicial.mp3");
+    if (alt==0) audio_load("temainicial","audios/musica/temainicial.mp3");
+    if (alt==1) audio_load("temainicial","audios/musica/pokerfacebit.mp3");
     audio_load("selecaojogadores","audios/musica/selecaojogadores.mp3");
     audio_load("musicadejogo1pt1","audios/musica/musicadejogo1pt1.mp3");
     audio_load("musicadejogo1pt2","audios/musica/musicadejogo1pt2.mp3");
     audio_load("musicadejogo2","audios/musica/musicadejogo2.mp3");
     audio_load("musicadejogo3pt1","audios/musica/musicadejogo3pt1.mp3");
     audio_load("musicadejogo3pt2","audios/musica/musicadejogo3pt2.mp3");
-    audio_load("musicafinalpt1","audios/musica/musicafinalpt1.mp3");
-    audio_load("musicafinalpt2","audios/musica/musicafinalpt2.mp3");
+    if (alt==0) audio_load("musicafinalpt1","audios/musica/musicafinalpt1.mp3");
+    if (alt==0) audio_load("musicafinalpt2","audios/musica/musicafinalpt2.mp3");
+    if (alt==1) audio_load("musicafinalpt1","audios/musica/pokerfaceforropt1.mp3");
+    if (alt==1) audio_load("musicafinalpt2","audios/musica/pokerfaceforro.mp3");
 }
 
 void audio_setar_volume_fundo(float volume){

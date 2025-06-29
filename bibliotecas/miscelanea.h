@@ -30,7 +30,7 @@ void limparTela() {
 int getch() {
 // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
 //Serve pra ler um input do usuário sem esperar pelo enter
-// Como usar no windows e linux (dessa forma pega nos 2):     while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
+// while (input == -1) input = getch();  // Verifica se uma tecla foi pressionada
 
 	if (_kbhit()) {
         return _getch();

@@ -42,7 +42,7 @@ int main_filho()
     console_cursor_invisivel(); //deixa cursor invisível
 
     //Audio
-    audio_setar_audios();
+    audio_setar_audios(opcoes.trilhaAlternativa);
     audio_setar_volume_efeito(opcoes.VolumeEfeito);
     audio_setar_volume_fundo(opcoes.VolumeFundo);
     

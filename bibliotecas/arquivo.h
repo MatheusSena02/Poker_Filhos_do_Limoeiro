@@ -144,20 +144,22 @@ int arq_criarOpcoes () {
         fprintf(arq,"DinheiroInicial = 1000\n\n");
         fprintf(arq,"//Qual o valor mínimo da primeira aposta do jogo? ( 10 [Padrão])\n");
         fprintf(arq,"ApostaMinimaInicial = 10\n\n");
+        fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
+        fprintf(arq,"ModoDeSalvamento = 1\n\n");
+
         fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
         fprintf(arq,"debug = 0\n\n");
-
         fprintf(arq,"//Número de Players do Modo Debug ( 6 = [Padrão])\n");
         fprintf(arq,"// Só é utilizado no modo debug 2\n");
         fprintf(arq,"NumeroDePlayersDebug = 6\n\n");
-
-        fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
-
-        fprintf(arq,"ModoDeSalvamento = 1\n\n");
+        
+        fprintf(arq,"//Trilha Sonora Alternativa [Secreta] ( 0 = Desativado [Padrão] / 1 = Ativado)\n");
+        fprintf(arq,"TrilhaAlternativa = 0\n");
 
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows, mas tem compatibilidade quase completa para LINUX\n");
+        
         fclose(arq);
         return 1;
     }

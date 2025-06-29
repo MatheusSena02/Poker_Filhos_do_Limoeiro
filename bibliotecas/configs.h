@@ -3,7 +3,7 @@
 #define CONFIGS_H
 
 typedef struct {
-	int debug, modoDeSalvamento, nplayersdebug, VolumeFundo, VolumeEfeito, loopMusica, dinheiroInicial, apostaMinimaInicial;
+	int debug, modoDeSalvamento, nplayersdebug, VolumeFundo, VolumeEfeito, loopMusica, dinheiroInicial, apostaMinimaInicial,trilhaAlternativa;
 }opc;
 
 void arq_atualizarOpcoes (opc *opcoes) {
@@ -20,6 +20,9 @@ void arq_atualizarOpcoes (opc *opcoes) {
         fprintf(arq,"DinheiroInicial = %d\n\n",opcoes->dinheiroInicial);
         fprintf(arq,"//Qual o valor mínimo da primeira aposta do jogo? ( 10 [Padrão])\n");
         fprintf(arq,"ApostaMinimaInicial = %d\n\n",opcoes->apostaMinimaInicial);
+        fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
+        fprintf(arq,"ModoDeSalvamento = %d\n\n",opcoes->modoDeSalvamento);
+        
         fprintf(arq,"//Modo de debug ( 0 = Desativado [Padrão] / 1 = Simples / 2 = Facilita Testes)\n");
         fprintf(arq,"// Simples -> prinfs de avisos e monitoramento\n");
         fprintf(arq,"//Facilita Testes -> Simples + pula partes do jogo para facilitar os testes\n");
@@ -27,9 +30,10 @@ void arq_atualizarOpcoes (opc *opcoes) {
         fprintf(arq,"//Número de Players do Modo Debug ( 6 = [Padrão])\n");
         fprintf(arq,"// Só é utilizado no modo debug 2\n");
         fprintf(arq,"NumeroDePlayersDebug = %d\n\n",opcoes->nplayersdebug);
-        fprintf(arq,"// Seleciona como será formatado o .txt que salva o histórico cada partida ( 1 = Data e Hora [Padrão] / 0 = partida.txt )\n");
-        fprintf(arq,"// Recomendação:  Windows / OnlineGDB = 1 / Replit = 0\n");
-        fprintf(arq,"ModoDeSalvamento = %d\n\n",opcoes->modoDeSalvamento);
+
+        fprintf(arq,"//Trilha Sonora Alternativa [Secreta] ( 0 = Desativado [Padrão] / 1 = Ativado)\n");
+        fprintf(arq,"TrilhaAlternativa = %d\n",opcoes->trilhaAlternativa);
+        
         fprintf(arq,"\n\n\n\n\n\n//-->Esse código foi feito para rodar em sistemas Windows e é onde funciona normalmente\n");
         fclose(arq);
     }
@@ -70,12 +74,14 @@ void config_inicializacao(opc *opcoes) {
     if (!arq_lerOpcoes(&opcoes->dinheiroInicial,"DinheiroInicial = ","DinheiroInicial = %d")) opcoes->dinheiroInicial = 1000;
 
     if (!arq_lerOpcoes(&opcoes->apostaMinimaInicial,"ApostaMinimaInicial = ","ApostaMinimaInicial = %d")) opcoes->apostaMinimaInicial = 10;
+
+    if (!arq_lerOpcoes(&opcoes->trilhaAlternativa,"TrilhaAlternativa = ","TrilhaAlternativa = %d")) opcoes->trilhaAlternativa = 0;
 }
 
 void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	//Imprime o menu de configuração
 	limparTela();
-	int cor[8]={39,39,39,39,39,39,39,39};
+	int cor[6]={39,39,39,39,39,39};
 	cor[pos] = 31;
 
 	printf("===================================================================\n");
@@ -101,18 +107,13 @@ void config_impressao(opc *opcoes,int pos,tp_carta baralho[]) {
 	printf("\e[33m// Varia de 0-10000 \e[3m( \e[93m10 [Padrão]\e[33m )\e[39m\e[23m\n");
     printf("\e[33m// Use A e D para aumentar/diminuir o valor\e[39m\n");
 	printf("===================================================================\n");
-    printf("\e[%dm => \e[1mModo de Debug = %d\e[39m\e[22m\n",cor[4],opcoes->debug);
-	printf("\e[33m// Modo de debug \e[3m( \e[93m0 = Desativado [Padrão]\e[33m / 1 = Simples / 2 = Facilita Testes)\e[39m\e[23m\n");
-	printf("===================================================================\n");
-	printf("\e[%dm => \e[1mNúmero de Players do Modo Debug 2= %d\e[39m\e[22m\n",cor[5],opcoes->nplayersdebug);
-	printf("===================================================================\n");
-    printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[6],opcoes->modoDeSalvamento);
+    printf("\e[%dm => \e[1mModo de Salvamento = %d\e[39m\e[22m\n",cor[4],opcoes->modoDeSalvamento);
 	printf("\e[33m// Seleciona a formatação do .txt que salva o histórico\e[39m\n");
 	printf("\e[33m//\e[3m ( \e[93m1 = Data e Hora [Padrão]\e[33m / 0 = partida.txt)\e[39m\n\e[23m");
 
 	printf("===================================================================\n");
 
-	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[7]);
+	printf("\n\n\e[%dmSalvar configurações e reiniciar o programa\e[39m\n",cor[5]);
 }
 
 int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
@@ -125,7 +126,7 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 	// Conforme navegador muda de valor, é como se indicasse qual opção ta com o mouse em cima
 	// O F serve pra confirmar a seleção
 	// A posição 0 é a mais alta
-	int numeroDeOpcoes=8;
+	int numeroDeOpcoes=6;
 	config_impressao(opcoes,cursor->navegador,baralho);
 
     audio_setar_volume_efeito(opcoes->VolumeEfeito);
@@ -195,19 +196,11 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
         case 102:
 			switch (cursor->navegador) {
 
-                case 4:
-					config_alternar(&opcoes->debug,3);
-				break;
-
-                case 5:
-					config_alternar_semZero(&opcoes->nplayersdebug,6);
-				break;
-
-				case 6:
+				case 4:
 					config_inverter(&opcoes->modoDeSalvamento);
 				break;
 
-				case 7:
+				case 5:
 					arq_atualizarOpcoes(opcoes);
 					return 1;
 				break;
