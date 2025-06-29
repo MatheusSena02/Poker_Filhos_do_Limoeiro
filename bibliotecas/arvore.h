@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "jogador.h"  // para tp_combinacoes e tp_jogador
 
 // ===============================
 // Estruturas

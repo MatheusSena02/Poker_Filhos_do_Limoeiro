@@ -2,10 +2,6 @@
 #ifndef COMBINACOES_H
 #define COMBINACOES_H
 
-#include "cartas.h"
-#include "jogador.h"
-#include "listasecarta.h"
-#include "pilhasecarta.h"
 #include "listadecarta.h"
 
 int vetor_inteiro_busca_maiorValor(const int vet[], int ini, int fim) {
