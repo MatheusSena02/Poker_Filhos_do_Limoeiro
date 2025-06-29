@@ -1671,6 +1671,7 @@ void combinacoes_verificar_jogadores(tp_jogador jogador[],tp_listasecarta *mao_m
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa,tp_jogador jogadores[]) {
 
     int sel=-1;
+    int allin=0;
     cursor_zerarCursor(cursor);
 
 
@@ -1745,7 +1746,10 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
         }
 
         else if (escolha==2) {
-            if ((pote->maiorAposta - jogador->aposta) < 0) jogador->aposta=jogador->dinheiro;
+            if ((pote->maiorAposta - jogador->aposta) > 0) {
+                allin=1;
+                jogador->aposta=jogador->dinheiro;
+            }
             else {
                 jogador->dinheiro+=jogador->aposta;
                 jogador->aposta += (pote->maiorAposta - jogador->aposta);
@@ -1758,6 +1762,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
 
     jogador->dinheiro-=jogador->aposta;
     pote->pote+=jogador->aposta;
+    if (allin==1) jogador->aposta=pote->maiorAposta;
     if (jogador->aposta > pote->maiorAposta) {
         pote->maiorApostaJogadorID=jogador->ID;
         pote->maiorAposta=jogador->aposta;
