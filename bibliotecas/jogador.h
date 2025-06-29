@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "cartas.h"
-#include "elementosvisuais.h"
 
 typedef struct{
     int quant;

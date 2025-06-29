@@ -10,19 +10,19 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "async.h"
-#include "audio.h"
-#include "miscelanea.h"
-#include "elementosvisuais.h"
-#include "arquivo.h"
-#include "cartas.h"
-#include "configs.h"
-#include "jogador.h"
-#include "extradebug.h"
-#include "combinacoes.h"
-#include "funcoes_async.h"
-#include "arvore.h"
-#include "saves.h"
+#include <windows.h>
+#include "bibliotecas/async.h"
+#include "bibliotecas/audio.h"
+#include "bibliotecas/miscelanea.h"
+#include "bibliotecas/elementosvisuais.h"
+#include "bibliotecas/arquivo.h"
+#include "bibliotecas/cartasejogador.h"
+#include "bibliotecas/configs.h"
+#include "bibliotecas/extradebug.h"
+#include "bibliotecas/combinacoes.h"
+#include "bibliotecas/funcoes_async.h"
+#include "bibliotecas/arvore.h"
+#include "bibliotecas/saves.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //

@@ -225,8 +225,6 @@ int config_navegar (tp_cursor *cursor,opc *opcoes,tp_carta baralho[]) {
 
 //CONFIGURAÇÕES TERMINAL--------------------------------------------------------------------------------------
 
-#include <windows.h>
-
 void windowsconfig() {
     // Essa função é de uma biblioteca externa, não influencia diretamente a lógica do jogo
     // Configuração de Console pro Windows (Cores, ANSI Escape Code e Tamanho) -------------
