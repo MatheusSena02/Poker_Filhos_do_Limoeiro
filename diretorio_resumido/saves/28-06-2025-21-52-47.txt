@@ -1,0 +1,6 @@
+QuantidadeJogadores = 2
+JogadorVencedorID: 1
+Jogador[0].nome = a
+Jogador[0].dinheiro = 1000.00
+Jogador[1].nome = t
+Jogador[1].dinheiro = 1000.00
