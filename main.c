@@ -23,6 +23,7 @@
 #include "bibliotecas/funcoes_async.h"
 #include "bibliotecas/arvore.h"
 #include "bibliotecas/saves.h"
+#include "bibliotecas/historico.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN -- INÍCIO DA MAIN //
@@ -37,6 +38,7 @@ int main_filho()
     //Verifica se o opcoes.txt já foi criado, se não foi, tenta criá-lo
     arq_verificarOpcoes();
     limparTela();
+    
     //Obter variáveis guardadas em opcoes.txt e inicializa srand
     config_inicializacao(&opcoes);
     console_cursor_invisivel(); //deixa cursor invisível
@@ -172,6 +174,7 @@ int main_filho()
     while(continua) {
         switch(etapa){
             case PRE_ROUND:
+                historico_iniciar();
                 animacao_animar_round1();
                 desenhar_fundo();
                 if(opcoes.debug>0) printf("E%d\e[H", etapa);

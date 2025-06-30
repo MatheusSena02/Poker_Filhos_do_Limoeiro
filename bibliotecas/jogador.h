@@ -1670,6 +1670,7 @@ void combinacoes_verificar_jogadores(tp_jogador jogador[],tp_listasecarta *mao_m
     }
 }
 
+#include "historico.h"
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa,tp_jogador jogadores[]) {
 
     int sel=-1;
@@ -1713,6 +1714,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     if (jogador->dinheiro==0) {
         desenhar_cabecalho_jogador_triste(jogador->ID);
         menu_jogo_jogador_desqualificado(jogador,cursor);
+        historico_registrar(jogador, "DESISTIU");
         jogador->desistir=1;
         return 1;
     }
@@ -1739,6 +1741,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
             if (menu_jogo_jogador_desistir(jogador,cursor)) {
                 jogador->desistir=1;
                 audio_play("perda",0);
+                historico_registrar(jogador, "DESISTIU");
                 return 1;
             }
             else {
@@ -1762,6 +1765,19 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     
     desenhar_jogadoreslimpar();
     desenhar_guialimpar();
+
+    // Salva histórico ANTES de atualizar o pote
+    if (jogador->desistir) {
+        historico_registrar(jogador, "DESISTIU");
+    } else if (jogador->allIn) {
+        historico_registrar(jogador, "ALL IN");
+    } else if (jogador->aposta > pote->maiorAposta) {
+        char texto[100];
+        sprintf(texto, "AUMENTOU para R$ %.2f", jogador->aposta);
+        historico_registrar(jogador, texto);
+    } else if (jogador->aposta == pote->maiorAposta) {
+        historico_registrar(jogador, "PAGOU a aposta");
+    }
 
     jogador->dinheiro-=jogador->aposta;
     pote->pote+=jogador->aposta;
