@@ -120,6 +120,7 @@ void debug_jogador_escolherNomes(tp_jogador jogador[],int quant){
         jogador[i].ID=i;
         jogador[i].aposta=0;
         jogador[i].desistir=0;
+        jogador[i].allIn=0;
 
         jogador[i].maiorInfo.naipe=-1;
         jogador[i].maiorInfo.valor=-1;

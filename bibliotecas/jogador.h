@@ -44,6 +44,7 @@ typedef struct{
     float dinheiro;
     float aposta;
     int desistir;
+    int allIn;
     int vitoria;
     tp_combinacaoInfo comparadorValor[15];
     tp_combinacaoInfo comparadorNaipe[4];
@@ -544,6 +545,7 @@ void jogador_escolherNomes(tp_jogador jogador[],int quant){
         jogador[i].ID=i;
         jogador[i].aposta=0;
         jogador[i].desistir=0;
+        jogador[i].allIn=0;
 
         jogador[i].maiorInfo.naipe=-1;
         jogador[i].maiorInfo.valor=-1;
@@ -1671,7 +1673,8 @@ void combinacoes_verificar_jogadores(tp_jogador jogador[],tp_listasecarta *mao_m
 int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_listasecarta *mao_mesa,tp_jogador jogadores[]) {
 
     int sel=-1;
-    int allin=0;
+    jogador->allIn=0;
+    
     cursor_zerarCursor(cursor);
 
 
@@ -1746,8 +1749,8 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
         }
 
         else if (escolha==2) {
-            if ((pote->maiorAposta - jogador->aposta) > 0) {
-                allin=1;
+            if ((jogador->dinheiro - (pote->maiorAposta - jogador->aposta)) < 0) {
+                jogador->allIn=1;
                 jogador->aposta=jogador->dinheiro;
             }
             else {
@@ -1762,7 +1765,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
 
     jogador->dinheiro-=jogador->aposta;
     pote->pote+=jogador->aposta;
-    if (allin==1) jogador->aposta=pote->maiorAposta;
+    //if (allin==1) jogador->aposta=pote->maiorAposta;
     if (jogador->aposta > pote->maiorAposta) {
         pote->maiorApostaJogadorID=jogador->ID;
         pote->maiorAposta=jogador->aposta;
@@ -1825,9 +1828,11 @@ void jogo_zerar_apostas(tp_jogador jogador[], tp_pote *pote, int quant){
 int jogo_rodada_verificar_continuarRodada(tp_jogador jogador[],tp_pote *pote,int quant) {
     int veri=0;
     for(int i=0;i<quant;i++){
-        if (jogador[i].aposta!=pote->maiorAposta && jogador[i].desistir==0) {
-            veri=1;
-            break;
+        if ((jogador[i].aposta!=pote->maiorAposta && jogador[i].desistir==0)) {
+            if (jogador[i].allIn==0) {
+                veri=1;
+                break;
+            }
         }
     }
     return veri;
