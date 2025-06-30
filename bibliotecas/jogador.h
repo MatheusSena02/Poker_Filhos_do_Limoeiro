@@ -1674,7 +1674,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
 
     int sel=-1;
     jogador->allIn=0;
-    
+
     cursor_zerarCursor(cursor);
 
 
@@ -1765,7 +1765,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
 
     jogador->dinheiro-=jogador->aposta;
     pote->pote+=jogador->aposta;
-    //if (allin==1) jogador->aposta=pote->maiorAposta;
+    
     if (jogador->aposta > pote->maiorAposta) {
         pote->maiorApostaJogadorID=jogador->ID;
         pote->maiorAposta=jogador->aposta;
@@ -1778,6 +1778,18 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     desenhar_jogadoraposta(jogador->aposta);
 
     jogo_jogador_rodada_finalizar(jogador,cursor,pote);
+
+    
+    /*
+    switch (escolha){
+        case 0: //Aumento
+
+        case 1: //Desistencia
+
+        case 2: //Pagou ou continuou
+    }
+    */
+
     return 1;
 }
 
