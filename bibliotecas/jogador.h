@@ -1711,7 +1711,7 @@ int jogo_jogador_rodada(tp_jogador *jogador,tp_cursor *cursor,tp_pote *pote,tp_l
     int escolha=-1;
 
 
-    if (jogador->dinheiro==0) {
+    if (jogador->dinheiro==0 && pote->maiorAposta!=0) {
         desenhar_cabecalho_jogador_triste(jogador->ID);
         menu_jogo_jogador_desqualificado(jogador,cursor);
         historico_registrar(jogador, "DESISTIU");

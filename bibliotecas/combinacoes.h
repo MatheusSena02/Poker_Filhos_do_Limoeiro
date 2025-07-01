@@ -130,7 +130,7 @@ int combinacoes_verificar_valores (tp_jogador *jogador, tp_listasecarta *mao_mes
         }
     }
 
-    if (pares == 1 && trincas == 1) {
+    if (pares > 0 && trincas == 1) {
         jogador->combinacoes.fullHouse.quant=1;
         jogador->combinacoes.fullHouse.naipeMaisAlto = ((jogador->combinacoes.par.naipeMaisAlto * 2) + (jogador->combinacoes.trinca.naipeMaisAlto * 3));
         jogador->combinacoes.fullHouse.valorMaisAlto = ((jogador->combinacoes.par.valorMaisAlto * 2) + (jogador->combinacoes.trinca.valorMaisAlto * 3));

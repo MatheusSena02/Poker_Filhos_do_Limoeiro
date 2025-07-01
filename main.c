@@ -188,11 +188,12 @@ int main_filho()
 
             case PRIMEIRO_ROUND:
                 animacao_animar_round2();
-                if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
-                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
 
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+
+                if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     desenhar_fundo();
                     
                     desenhar_mesaapoiodamesa();
@@ -212,9 +213,9 @@ int main_filho()
                 async_thread_t musicadejogo2 = async_run(som_comecar_musicadejogo_2,&opcoes.VolumeFundo);
                 animacao_animar_round3();
                 
-                if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
-                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
 
+                if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
                     desenhar_fundo();
                     
                     desenhar_mesaapoiodamesa();
@@ -234,9 +235,8 @@ int main_filho()
                 async_thread_t musicadejogo3 = async_run(som_comecar_musicadejogo_3,&opcoes.VolumeFundo);
                 animacao_animar_round4();
 
+                baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
                 if(condicao_rodada(jogador,&mao_mesa,pote.quantidadeJogadores)) {
-                    baralho_distribuirCartas_mesa(baralhoJogo, &mao_mesa);
-
                     desenhar_fundo();
                     
                     desenhar_mesaapoiodamesa();
